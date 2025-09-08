@@ -310,8 +310,8 @@ function setActiveFilter(activeButton, filter) {
 function filterEpisodes(episodes, filter) {
     switch (filter) {
         case 'chronological':
-            // For Dating, Shalom Bayis, Shmiras Einayim: chronological (oldest first)
-            if (['dating', 'shalom-bayis', 'shemiras-einayim'].includes(currentSeries)) {
+            // For Dating, Shalom Bayis, Shemiras Einayim: chronological (oldest first)
+            if (['dating', 'shalom-bayis', 'shmiras-einayim'].includes(currentSeries)) {
                 return [...episodes].sort((a, b) => {
                     const aNum = parseInt(a.episode_number) || 999;
                     const bNum = parseInt(b.episode_number) || 999;
@@ -344,14 +344,14 @@ function filterEpisodes(episodes, filter) {
         case 'all':
         default:
             // Apply series-specific default ordering
-            if (['dating', 'shalom-bayis', 'shemiras-einayim'].includes(currentSeries)) {
+            if (['dating', 'shalom-bayis', 'shmiras-einayim'].includes(currentSeries)) {
                 // Chronological (oldest first)
                 return [...episodes].sort((a, b) => {
                     const aNum = parseInt(a.episode_number) || 999;
                     const bNum = parseInt(b.episode_number) || 999;
                     return aNum - bNum;
                 });
-            } else if (['shemiras-halashon', 'shabbos', 'mesilas-yesharim'].includes(currentSeries)) {
+            } else if (['shmiras-halashon', 'shabbos', 'mesilas-yesharim'].includes(currentSeries)) {
                 // Reverse chronological (newest first)
                 return [...episodes].sort((a, b) => {
                     const dateA = new Date(a.date);
@@ -542,8 +542,8 @@ function generateSeriesDescription(seriesName) {
         'mesilas-yesharim': 'Exploring the path of the righteous through the teachings of the Mesilas Yesharim.',
         'shabbos': 'Deep dive into Shabbos laws, customs, and spiritual significance.',
         'shalom-bayis': 'Building and maintaining peace and harmony in the Jewish home.',
-        'shemiras-halashon': 'Guarding your speech and the power of words in Jewish thought.',
-        'shemiras-einayim': 'Guarding the eyes and maintaining purity in vision and thought.',
+        'shmiras-halashon': 'Guarding your speech and the power of words in Jewish thought.',
+        'shmiras-einayim': 'Guarding the eyes and maintaining purity in vision and thought.',
     };
 
     return descriptions[seriesName] || 'A collection of teachings and insights on this important topic.';
@@ -558,8 +558,8 @@ function getSeriesImage(seriesName) {
         'mesilas-yesharim': 'mesilas-yesharim.png',
         'shabbos': 'shabbos.png',
         'shalom-bayis': 'shalom-bayis.png',
-        'shemiras-halashon': 'shemiras-halashon.png',
-        'shemiras-einayim': 'shemiras-einayim.png',
+        'shmiras-halashon': 'shmiras-halashon.png',
+        'shmiras-einayim': 'shmiras-einayim.png',
     };
 
     return imageMap[seriesName] || 'background2.png';

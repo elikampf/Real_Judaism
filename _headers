@@ -9,7 +9,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
 
 # Content Security Policy (adjust as needed for your external resources)
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; frame-src https://open.spotify.com https://podcasts.apple.com https://www.youtube.com
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; frame-src https://open.spotify.com https://podcasts.apple.com https://www.youtube.com https://anchor.fm
 
 # Caching headers for static assets
 /css/*

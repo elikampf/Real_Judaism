@@ -321,7 +321,7 @@ function getSeriesImage(seriesName) {
         'mesilas-yesharim': 'images/mesilas-yesharim.png',
         'shabbos': 'images/shabbos.png',
         'shalom-bayis': 'images/shalom-bayis.png',
-        'shemiras-halashon': 'images/shemiras-halashon.png',
+        'shmiras-halashon': 'images/shmiras-halashon.png',
         'shmiras-einayim': 'images/shmiras-einayim.png',
         'shalom-bayis-hebrew': 'images/shalom-bayis-heb.png'
     };
@@ -338,7 +338,7 @@ function generateSeriesDescription(seriesName) {
         'mesilas-yesharim': 'Exploring the path of the righteous through the teachings of the Mesilas Yesharim.',
         'shabbos': 'Deep dive into Shabbos laws, customs, and spiritual significance.',
         'shalom-bayis': 'Building and maintaining peace and harmony in the Jewish home.',
-        'shemiras-halashon': 'Guarding your speech and the power of words in Jewish thought.',
+        'shmiras-halashon': 'Guarding your speech and the power of words in Jewish thought.',
         'shmiras-einayim': 'Guarding the eyes and maintaining purity in vision and thought.',
         'shalom-bayis-hebrew': 'בניית שלום ואושר בבית היהודי בעברית.'
     };

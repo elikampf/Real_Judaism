@@ -4,7 +4,15 @@
   "description": "Automated podcast episode updater for Real Judaism website",
   "scripts": {
     "update-episodes": "node scripts/update-episodes.js",
-    "test-update": "PODCAST_FILTER=all node scripts/update-episodes.js"
+    "test-update": "PODCAST_FILTER=all node scripts/update-episodes.js",
+    "manual-update": "node manual-update.js",
+    "update-all": "node manual-update.js all",
+    "update-dating": "node manual-update.js dating",
+    "update-shabbos": "node manual-update.js shabbos",
+    "update-shalom-bayis": "node manual-update.js shalom-bayis",
+    "update-shmiras-halashon": "node manual-update.js shmiras-halashon",
+    "update-shmiras-einayim": "node manual-update.js shmiras-einayim",
+    "update-hebrew": "node manual-update.js 'shalom-bayis-hebrew,shmiras-einayim-hebrew'"
   },
   "dependencies": {
     "node-fetch": "^2.7.0"
