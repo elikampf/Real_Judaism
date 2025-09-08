@@ -337,16 +337,19 @@
             button.innerHTML = '<span class="spinner"></span>Updating...';
 
             try {
-                // Alternative approach: Use GitHub's workflow dispatch API with proper authentication
+                // Check if token is available
+                if (!GITHUB_TOKEN) {
+                    throw new Error('GitHub token not set. Please enter your GitHub Personal Access Token above.');
+                }
+
+                // Use GitHub's workflow dispatch API with proper authentication
                 const headers = {
                     'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `token ${GITHUB_TOKEN}`
                 };
 
-                // If we have a token, use it
-                if (GITHUB_TOKEN) {
-                    headers['Authorization'] = `token ${GITHUB_TOKEN}`;
-                }
+                console.log('Making API call to GitHub...'); // Debug log
 
                 const response = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/workflows/update-episodes.yml/dispatches`, {
                     method: 'POST',
@@ -358,6 +361,8 @@
                         }
                     })
                 });
+
+                console.log('Response status:', response.status); // Debug log
 
                 if (response.ok) {
                     showStatus(`✅ Update workflow triggered for ${podcastFilter === 'all' ? 'all podcasts' : podcastFilter}! Check GitHub Actions for progress.`, 'success');
