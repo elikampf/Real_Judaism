@@ -32,6 +32,15 @@
   Cache-Control: public, max-age=86400
   Content-Type: application/xml
 
+# Special security for admin page
+/admin.html
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cache-Control: private, no-cache, no-store, must-revalidate
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'
+
 # Netlify Forms headers (automatically added by Netlify)
 # These ensure forms work correctly
 /*

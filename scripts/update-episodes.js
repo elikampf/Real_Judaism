@@ -6,6 +6,10 @@
 const fs = require('fs').promises;
 const path = require('path');
 
+// Add fetch polyfill for Node.js versions that don't have it globally
+const https = require('https');
+const fetch = require('node-fetch');
+
 // RSS Feed Configuration
 const PODCAST_CONFIG = {
     'mesilas-yesharim': {
@@ -52,7 +56,7 @@ const PODCAST_CONFIG = {
 
 // Exclusion rules
 const EXCLUDE_RULES = {
-    titleContains: ['trailer', 'test', 'draft', 'private'],
+    titleContains: ['trailer'],
     descriptionContains: ['trailer']
 };
 
@@ -122,7 +126,7 @@ function getPodcastsToCheck() {
     
     // Auto mode - determine based on current day/schedule
     const today = new Date();
-    const dayOfWeek = today.toLocaleLowerCase('en-US', { weekday: 'long' });
+    const dayOfWeek = today.toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
     const dayOfMonth = today.getDate();
     
     const podcastsToCheck = [];
@@ -164,7 +168,19 @@ async function loadCurrentEpisodes() {
  */
 async function checkPodcastForNewEpisodes(config, currentData) {
     try {
-        const response = await fetch(config.rss);
+        // Create HTTPS agent that ignores SSL certificate errors
+        const httpsAgent = new https.Agent({
+            rejectUnauthorized: false
+        });
+
+        const response = await fetch(config.rss, {
+            agent: httpsAgent
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
         const rssText = await response.text();
         
         // Parse RSS XML (simple parsing)
@@ -223,7 +239,7 @@ function parseRSSEpisodes(rssText, seriesName) {
                 spotify_embed_url: generateSpotifyEmbedUrl(enclosure),
                 series: seriesName,
                 episode_number: extractEpisodeNumber(title),
-                file_path: `data\\${seriesName.replace('-', '_')}_episodes.csv`
+                file_path: `data/${seriesName.replace('-', '_')}_episodes.csv`
             };
             
             episodes.push(episode);

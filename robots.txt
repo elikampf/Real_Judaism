@@ -15,6 +15,7 @@ Allow: /sitemap.xml
 
 # Disallow access to admin areas (if any in future)
 Disallow: /admin/
+Disallow: /admin.html
 Disallow: /private/
 Disallow: /temp/
 
