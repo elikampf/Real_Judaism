@@ -12,7 +12,9 @@
     "update-shalom-bayis": "node manual-update.js shalom-bayis",
     "update-shmiras-halashon": "node manual-update.js shmiras-halashon",
     "update-shmiras-einayim": "node manual-update.js shmiras-einayim",
-    "update-hebrew": "node manual-update.js 'shalom-bayis-hebrew,shmiras-einayim-hebrew'"
+    "update-hebrew": "node manual-update.js 'shalom-bayis-hebrew,shmiras-einayim-hebrew'",
+    "simple-update": "node simple-update.js",
+    "update-specific": "node simple-update.js"
   },
   "dependencies": {
     "node-fetch": "^2.7.0"
