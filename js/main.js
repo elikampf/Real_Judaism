@@ -577,72 +577,6 @@ function updateScrollEffects() {
     }
 }
 
-/**
- * Enhanced Dropdown Functionality
- */
-function initializeDropdowns() {
-    const dropdowns = document.querySelectorAll('.nav-dropdown');
-
-    dropdowns.forEach(dropdown => {
-        const toggle = dropdown.querySelector('.dropdown-toggle');
-        const menu = dropdown.querySelector('.dropdown-menu');
-
-        if (toggle && menu) {
-            let isOpen = false;
-            let timeoutId;
-
-            // Desktop hover behavior
-            if (window.innerWidth > 768) {
-                dropdown.addEventListener('mouseenter', () => {
-                    clearTimeout(timeoutId);
-                    showDropdown(menu);
-                });
-
-                dropdown.addEventListener('mouseleave', () => {
-                    timeoutId = setTimeout(() => {
-                        hideDropdown(menu);
-                    }, 300);
-                });
-            }
-
-            // Click behavior for mobile and accessibility
-            toggle.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    if (isOpen) {
-                        hideDropdown(menu);
-                        isOpen = false;
-                    } else {
-                        showDropdown(menu);
-                        isOpen = true;
-                    }
-                }
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!dropdown.contains(e.target)) {
-                    hideDropdown(menu);
-                    isOpen = false;
-                }
-            });
-
-            // Keyboard navigation
-            toggle.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    if (isOpen) {
-                        hideDropdown(menu);
-                        isOpen = false;
-                    } else {
-                        showDropdown(menu);
-                        isOpen = true;
-                    }
-                }
-            });
-        }
-    });
-}
 
 /**
  * Show dropdown menu
@@ -662,72 +596,6 @@ function hideDropdown(menu) {
     menu.style.transform = 'translateY(-10px)';
 }
 
-/**
- * Enhanced contact form handling with better validation
- */
-function initializeContactForm() {
-    const contactForm = document.querySelector('.contact-form');
-
-    if (contactForm) {
-        // Real-time validation
-        const inputs = contactForm.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                validateField(this);
-            });
-
-            input.addEventListener('input', function() {
-                if (this.classList.contains('error')) {
-                    this.classList.remove('error');
-                }
-            });
-        });
-
-        // Form submission with enhanced validation
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = this.querySelector('#name');
-            const email = this.querySelector('#email');
-            const message = this.querySelector('#message');
-            const submitBtn = this.querySelector('button[type="submit"]');
-
-            // Clear previous errors
-            clearFormErrors();
-
-            // Validate all fields
-            let isValid = true;
-
-            if (!validateField(name)) {
-                showFieldError(name, 'Please enter your name.');
-                isValid = false;
-            }
-
-            if (!validateField(email)) {
-                showFieldError(email, 'Please enter a valid email address.');
-                isValid = false;
-            }
-
-            if (!validateField(message)) {
-                showFieldError(message, 'Please enter your message.');
-                isValid = false;
-            }
-
-            if (!isValid) {
-                return;
-            }
-
-            // Show loading state
-            setLoadingState(submitBtn, true);
-
-            // Simulate form processing (replace with actual form submission)
-            setTimeout(() => {
-                // Redirect to thank you page
-                window.location.href = 'thank-you.html';
-            }, 1500);
-        });
-    }
-}
 
 /**
  * Clear all form errors
@@ -781,39 +649,6 @@ function setLoadingState(button, isLoading) {
     }
 }
 
-/**
- * Enhanced validate field function
- */
-function validateField(field) {
-    const value = field.value.trim();
-    let isValid = true;
-
-    // Remove existing error styling
-    field.classList.remove('error');
-
-    // Required field validation
-    if (field.hasAttribute('required') && !value) {
-        isValid = false;
-    }
-
-    // Email validation
-    if (field.type === 'email' && value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            isValid = false;
-        }
-    }
-
-    // Minimum length validation
-    if (field.hasAttribute('minlength')) {
-        const minLength = parseInt(field.getAttribute('minlength'));
-        if (value.length < minLength) {
-            isValid = false;
-        }
-    }
-
-    return isValid;
-}
 
 /**
  * Google Analytics 4 Tracking Functions

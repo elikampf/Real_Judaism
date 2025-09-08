@@ -422,7 +422,7 @@ function getSeriesImage(seriesName) {
         'shalom-bayis-hebrew': 'images/shalom-bayis-heb.png'
     };
 
-    return imageMap[seriesName] || 'images/background2.png';
+    return imageMap[seriesName] || 'images/profile_2.jpg';
 }
 
 /**

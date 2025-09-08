@@ -4,7 +4,7 @@
  */
 
 // Global variables for series page
-let currentSeries = '';
+let seriesPageCurrentSeries = '';
 let seriesEpisodes = [];
 let allSeriesData = {};
 let currentPage = 1;
@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
 async function initializeSeriesPage() {
     // Extract series name from URL path
     const pathParts = window.location.pathname.split('/');
-    currentSeries = (pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2]).replace('.html', '');
+    seriesPageCurrentSeries = (pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2]).replace('.html', '');
     
-    if (!currentSeries) {
+    if (!seriesPageCurrentSeries) {
         console.error('No series found in URL');
         showNoEpisodesState();
         return;
@@ -54,18 +54,18 @@ async function loadSeriesData() {
         const episodeData = await response.json();
         allSeriesData = episodeData.series;
 
-        if (!allSeriesData[currentSeries]) {
-            throw new Error(`Series "${currentSeries}" not found`);
+        if (!allSeriesData[seriesPageCurrentSeries]) {
+            throw new Error(`Series "${seriesPageCurrentSeries}" not found`);
         }
 
-        seriesEpisodes = allSeriesData[currentSeries].episodes || [];
+        seriesEpisodes = allSeriesData[seriesPageCurrentSeries].episodes || [];
         
         // Update page with series data
         updateSeriesInfo();
         displayEpisodes();
         loadRelatedSeries();
         
-        console.log(`Loaded ${seriesEpisodes.length} episodes for series: ${currentSeries}`);
+        console.log(`Loaded ${seriesEpisodes.length} episodes for series: ${seriesPageCurrentSeries}`);
 
     } catch (error) {
         console.error('Error loading series data:', error);
@@ -87,7 +87,7 @@ function updateSeriesInfo() {
     }
 
     // Update page title if needed
-    const seriesTitle = formatSeriesName(currentSeries);
+    const seriesTitle = formatSeriesName(seriesPageCurrentSeries);
     document.title = `${seriesTitle} - Real Judaism`;
 }
 
@@ -311,7 +311,7 @@ function filterEpisodes(episodes, filter) {
     switch (filter) {
         case 'chronological':
             // For Dating, Shalom Bayis, Shemiras Einayim: chronological (oldest first)
-            if (['dating', 'shalom-bayis', 'shmiras-einayim'].includes(currentSeries)) {
+            if (['dating', 'shalom-bayis', 'shmiras-einayim'].includes(seriesPageCurrentSeries)) {
                 return [...episodes].sort((a, b) => {
                     const aNum = parseInt(a.episode_number) || 999;
                     const bNum = parseInt(b.episode_number) || 999;
@@ -344,14 +344,14 @@ function filterEpisodes(episodes, filter) {
         case 'all':
         default:
             // Apply series-specific default ordering
-            if (['dating', 'shalom-bayis', 'shmiras-einayim'].includes(currentSeries)) {
+            if (['dating', 'shalom-bayis', 'shmiras-einayim'].includes(seriesPageCurrentSeries)) {
                 // Chronological (oldest first)
                 return [...episodes].sort((a, b) => {
                     const aNum = parseInt(a.episode_number) || 999;
                     const bNum = parseInt(b.episode_number) || 999;
                     return aNum - bNum;
                 });
-            } else if (['shmiras-halashon', 'shabbos', 'mesilas-yesharim'].includes(currentSeries)) {
+            } else if (['shmiras-halashon', 'shabbos', 'mesilas-yesharim'].includes(seriesPageCurrentSeries)) {
                 // Reverse chronological (newest first)
                 return [...episodes].sort((a, b) => {
                     const dateA = new Date(a.date);
@@ -372,7 +372,7 @@ function loadRelatedSeries() {
 
     // Get other series (excluding current)
     const otherSeries = Object.keys(allSeriesData)
-        .filter(seriesName => seriesName !== currentSeries)
+        .filter(seriesName => seriesName !== seriesPageCurrentSeries)
         .slice(0, 3); // Show max 3 related series
 
     container.innerHTML = '';
@@ -562,7 +562,7 @@ function getSeriesImage(seriesName) {
         'shmiras-einayim': 'shmiras-einayim.png',
     };
 
-    return imageMap[seriesName] || 'background2.png';
+    return imageMap[seriesName] || 'images/profile_2.jpg';
 }
 
 /**
