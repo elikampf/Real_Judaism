@@ -503,13 +503,7 @@ function preloadCriticalResources() {
         document.head.appendChild(link);
     }
 
-    // Preload episode data JSON
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'fetch';
-    link.href = 'data/episodes.json?v=' + Date.now();
-    link.crossOrigin = 'anonymous';
-    document.head.appendChild(link);
+    // Episode data is now loaded from individual series files as needed
 }
 
 /**

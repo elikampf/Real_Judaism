@@ -55,20 +55,20 @@ function parseDate(dateStr) {
 async function loadSeriesData() {
     try {
         showLoadingState();
-        
-        const response = await fetch('../data/episodes.json?v=' + Date.now());
+
+        // Load from specific series JSON file
+        const seriesFileName = `${seriesPageCurrentSeries}_episodes.json`;
+        const response = await fetch(`../data/${seriesFileName}?v=` + Date.now());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const episodeData = await response.json();
-        allSeriesData = episodeData.series;
+        seriesEpisodes = episodeData.episodes || [];
 
-        if (!allSeriesData[seriesPageCurrentSeries]) {
-            throw new Error(`Series "${seriesPageCurrentSeries}" not found`);
+        if (!seriesEpisodes || seriesEpisodes.length === 0) {
+            throw new Error(`No episodes found for series "${seriesPageCurrentSeries}"`);
         }
-
-        seriesEpisodes = allSeriesData[seriesPageCurrentSeries].episodes || [];
         
         // Sort episodes by date (newest first)
         seriesEpisodes.sort((a, b) => {
@@ -384,22 +384,37 @@ function filterEpisodes(episodes, filter) {
 /**
  * Load related series
  */
-function loadRelatedSeries() {
+async function loadRelatedSeries() {
     const container = document.getElementById('related-series');
-    if (!container || !allSeriesData) return;
+    if (!container) return;
 
-    // Get other series (excluding current)
-    const otherSeries = Object.keys(allSeriesData)
-        .filter(seriesName => seriesName !== seriesPageCurrentSeries)
-        .slice(0, 3); // Show max 3 related series
+    // Define related series based on current series
+    const relatedSeriesMap = {
+        'dating': ['shalom-bayis', 'mesilas-yesharim', 'shmiras-einayim'],
+        'shalom-bayis': ['dating', 'mesilas-yesharim', 'shmiras-halashon'],
+        'shmiras-einayim': ['mesilas-yesharim', 'shmiras-halashon', 'shabbos'],
+        'shmiras-halashon': ['mesilas-yesharim', 'shabbos', 'shalom-bayis'],
+        'shabbos': ['mesilas-yesharim', 'shmiras-halashon', 'shmiras-einayim'],
+        'mesilas-yesharim': ['shabbos', 'shmiras-halashon', 'shalom-bayis']
+    };
 
+    const relatedSeries = relatedSeriesMap[seriesPageCurrentSeries] || ['dating', 'shalom-bayis', 'mesilas-yesharim'];
     container.innerHTML = '';
 
-    otherSeries.forEach(seriesName => {
-        const seriesInfo = allSeriesData[seriesName];
-        const relatedCard = createRelatedSeriesCard(seriesName, seriesInfo);
-        container.appendChild(relatedCard);
-    });
+    for (const seriesName of relatedSeries.slice(0, 3)) {
+        try {
+            const seriesFileName = `${seriesName}_episodes.json`;
+            const response = await fetch(`../data/${seriesFileName}?v=` + Date.now());
+            if (response.ok) {
+                const seriesData = await response.json();
+                const episodeCount = seriesData.episodes ? seriesData.episodes.length : 0;
+                const relatedCard = createRelatedSeriesCard(seriesName, { episodes: [], episode_count: episodeCount });
+                container.appendChild(relatedCard);
+            }
+        } catch (error) {
+            console.warn(`Could not load related series ${seriesName}:`, error);
+        }
+    }
 
     // Initialize lazy loading after adding cards
     if (typeof initializeLazyLoading === 'function') {

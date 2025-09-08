@@ -18,7 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const episodesGrid = document.getElementById('episodesGrid');
     const seriesGrid = document.getElementById('seriesGrid');
 
-    if (episodesGrid || seriesGrid) {
+    // Don't load episodes on the all podcasts page (podcast.html)
+    // since it has manual accordions and we don't want episode dumps
+    const isPodcastPage = window.location.pathname.includes('podcast.html');
+
+    if ((episodesGrid || seriesGrid) && !isPodcastPage) {
         loadEpisodeData();
         initializeSeriesFilters();
         initializeHomepageEpisodeCounts();

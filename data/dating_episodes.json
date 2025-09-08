@@ -1,0 +1,94 @@
+﻿{
+    "episodes":  [
+                     {
+                         "title":  "Ep8. Series Finale - Introduction to Shalom Bayis",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "29-09-24",
+                         "length":  "23.94 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/0sNW7o9gLiGzcETdplthPd",
+                         "series":  "dating",
+                         "episode_number":  8,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep7. Engagement",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "13-09-24",
+                         "length":  "27.1 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/5K8bMELOl9VmCHAEiLcuci",
+                         "series":  "dating",
+                         "episode_number":  7,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep6. The Second Date and Beyond",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "24-08-24",
+                         "length":  "34.63 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/0GZycq2uL6vgG9LqP3hn6t",
+                         "series":  "dating",
+                         "episode_number":  6,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep5. The First Date",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "07-08-24",
+                         "length":  "26.92 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/59gouKw88Fl5KJtiwjZvYA",
+                         "series":  "dating",
+                         "episode_number":  5,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep4. Representing Yourself and Checking Out the Other",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "12-07-24",
+                         "length":  "34.37 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/2wNAzsqgF0xe5mt0IsRaYJ",
+                         "series":  "dating",
+                         "episode_number":  4,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep3. Priorities  In Marriage",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "29-06-24",
+                         "length":  "32.94 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/39N0d59VLiuefVv5tylyNu",
+                         "series":  "dating",
+                         "episode_number":  3,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep2. Building Up Yourself",
+                         "description":  "Understand why the Shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "21-06-24",
+                         "length":  "36.25 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/68y5Tk8vNMSun3x8d1q3hp",
+                         "series":  "dating",
+                         "episode_number":  2,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Dating Shiur 1",
+                         "description":  "Understand why the shidduch system is the best way to find your Bashert. A step by step approach to dating for marriage.",
+                         "date":  "07-06-24",
+                         "length":  "35.03 min",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/3w86qFYdnTVzyagAQi5L1s",
+                         "series":  "dating",
+                         "episode_number":  1,
+                         "file_path":  "data\\Dating_episodes.csv"
+                     },
+                     {
+                         "title":  "Ep1. Dating Shiur",
+                         "description":  "Understand why the shidduch system is the best way to find your Bashert. A step by step approach to dating\u0026nbsp;for marriage.\n]]\u003e",
+                         "date":  "07-06-24",
+                         "length":  "00:35:02",
+                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/95634081",
+                         "series":  "dating",
+                         "episode_number":  1,
+                         "file_path":  "data/dating_episodes.csv"
+                     }
+                 ]
+}
