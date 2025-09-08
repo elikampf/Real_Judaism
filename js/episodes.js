@@ -7,14 +7,22 @@
 let allEpisodes = [];
 let episodeData = null;
 let currentSeries = 'all';
+let episodesPerPage = 12; // Show 12 episodes initially
+let currentPage = 1;
 
 /**
  * Initialize episodes functionality
  */
 document.addEventListener('DOMContentLoaded', function() {
-    loadEpisodeData();
-    initializeSeriesFilters();
-    initializeHomepageEpisodeCounts();
+    // Only initialize if we're on a page that should display episodes
+    const episodesGrid = document.getElementById('episodesGrid');
+    const seriesGrid = document.getElementById('seriesGrid');
+
+    if (episodesGrid || seriesGrid) {
+        loadEpisodeData();
+        initializeSeriesFilters();
+        initializeHomepageEpisodeCounts();
+    }
 });
 
 /**
@@ -24,7 +32,21 @@ async function loadEpisodeData() {
     try {
         // Determine the correct path to episodes.json based on current location
         const currentPath = window.location.pathname;
-        const dataPath = currentPath.includes('/hebrew-home/') ? '../data/episodes.json' : 'data/episodes.json';
+        let dataPath;
+
+        if (currentPath.includes('/hebrew-home/')) {
+            dataPath = '../data/episodes.json';
+        } else if (currentPath.includes('/series/') || currentPath.includes('/podcast.html')) {
+            dataPath = '../data/episodes.json';
+        } else if (currentPath === '/' || currentPath.endsWith('/index.html')) {
+            dataPath = 'data/episodes.json';
+        } else {
+            dataPath = 'data/episodes.json';
+        }
+
+        console.log('Loading episodes from:', dataPath);
+        console.log('Current path:', currentPath);
+
         const response = await fetch(dataPath);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -33,36 +55,68 @@ async function loadEpisodeData() {
         episodeData = await response.json();
         allEpisodes = episodeData.episodes || [];
 
+        console.log(`✅ Loaded ${allEpisodes.length} episodes from ${episodeData.series_count || Object.keys(episodeData.series || {}).length} series`);
+
         // Display episodes and series
         displayEpisodes(allEpisodes);
         displaySeries();
 
-        console.log(`Loaded ${allEpisodes.length} episodes from ${episodeData.series_count} series`);
+        // Update episode counts on the page
+        updateEpisodeCounts();
+
+        // Update homepage series card images
+        updateHomepageImages();
 
     } catch (error) {
-        console.error('Error loading episode data:', error);
+        console.error('❌ Error loading episode data:', error);
+        console.error('Error details:', error.message);
         displayError('Failed to load episode data. Please try again later.');
     }
 }
 
 /**
- * Display episodes in the grid
+ * Display episodes in the grid with pagination
  */
-function displayEpisodes(episodes) {
-    const container = document.getElementById('episodesGrid');
+function displayEpisodes(episodes, resetPage = true) {
+    // Try different container IDs
+    let container = document.getElementById('episodesGrid') ||
+                   document.getElementById('episodes-grid');
     if (!container) return;
 
-    container.innerHTML = '';
+    if (resetPage) {
+        currentPage = 1;
+    }
+
+    // Clear container if resetting page
+    if (resetPage) {
+        container.innerHTML = '';
+    }
 
     if (episodes.length === 0) {
         container.innerHTML = '<p class="no-episodes">No episodes found for this series.</p>';
         return;
     }
 
-    episodes.forEach((episode, index) => {
-        const episodeCard = createEpisodeCard(episode, index + 1);
+    // Calculate episodes to show
+    const startIndex = 0;
+    const endIndex = currentPage * episodesPerPage;
+    const episodesToShow = episodes.slice(startIndex, endIndex);
+
+    // Only add new episodes if not resetting
+    const startFrom = resetPage ? 0 : (currentPage - 1) * episodesPerPage;
+
+    episodesToShow.slice(startFrom).forEach((episode, index) => {
+        const episodeCard = createEpisodeCard(episode, startFrom + index + 1);
         container.appendChild(episodeCard);
     });
+
+    // Add Load More button if there are more episodes
+    if (episodes.length > endIndex) {
+        addLoadMoreButton(episodes.length - endIndex);
+    } else if (document.querySelector('.load-more-btn')) {
+        // Remove load more button if no more episodes
+        document.querySelector('.load-more-btn').remove();
+    }
 }
 
 /**
@@ -256,6 +310,48 @@ function addEpisodeCountToCard(card, count) {
 }
 
 /**
+ * Add Load More button
+ */
+function addLoadMoreButton(remainingCount) {
+    // Remove existing load more button
+    const existingButton = document.querySelector('.load-more-btn');
+    if (existingButton) {
+        existingButton.remove();
+    }
+
+    // Try different container IDs
+    const container = document.getElementById('episodesGrid') ||
+                     document.getElementById('episodes-grid');
+    if (!container) return;
+
+    const loadMoreContainer = document.createElement('div');
+    loadMoreContainer.className = 'load-more-container';
+    loadMoreContainer.innerHTML = `
+        <button class="load-more-btn" onclick="loadMoreEpisodes()">
+            Load More Episodes (${remainingCount} remaining)
+        </button>
+    `;
+
+    container.appendChild(loadMoreContainer);
+}
+
+/**
+ * Load more episodes
+ */
+function loadMoreEpisodes() {
+    currentPage++;
+
+    let episodesToLoad;
+    if (currentSeries === 'all') {
+        episodesToLoad = allEpisodes;
+    } else {
+        episodesToLoad = episodeData.series[currentSeries]?.episodes || [];
+    }
+
+    displayEpisodes(episodesToLoad, false); // false = don't reset page
+}
+
+/**
  * Filter episodes by series
  */
 function filterBySeries(seriesName) {
@@ -279,7 +375,7 @@ function filterBySeries(seriesName) {
         filteredEpisodes = episodeData.series[seriesName]?.episodes || [];
     }
 
-    displayEpisodes(filteredEpisodes);
+    displayEpisodes(filteredEpisodes, true); // true = reset page
 }
 
 /**
@@ -365,15 +461,86 @@ function playEpisode(audioUrl) {
 }
 
 /**
+ * Update episode counts on the page
+ */
+function updateEpisodeCounts() {
+    if (!episodeData || !episodeData.series) return;
+
+    // Update accordion episode counts on podcast page
+    Object.keys(episodeData.series).forEach(seriesName => {
+        const series = episodeData.series[seriesName];
+        const episodeCount = series.episodes ? series.episodes.length : (series.episode_count || 0);
+
+        // Update accordion headers with dynamic counts
+        updateAccordionCount(seriesName, episodeCount);
+    });
+}
+
+/**
+ * Update homepage series card images dynamically
+ */
+function updateHomepageImages() {
+    // Only run on homepage
+    if (!document.querySelector('.hero-section')) return;
+
+    const seriesCards = document.querySelectorAll('.series-card-main[data-series]');
+    seriesCards.forEach(card => {
+        const seriesName = card.getAttribute('data-series');
+        if (seriesName) {
+            const imageElement = card.querySelector('.card-image-main');
+            if (imageElement) {
+                const correctImagePath = getSeriesImage(seriesName);
+                if (correctImagePath && imageElement.src !== correctImagePath) {
+                    // Update to absolute path for homepage
+                    const absolutePath = window.location.origin + '/' + correctImagePath;
+                    imageElement.src = absolutePath;
+                    console.log(`✅ Updated ${seriesName} image to: ${absolutePath}`);
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Update accordion episode count for a specific series
+ */
+function updateAccordionCount(seriesName, count) {
+    // Map series names to accordion selectors
+    const seriesMap = {
+        'dating': '.accordion-item[data-category="relationships"] .accordion-episodes',
+        'shalom-bayis': '.accordion-item[data-category="marriage"] .accordion-episodes',
+        'shmiras-einayim': '.accordion-item[data-category="purity"] .accordion-episodes',
+        'shmiras-halashon': '.accordion-item[data-category="speech"] .accordion-episodes',
+        'shabbos': '.accordion-item[data-category="shabbos"] .accordion-episodes',
+        'mesilas-yesharim': '.accordion-item[data-category="character"] .accordion-episodes'
+    };
+
+    const selector = seriesMap[seriesName];
+    if (selector) {
+        const countElement = document.querySelector(selector);
+        if (countElement) {
+            countElement.textContent = `${count} episodes`;
+            console.log(`✅ Updated ${seriesName} count to ${count}`);
+        }
+    }
+}
+
+/**
  * Display error message
  */
 function displayError(message) {
-    const container = document.getElementById('episodesGrid') || document.getElementById('seriesGrid');
+    // Try different container IDs
+    const container = document.getElementById('episodesGrid') ||
+                     document.getElementById('episodes-grid') ||
+                     document.getElementById('seriesGrid');
     if (container) {
-        container.innerHTML = `<div class="error-message">${message}</div>`;
+        container.innerHTML = `<div class="error-message" style="color: red; padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 6px; margin: 1rem 0;">${message}</div>`;
+    } else {
+        console.error('Error:', message);
     }
 }
 
 // Export functions for global access
 window.filterBySeries = filterBySeries;
 window.playEpisode = playEpisode;
+window.loadMoreEpisodes = loadMoreEpisodes;

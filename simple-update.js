@@ -202,11 +202,16 @@ async function updatePodcasts(podcastName = null) {
         // Update each podcast
         for (const podcastName of podcastsToUpdate) {
             console.log(`🔍 Updating ${podcastName}...`);
+            console.log(`   📡 RSS URL: ${RSS_FEEDS[podcastName]}`);
 
             try {
                 const rssUrl = RSS_FEEDS[podcastName];
+                console.log(`   🌐 Fetching RSS feed...`);
                 const rssText = await fetchRSS(rssUrl);
+                console.log(`   📄 RSS feed loaded (${rssText.length} characters)`);
+
                 const newEpisodes = parseEpisodes(rssText, podcastName);
+                console.log(`   📊 Parsed ${newEpisodes.length} episodes from RSS`);
 
                 // Filter out existing episodes
                 const existingTitles = new Set(
@@ -216,55 +221,96 @@ async function updatePodcasts(podcastName = null) {
                 );
 
                 const actuallyNew = newEpisodes.filter(ep => !existingTitles.has(ep.title));
+                console.log(`   🎯 After filtering duplicates: ${actuallyNew.length} new episodes`);
 
                 if (actuallyNew.length > 0) {
                     console.log(`✅ Found ${actuallyNew.length} new episodes for ${podcastName}`);
                     existingData.episodes.push(...actuallyNew);
                     totalNewEpisodes += actuallyNew.length;
+
+                    // Initialize series if it doesn't exist
+                    if (!existingData.series[podcastName]) {
+                        existingData.series[podcastName] = { episodes: [] };
+                    }
+                    existingData.series[podcastName].episodes.push(...actuallyNew);
                 } else {
                     console.log(`ℹ️ No new episodes for ${podcastName}`);
+
+                    // Still initialize series structure if it doesn't exist
+                    if (!existingData.series[podcastName]) {
+                        existingData.series[podcastName] = { episodes: [] };
+                    }
                 }
 
             } catch (error) {
                 console.log(`❌ Error updating ${podcastName}: ${error.message}`);
+                console.log(`   🔍 Error details:`, error);
+
+                // Still initialize series structure even on error
+                if (!existingData.series[podcastName]) {
+                    existingData.series[podcastName] = { episodes: [] };
+                }
             }
         }
 
         console.log(`\n📊 TOTAL: ${totalNewEpisodes} new episodes found`);
 
+        // Always save the data (even if no new episodes) to ensure proper structure
+        console.log(`\n💾 Saving episode data...`);
+
+        // Sort episodes by date (newest first)
+        existingData.episodes.sort((a, b) => {
+            const dateA = new Date(a.date.split('-').reverse().join('-'));
+            const dateB = new Date(b.date.split('-').reverse().join('-'));
+            return dateB - dateA;
+        });
+
+        // Update metadata
+        existingData.last_updated = new Date().toISOString();
+        existingData.series_count = Object.keys(RSS_FEEDS).length;
+
+        // Ensure all series are properly initialized
+        Object.keys(RSS_FEEDS).forEach(seriesName => {
+            if (!existingData.series[seriesName]) {
+                existingData.series[seriesName] = { episodes: [] };
+            }
+            // Update episode count for each series
+            existingData.series[seriesName].episode_count = existingData.series[seriesName].episodes.length;
+        });
+
+        // Save updated data
+        const dataDir = path.join(__dirname, 'data');
+        await fs.mkdir(dataDir, { recursive: true });
+
+        // Save in the format the website expects
+        const websiteFormat = {
+            episodes: existingData.episodes,
+            series: existingData.series,
+            series_count: existingData.series_count,
+            last_updated: existingData.last_updated
+        };
+
+        await fs.writeFile(
+            path.join(dataDir, 'episodes.json'),
+            JSON.stringify(websiteFormat, null, 2),
+            'utf8'
+        );
+
+        console.log('✅ Episodes data saved successfully!');
+        console.log(`📊 Total episodes: ${existingData.episodes.length}`);
+        console.log(`🎙️ Total series: ${Object.keys(existingData.series).length}`);
+
         if (totalNewEpisodes > 0) {
-            // Sort episodes by date (newest first)
-            existingData.episodes.sort((a, b) => {
-                const dateA = new Date(a.date.split('-').reverse().join('-'));
-                const dateB = new Date(b.date.split('-').reverse().join('-'));
-                return dateB - dateA;
-            });
-
-            // Update metadata
-            existingData.last_updated = new Date().toISOString();
-            existingData.series_count = Object.keys(RSS_FEEDS).length;
-
-            // Save updated data
-            const dataDir = path.join(__dirname, 'data');
-            await fs.mkdir(dataDir, { recursive: true });
-            await fs.writeFile(
-                path.join(dataDir, 'episodes.json'),
-                JSON.stringify(existingData, null, 2),
-                'utf8'
-            );
-
-            console.log('💾 Episodes data saved successfully!');
-            console.log('\n🚀 NEXT STEPS:');
-            console.log('1. Check data/episodes.json to see the updates');
-            console.log('2. Commit and push to GitHub:');
-            console.log('   git add data/episodes.json');
-            console.log('   git commit -m "Update podcast episodes"');
-            console.log('   git push origin main');
-            console.log('3. Netlify will rebuild your site automatically');
-
-        } else {
-            console.log('ℹ️ No updates needed - all podcasts are current');
+            console.log(`✨ New episodes added: ${totalNewEpisodes}`);
         }
+
+        console.log('\n🚀 NEXT STEPS:');
+        console.log('1. Check data/episodes.json to verify the updates');
+        console.log('2. Commit and push to GitHub:');
+        console.log('   git add data/episodes.json');
+        console.log('   git commit -m "Update podcast episodes"');
+        console.log('   git push origin main');
+        console.log('3. Your website will automatically show the updated episodes!');
 
     } catch (error) {
         console.error('❌ Fatal error:', error.message);

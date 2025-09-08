@@ -189,8 +189,9 @@
             testDiv.innerHTML = `
                 <p>📍 Current URL path: <code>${currentPath}</code></p>
                 <p>🎯 Resolved data path: <code>${dataPath}</code></p>
-                <p>🌐 Full URL: <code>${window.location.origin}${dataPath}</code></p>
+                <p>🌐 Full URL: <code>${window.location.origin}/${dataPath}</code></p>
                 <p>💡 Test this URL: <a href="${dataPath}" target="_blank">${dataPath}</a></p>
+                <p>🔍 Check if file exists: <a href="${dataPath}" target="_blank">Open JSON file</a></p>
             `;
         }
 
