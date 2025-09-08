@@ -897,7 +897,7 @@
     font-size: var(--text-lg);
     transition: transform var(--transition-normal);
 }
-.blog-nav-btn.prev-btn:hover .btn-icon { transform: translateX(-3px) scaleX(-1); }
+.blog-nav-btn.prev-btn:hover .btn-icon { transform: translateX(-3px); }
 .blog-nav-btn.next-btn:hover .btn-icon { transform: translateX(3px); }
 
 /* Mobile Responsive */
