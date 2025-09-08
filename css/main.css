@@ -900,6 +900,34 @@
 .blog-nav-btn.prev-btn:hover .btn-icon { transform: translateX(-3px); }
 .blog-nav-btn.next-btn:hover .btn-icon { transform: translateX(3px); }
 
+/* Monthly Blog Announcement */
+.monthly-blog-announcement {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-bottom: var(--space-12);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.announcement-content {
+    text-align: center;
+    color: var(--color-white);
+}
+
+.announcement-title {
+    font: 600 var(--text-xl) var(--font-family);
+    margin-bottom: var(--space-4);
+    color: var(--color-white);
+}
+
+.announcement-text {
+    font: 400 var(--text-base) var(--font-family);
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+}
+
 /* Mobile Responsive */
 @media (max-width: 767px) {
     .article-header { padding: var(--space-16) 0 var(--space-8); }
