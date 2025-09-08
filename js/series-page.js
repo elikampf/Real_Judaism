@@ -41,6 +41,15 @@ async function initializeSeriesPage() {
 }
 
 /**
+ * Parse DD-MM-YY date format to Date object
+ */
+function parseDate(dateStr) {
+    if (!dateStr) return new Date(0);
+    const [day, month, year] = dateStr.split('-');
+    return new Date(2000 + parseInt(year), parseInt(month) - 1, parseInt(day));
+}
+
+/**
  * Load series data from JSON
  */
 async function loadSeriesData() {
@@ -60,6 +69,13 @@ async function loadSeriesData() {
         }
 
         seriesEpisodes = allSeriesData[seriesPageCurrentSeries].episodes || [];
+        
+        // Sort episodes by date (newest first)
+        seriesEpisodes.sort((a, b) => {
+            const dateA = parseDate(a.date);
+            const dateB = parseDate(b.date);
+            return dateB - dateA; // Newest first
+        });
         
         // Update page with series data
         updateSeriesInfo();
