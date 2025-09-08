@@ -1,0 +1,42 @@
+[build]
+  # Build command (not needed for static site)
+  command = "echo 'Static site - no build needed'"
+
+  # Directory to publish
+  publish = "."
+
+  # Include all files and directories
+  ignore = false
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = false
+
+[build.processing.js]
+  bundle = true
+  minify = false
+
+[build.processing.html]
+  pretty_urls = true
+
+# Include data directory explicitly
+[[redirects]]
+  from = "/data/*"
+  to = "/data/:splat"
+  status = 200
+
+# Ensure JSON files are served with correct MIME type
+[[headers]]
+  for = "/data/*.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "public, max-age=300"
+
+# Allow CORS for API calls if needed
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"

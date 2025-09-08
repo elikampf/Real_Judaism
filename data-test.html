@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Access Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        .test { margin: 1rem 0; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        pre { background: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Data Access Test</h1>
+    <p>Testing if the episodes.json file is accessible via web requests.</p>
+
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        async function testDataAccess() {
+            const tests = [
+                { name: 'Direct path', url: 'data/episodes.json' },
+                { name: 'Absolute path', url: '/data/episodes.json' },
+                { name: 'Full URL', url: window.location.origin + '/data/episodes.json' },
+                { name: 'Root relative', url: './data/episodes.json' }
+            ];
+
+            for (const test of tests) {
+                const div = document.createElement('div');
+                div.className = 'test';
+                div.innerHTML = `<h3>Testing: ${test.name}</h3><p>URL: <code>${test.url}</code></p><p>Status: Testing...</p>`;
+
+                results.appendChild(div);
+
+                try {
+                    const response = await fetch(test.url);
+                    const statusText = div.querySelector('p:last-child');
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        statusText.innerHTML = `✅ SUCCESS: Found ${data.episodes ? data.episodes.length : 'unknown'} episodes`;
+                        div.classList.add('success');
+                    } else {
+                        statusText.innerHTML = `❌ FAILED: HTTP ${response.status} - ${response.statusText}`;
+                        div.classList.add('error');
+                    }
+                } catch (error) {
+                    const statusText = div.querySelector('p:last-child');
+                    statusText.innerHTML = `❌ ERROR: ${error.message}`;
+                    div.classList.add('error');
+                }
+            }
+        }
+
+        // Run test on page load
+        document.addEventListener('DOMContentLoaded', testDataAccess);
+    </script>
+</body>
+</html>

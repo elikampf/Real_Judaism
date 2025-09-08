@@ -3,12 +3,12 @@
  * Handles loading and displaying podcast episodes from JSON data
  */
 
-// Global variables
-let allEpisodes = [];
-let episodeData = null;
-let currentSeries = 'all';
+// Global variables (renamed to avoid conflicts with series-page.js)
+let episodesAllEpisodes = [];
+let episodesEpisodeData = null;
+let episodesCurrentSeries = 'all';
 let episodesPerPage = 12; // Show 12 episodes initially
-let currentPage = 1;
+let episodesCurrentPage = 1;
 
 /**
  * Initialize episodes functionality
@@ -34,31 +34,37 @@ async function loadEpisodeData() {
         const currentPath = window.location.pathname;
         let dataPath;
 
-        if (currentPath.includes('/hebrew-home/')) {
-            dataPath = '../data/episodes.json';
-        } else if (currentPath.includes('/series/') || currentPath.includes('/podcast.html')) {
-            dataPath = '../data/episodes.json';
-        } else if (currentPath === '/' || currentPath.endsWith('/index.html')) {
-            dataPath = 'data/episodes.json';
+        // For deployed website (Netlify), always use absolute path from root
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            dataPath = '/data/episodes.json';
         } else {
-            dataPath = 'data/episodes.json';
+            // For local development
+            if (currentPath.includes('/hebrew-home/')) {
+                dataPath = '../data/episodes.json';
+            } else if (currentPath.includes('/series/') || currentPath.includes('/podcast.html')) {
+                dataPath = '../data/episodes.json';
+            } else {
+                dataPath = 'data/episodes.json';
+            }
         }
 
-        console.log('Loading episodes from:', dataPath);
-        console.log('Current path:', currentPath);
+        console.log('🌐 Environment:', window.location.hostname === 'localhost' ? 'Local' : 'Production');
+        console.log('📍 Current path:', currentPath);
+        console.log('🎯 Data path:', dataPath);
+        console.log('🔗 Full URL:', window.location.origin + dataPath);
 
         const response = await fetch(dataPath);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        episodeData = await response.json();
-        allEpisodes = episodeData.episodes || [];
+        episodesEpisodeData = await response.json();
+        episodesAllEpisodes = episodesEpisodeData.episodes || [];
 
-        console.log(`✅ Loaded ${allEpisodes.length} episodes from ${episodeData.series_count || Object.keys(episodeData.series || {}).length} series`);
+        console.log(`✅ Loaded ${episodesAllEpisodes.length} episodes from ${episodesEpisodeData.series_count || Object.keys(episodesEpisodeData.series || {}).length} series`);
 
         // Display episodes and series
-        displayEpisodes(allEpisodes);
+        displayEpisodes(episodesAllEpisodes);
         displaySeries();
 
         // Update episode counts on the page
@@ -84,7 +90,7 @@ function displayEpisodes(episodes, resetPage = true) {
     if (!container) return;
 
     if (resetPage) {
-        currentPage = 1;
+        episodesCurrentPage = 1;
     }
 
     // Clear container if resetting page
@@ -99,11 +105,11 @@ function displayEpisodes(episodes, resetPage = true) {
 
     // Calculate episodes to show
     const startIndex = 0;
-    const endIndex = currentPage * episodesPerPage;
+    const endIndex = episodesCurrentPage * episodesPerPage;
     const episodesToShow = episodes.slice(startIndex, endIndex);
 
     // Only add new episodes if not resetting
-    const startFrom = resetPage ? 0 : (currentPage - 1) * episodesPerPage;
+    const startFrom = resetPage ? 0 : (episodesCurrentPage - 1) * episodesPerPage;
 
     episodesToShow.slice(startFrom).forEach((episode, index) => {
         const episodeCard = createEpisodeCard(episode, startFrom + index + 1);
@@ -163,12 +169,12 @@ function createEpisodeCard(episode, episodeNumber) {
  */
 function displaySeries() {
     const container = document.getElementById('seriesGrid');
-    if (!container || !episodeData) return;
+    if (!container || !episodesEpisodeData) return;
 
     container.innerHTML = '';
 
-    Object.keys(episodeData.series).forEach(seriesName => {
-        const seriesInfo = episodeData.series[seriesName];
+    Object.keys(episodesEpisodeData.series).forEach(seriesName => {
+        const seriesInfo = episodesEpisodeData.series[seriesName];
         const seriesCard = createSeriesCard(seriesName, seriesInfo.episodes);
         container.appendChild(seriesCard);
     });
@@ -216,12 +222,12 @@ function createSeriesCard(seriesName, episodes) {
 function initializeSeriesFilters() {
     // Add filter buttons if they don't exist
     const seriesSection = document.querySelector('.series-section');
-    if (seriesSection && !document.querySelector('.series-filters') && episodeData) {
+    if (seriesSection && !document.querySelector('.series-filters') && episodesEpisodeData) {
         const filterContainer = document.createElement('div');
         filterContainer.className = 'series-filters';
         let filterButtons = `<button class="filter-btn active" onclick="filterBySeries('all')">All Series</button>`;
 
-        Object.keys(episodeData.series).forEach(seriesName => {
+        Object.keys(episodesEpisodeData.series).forEach(seriesName => {
             const displayName = seriesName.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
             filterButtons += `<button class="filter-btn" onclick="filterBySeries('${seriesName}')">${displayName}</button>`;
         });
@@ -238,7 +244,7 @@ function initializeHomepageEpisodeCounts() {
     // Only run on homepage
     if (!document.querySelector('.series-showcase')) return;
 
-    if (!episodeData) {
+    if (!episodesEpisodeData) {
         // Wait for episode data to load
         setTimeout(initializeHomepageEpisodeCounts, 100);
         return;
@@ -251,13 +257,13 @@ function initializeHomepageEpisodeCounts() {
  * Update episode counts on homepage series cards
  */
 function updateHomepageEpisodeCounts() {
-    if (!episodeData) return;
+    if (!episodesEpisodeData) return;
 
     const seriesCards = document.querySelectorAll('.series-card-main');
     seriesCards.forEach(card => {
         const seriesName = getSeriesNameFromCard(card);
-        if (seriesName && episodeData.series[seriesName]) {
-            const episodeCount = episodeData.series[seriesName].episode_count || episodeData.series[seriesName].episodes.length;
+        if (seriesName && episodesEpisodeData.series[seriesName]) {
+            const episodeCount = episodesEpisodeData.series[seriesName].episode_count || episodesEpisodeData.series[seriesName].episodes.length;
             addEpisodeCountToCard(card, episodeCount);
         }
     });
@@ -339,13 +345,13 @@ function addLoadMoreButton(remainingCount) {
  * Load more episodes
  */
 function loadMoreEpisodes() {
-    currentPage++;
+    episodesCurrentPage++;
 
     let episodesToLoad;
-    if (currentSeries === 'all') {
-        episodesToLoad = allEpisodes;
+    if (episodesCurrentSeries === 'all') {
+        episodesToLoad = episodesAllEpisodes;
     } else {
-        episodesToLoad = episodeData.series[currentSeries]?.episodes || [];
+        episodesToLoad = episodesEpisodeData.series[episodesCurrentSeries]?.episodes || [];
     }
 
     displayEpisodes(episodesToLoad, false); // false = don't reset page
@@ -355,7 +361,7 @@ function loadMoreEpisodes() {
  * Filter episodes by series
  */
 function filterBySeries(seriesName) {
-    currentSeries = seriesName;
+    episodesCurrentSeries = seriesName;
 
     // Update filter button states
     const filterButtons = document.querySelectorAll('.filter-btn');
@@ -370,9 +376,9 @@ function filterBySeries(seriesName) {
     // Filter and display episodes
     let filteredEpisodes;
     if (seriesName === 'all') {
-        filteredEpisodes = allEpisodes;
+        filteredEpisodes = episodesAllEpisodes;
     } else {
-        filteredEpisodes = episodeData.series[seriesName]?.episodes || [];
+        filteredEpisodes = episodesEpisodeData.series[seriesName]?.episodes || [];
     }
 
     displayEpisodes(filteredEpisodes, true); // true = reset page
@@ -422,7 +428,14 @@ function getSeriesImage(seriesName) {
         'shalom-bayis-hebrew': 'images/shalom-bayis-heb.png'
     };
 
-    return imageMap[seriesName] || 'images/background2.png';
+    const imagePath = imageMap[seriesName] || 'images/background2.png';
+
+    // For production (deployed), ensure absolute paths
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        return '/' + imagePath;
+    }
+
+    return imagePath;
 }
 
 /**
@@ -464,11 +477,11 @@ function playEpisode(audioUrl) {
  * Update episode counts on the page
  */
 function updateEpisodeCounts() {
-    if (!episodeData || !episodeData.series) return;
+    if (!episodesEpisodeData || !episodesEpisodeData.series) return;
 
     // Update accordion episode counts on podcast page
-    Object.keys(episodeData.series).forEach(seriesName => {
-        const series = episodeData.series[seriesName];
+    Object.keys(episodesEpisodeData.series).forEach(seriesName => {
+        const series = episodesEpisodeData.series[seriesName];
         const episodeCount = series.episodes ? series.episodes.length : (series.episode_count || 0);
 
         // Update accordion headers with dynamic counts
@@ -486,7 +499,7 @@ function updateHomepageImages() {
     const seriesCards = document.querySelectorAll('.series-card-main[data-series]');
     seriesCards.forEach(card => {
         const seriesName = card.getAttribute('data-series');
-        if (seriesName) {
+        if (seriesName && episodesEpisodeData && episodesEpisodeData.series) {
             const imageElement = card.querySelector('.card-image-main');
             if (imageElement) {
                 const correctImagePath = getSeriesImage(seriesName);

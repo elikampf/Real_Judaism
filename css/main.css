@@ -422,8 +422,6 @@
   .justify-end{justify-content:flex-end}
   .w-full{width:100%}  .w-auto{width:auto}
     /* Accessibility */
-  .skip-link{position:absolute;top:-100px;left:-100px;background:var(--color-charcoal);color:var(--color-white);padding:var(--space-2) var(--space-4);text-decoration:none;border-radius:var(--radius-md);z-index:9999;font-weight:500;opacity:0;transform:translateY(-20px);transition:all var(--transition-fast)}
-  .skip-link:focus{top:6px;left:6px;opacity:1;transform:translateY(0);outline:2px solid var(--color-primary);outline-offset:2px}
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   @supports selector(:focus-visible){.btn-primary:focus,.btn-secondary:focus,.input:focus,.textarea:focus,.select:focus,.nav-link:focus,.text-link:focus{outline:none}.btn-primary:focus-visible,.btn-secondary:focus-visible,.input:focus-visible,.textarea:focus-visible,.select:focus-visible,.nav-link:focus-visible,.text-link:focus-visible{outline:2px solid var(--color-primary);outline-offset:2px}}
   @media (prefers-reduced-motion:reduce){*,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.hero-bg:hover,.btn-primary:hover,.btn-secondary:hover{transform:none}}
