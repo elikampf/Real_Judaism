@@ -43,7 +43,7 @@ async function loadEpisodeData() {
         console.log('Loading episodes from:', dataPath);
         console.log('Current path:', currentPath);
 
-        const response = await fetch(dataPath);
+        const response = await fetch(dataPath + '?v=' + Date.now());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

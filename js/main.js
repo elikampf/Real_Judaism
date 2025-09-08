@@ -507,7 +507,7 @@ function preloadCriticalResources() {
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'fetch';
-    link.href = 'data/episodes.json';
+    link.href = 'data/episodes.json?v=' + Date.now();
     link.crossOrigin = 'anonymous';
     document.head.appendChild(link);
 }

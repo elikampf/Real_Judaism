@@ -46,7 +46,7 @@ async function loadSeriesData() {
     try {
         showLoadingState();
         
-        const response = await fetch('../data/episodes.json');
+        const response = await fetch('../data/episodes.json?v=' + Date.now());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
