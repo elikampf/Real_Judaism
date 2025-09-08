@@ -37,6 +37,7 @@ async function initializeSeriesPage() {
     initializeEpisodeFilters();
     initializeScrollToEpisodes();
     initializeLazyLoadingForSeries();
+    initializeLoadMoreButton();
 }
 
 /**
@@ -127,11 +128,12 @@ function displayEpisodes() {
     });
 
     // Show/hide load more button
-    if (loadMoreContainer) {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
         if (episodesToShow.length < filteredEpisodes.length) {
-            loadMoreContainer.style.display = 'block';
+            loadMoreBtn.style.display = 'block';
         } else {
-            loadMoreContainer.style.display = 'none';
+            loadMoreBtn.style.display = 'none';
         }
     }
 
@@ -620,6 +622,19 @@ function animateNumber(element, start, end, duration) {
     }
     
     requestAnimationFrame(updateNumber);
+}
+
+/**
+ * Initialize load more button functionality
+ */
+function initializeLoadMoreButton() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            seriesCurrentPage++;
+            displayEpisodes();
+        });
+    }
 }
 
 // Export functions for global access
