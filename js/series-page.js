@@ -8,7 +8,7 @@ let seriesPageCurrentSeries = '';
 let seriesEpisodes = [];
 let allSeriesData = {};
 let seriesCurrentPage = 1;
-const episodesPerPage = 9; // 3x3 grid on desktop
+const seriesPageEpisodesPerPage = 9; // 3x3 grid on desktop
 let currentFilter = 'all';
 
 /**
@@ -115,7 +115,7 @@ function displayEpisodes() {
     }
 
     // Calculate episodes to show
-    const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * episodesPerPage);
+    const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
     
     // Clear container
     container.innerHTML = '';
