@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Judaism - הבית הישראלי</title>
+    <meta name="description" content="הדרכה מעשית ואותנטית, מבוססת תורה ופסיכולוגיה, שנוצרה במיוחד עבור הקהל בישראל. תוכן מקורי בעברית בנושאי שלום בית, שמירת עיניים, ועוד.">
+    <meta name="keywords" content="יהדות, שלום בית, שמירת עיניים, תורה, הדרכה רוחנית, הרב ארי קלפר, יהדות מעשית">
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Google Analytics 4 -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        // Check for cookie consent before enabling GA
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('cookie-consent');
+            if (consent === 'accepted') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_features': false
+                });
+            }
+        }
+
+        // Initialize GA with consent check
+        checkCookieConsent();
+
+        // Listen for consent changes
+        window.addEventListener('cookie-consent-changed', function(e) {
+            if (e.detail.consent === 'accepted') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_features': false
+                });
+            }
+        });
+    </script>
+
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/rtl.css">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Real Judaism - הבית הישראלי">
+    <meta property="og:description" content="הדרכה מעשית ואותנטית, מבוססת תורה ופסיכולוגיה, שנוצרה במיוחד עבור הקהל בישראל.">
+    <meta property="og:image" content="../images/hebrew-portal.png">
+    <meta property="og:url" content="https://real-judaism.com/hebrew-home">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="he_IL">
+</head>
+<body class="rtl">
+    <a href="#main-content" class="skip-link">דלג לתוכן המרכזי</a>
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <nav class="main-navigation">
+            <div class="nav-container">
+                <div class="nav-brand-left">
+                    <a href="index.html" class="brand-link">
+                        <span class="tagline">יהדות אמיתית</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">אנגלית</a></li>
+                    <li><a href="index.html" class="nav-link active">דף הבית</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">פודקאסט <span class="dropdown-icon">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="series/shalom-bayis-hebrew.html" class="dropdown-link">שלום בית</a></li>
+                            <li><a href="series/shmirat-einayim-hebrew.html" class="dropdown-link">שמירת עיניים</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog-hebrew.html" class="nav-link">בלוג</a></li>
+                    <li><a href="about-hebrew.html" class="nav-link">אודות</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hebrew Section Indicator -->
+    <div class="hebrew-section-indicator">
+        <span class="hebrew-indicator-text">יהדות אמיתית</span>
+    </div>
+
+    <main class="main-content" id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section-dark hebrew-hero">
+            <div class="hero-background">
+                <img src="../images/background.png" alt="" class="hero-bg-image" aria-hidden="true">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-container container">
+                <div class="hero-content-center">
+                    <h1 class="hero-statement hebrew-statement">המסע שלך מתחיל כאן</h1>
+                    <p class="hero-description hebrew-description">הצטרפו לאלפים שכבר גילו שצמיחה רוחנית אמיתית היא לא עניין של שלמות, אלא של התקדמות. כאן תמצאו את חכמת התורה שהופכת כל התמודדות לכוח וכל אתגר לצמיחה, צעד אחר צעד.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Series Grid Section -->
+        <section class="series-showcase hebrew-series-showcase">
+            <div class="container">
+                <h2 class="section-title">סדרות הפודקאסט שלנו</h2>
+                <div class="series-grid-main hebrew-series-grid">
+                    <!-- Shalom Bayis Card -->
+                    <a href="series/shalom-bayis-hebrew.html" class="series-card-main hebrew-card">
+                        <div class="card-image-container">
+                            <img src="../images/shalom-bayis-heb.png" alt="שלום בית לגברים" class="card-image-main">
+                            <div class="card-overlay">
+                                <span class="card-play-icon">▶</span>
+                            </div>
+                        </div>
+                        <div class="card-content-main">
+                            <h3 class="card-title-main">שלום בית</h3>
+                            <p class="card-description-main">כלים מעשיים לבניית בית יציב ומלא הרמוניה, מבוססי תורה והבנה עמוקה של נפש האדם.</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Shmiras Einayim Card -->
+                    <a href="series/shmirat-einayim-hebrew.html" class="series-card-main hebrew-card">
+                        <div class="card-image-container">
+                            <img src="../images/shemiras-einayim-heb.png" alt="שמירת עיניים" class="card-image-main">
+                            <div class="card-overlay">
+                                <span class="card-play-icon">▶</span>
+                            </div>
+                        </div>
+                        <div class="card-content-main">
+                            <h3 class="card-title-main">שמירת עיניים</h3>
+                            <p class="card-description-main">התמודדות עם אתגרי הדור. הדרכה אמיתית לשמירה על קדושה וטוהר בעידן הדיגיטלי.</p>
+                        </div>
+                    </a>
+
+                    <!-- Blog Card -->
+                    <a href="blog-hebrew.html" class="series-card-main hebrew-card">
+                        <div class="card-content-main">
+                            <h3 class="card-title-main">בלוג</h3>
+                            <p class="card-description-main">כלים מעשיים והדרכה תורנית לבניית שלום בית, עבודת המידות והתמודדות עם אתגרי הדור.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-container">
+                <div class="cta-content">
+                    <h2 class="cta-title">התחילו את המסע שלכם היום</h2>
+                    <p class="cta-description">גלו כיצד חכמה יהודית עתיקה יכולה לתת לכם כלים מעשיים להתמודדות עם אתגרי החיים המודרניים.</p>
+                    <div class="cta-actions">
+                        <a href="series/shalom-bayis-hebrew.html" class="btn-primary btn-large">
+                            <span class="btn-icon">🎧</span>
+                            לסדרת שלום בית
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Right Column - About (RTL adjustment) -->
+                <div class="footer-about">
+                    <h3 class="footer-section-title">יהדות אמיתית</h3>
+                    <div class="footer-contact-info">
+                        <p class="contact-label">📧 צור קשר:</p>
+                        <p><a href="mailto:rabbiariklapper@gmail.com" class="footer-email">rabbiariklapper@gmail.com</a></p>
+                        <p class="contact-label">🛠️ תמיכה טכנית:</p>
+                        <p><a href="mailto:eli@elipodcastproductions.com" class="footer-email">eli@elipodcastproductions.com</a></p>
+                    </div>
+                </div>
+                
+                <!-- Center Column - Quick Links -->
+                <div class="footer-explore">
+                    <h4 class="footer-section-title">חקור</h4>
+                    <ul class="footer-links">
+                        <li><a href="series/shalom-bayis-hebrew.html" class="footer-link">שלום בית</a></li>
+                        <li><a href="series/shmirat-einayim-hebrew.html" class="footer-link">שמירת עיניים</a></li>
+                        <li><a href="about-hebrew.html" class="footer-link">אודות</a></li>
+                        <li><a href="#contact" class="footer-link">צור קשר</a></li>
+                        <li><a href="blog-hebrew.html" class="footer-link">בלוג</a></li>
+                    </ul>
+                </div>
+
+                <!-- Left Column - Legal & Credits (RTL adjustment) -->
+                <div class="footer-legal">
+                    <h4 class="footer-section-title">מידע</h4>
+                    <ul class="footer-links">
+                        <li><a href="../privacy-policy.html" class="footer-link">מדיניות פרטיות</a></li>
+                        <li><a href="../terms-of-service.html" class="footer-link">תנאי שימוש</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-credit-centered">עיצוב אתר ופודקאסט: <a href="https://elipodcastproductions.com" target="_blank" class="footer-credit-link" rel="noopener noreferrer"><strong>Eli Podcast Productions</strong></a></p>
+                <p>&copy; 2025 Real Judaism. כל הזכויות שמורות.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/episodes.js"></script>
+</body>
+</html>

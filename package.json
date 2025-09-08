@@ -1,0 +1,26 @@
+{
+  "name": "real-judaism-podcast-updater",
+  "version": "1.0.0",
+  "description": "Automated podcast episode updater for Real Judaism website",
+  "scripts": {
+    "update-episodes": "node scripts/update-episodes.js",
+    "test-update": "PODCAST_FILTER=all node scripts/update-episodes.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elikampf/Real_Judaism.git"
+  },
+  "keywords": [
+    "podcast",
+    "automation",
+    "rss",
+    "judaism"
+  ],
+  "author": "Real Judaism",
+  "license": "MIT"
+}

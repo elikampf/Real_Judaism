@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Podcasts - Real Judaism</title>
+    <meta name="description" content="Explore Rabbi Ari Klapper's complete collection of Torah podcasts. From dating and marriage to spiritual growth and Shabbos, discover practical Jewish wisdom for modern life.">
+    <meta name="keywords" content="Jewish podcasts, Torah podcasts, Rabbi Ari Klapper, Orthodox Judaism, spiritual growth, Jewish learning, dating, marriage, Shabbos, character development">
+
+    <!-- Google Analytics 4 -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        // Check for cookie consent before enabling GA
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('cookie-consent');
+            if (consent === 'accepted') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_features': false
+                });
+            }
+        }
+
+        // Initialize GA with consent check
+        checkCookieConsent();
+
+        // Listen for consent changes
+        window.addEventListener('cookie-consent-changed', function(e) {
+            if (e.detail.consent === 'accepted') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_features': false
+                });
+            }
+        });
+    </script>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="All Podcasts - Real Judaism">
+    <meta property="og:description" content="Explore Rabbi Ari Klapper's complete collection of Torah podcasts. From dating and marriage to spiritual growth and Shabbos, discover practical Jewish wisdom for modern life.">
+    <meta property="og:image" content="images/profile.png">
+    <meta property="og:url" content="https://real-judaism.com/podcast">
+    <meta property="og:type" content="website">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <nav class="main-navigation">
+            <div class="nav-container">
+                <div class="nav-brand-left">
+                    <a href="index.html" class="brand-link">
+                        <span class="tagline">Real Judaism</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active">Podcast <span class="dropdown-icon">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="podcast.html" class="dropdown-link active">All Podcasts</a></li>
+                            <li><a href="series/dating.html" class="dropdown-link">Dating</a></li>
+                            <li><a href="series/shalom-bayis.html" class="dropdown-link">Shalom Bayis</a></li>
+                            <li><a href="series/shemiras-einayim.html" class="dropdown-link">Shmiras Einayim</a></li>
+                            <li><a href="series/shemiras-halashon.html" class="dropdown-link">Shmiras Halashon</a></li>
+                            <li><a href="series/shabbos.html" class="dropdown-link">Shabbos Malkesa</a></li>
+                            <li><a href="series/mesilas-yesharim.html" class="dropdown-link">Mesilas Yesharim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="hebrew-home/index.html" class="nav-link hebrew-link">הבית הישראלי</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content" id="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section-dark">
+            <div class="hero-background">
+                <img src="images/background.png" alt="" class="hero-bg-image" aria-hidden="true">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-container">
+                <div class="hero-content-center">
+                    <h1 class="hero-title">Podcasts that Address Your Struggles</h1>
+                    <p class="hero-description">
+                        <br>
+                        For those tired of theoretical answers to real-life problems—comprehensive guidance covering dating, marriage, spiritual challenges, and character development that speaks to your actual experience.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Podcast Series Section -->
+        <section class="podcast-series-section">
+            <div class="container">
+                <div class="series-intro">
+                    <h2 class="section-title">Torah Podcast Series</h2>
+                    <p class="section-description">Discover practical Jewish wisdom through comprehensive series addressing real-life challenges and spiritual growth.</p>
+                </div>
+
+                <!-- Series Grid -->
+                <div class="podcast-series-grid">
+
+                    <!-- Dating Series -->
+                    <div class="accordion-item" data-category="relationships">
+                        <div class="accordion-header-wrapper">
+                            <button class="accordion-header" aria-expanded="false">
+                                <div class="accordion-summary">
+                                    <div class="accordion-meta">
+                                        <h3 class="accordion-title">Dating & Marriage Preparation</h3>
+                                        <span class="accordion-episodes">8 episodes</span>
+                                        <span class="accordion-category">Relationships</span>
+                                        <div class="platform-icons-mini">
+                                            <a href="https://open.spotify.com/show/2hCOZGVEIEJM5gvdAKPLaU?si=fbd9b89c8fd14e8f" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://podcasts.apple.com/us/podcast/dating/id1750872872" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtN" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="accordion-hook">For singles paralyzed by the shidduch system—practical Torah guidance that bridges the gap between your convictions and modern dating reality.</p>
+                                </div>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-actions">
+                                <a href="series/dating.html" class="btn-quick-listen">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-details">
+                                <div class="accordion-description">
+                                    <p>This podcast series delivers comprehensive shiurim on Jewish dating and marriage preparation, covering everything from self-knowledge and understanding the shidduch system to the three-pillar framework for evaluating compatibility. Learn how to conduct purposeful dates, maintain proper boundaries during courtship, and navigate the engagement period with spiritual clarity and emotional intelligence.</p>
+                                </div>
+                                <div class="accordion-target">
+                                    <h4>For Jewish young adults (18-28) who:</h4>
+                                    <ul>
+                                        <li>Feel overwhelmed by the formal, high-pressure shidduch process</li>
+                                        <li>Are caught between following their heart and pleasing their families</li>
+                                        <li>Excel in studies/careers but feel paralyzed when it comes to dating</li>
+                                        <li>Want practical guidance beyond checking boxes on a resume</li>
+                                        <li>Are terrified of making the wrong choice and disappointing everyone</li>
+                                    </ul>
+                                </div>
+                                <div class="accordion-topics">
+                                    <h4>Key Topics:</h4>
+                                    <div class="topics-list">
+                                        <span class="topic-tag">Self-Knowledge & Preparation</span>
+                                        <span class="topic-tag">Three-Pillar Compatibility Framework</span>
+                                        <span class="topic-tag">Shidduch vs. Secular Dating</span>
+                                        <span class="topic-tag">Purposeful Courtship</span>
+                                        <span class="topic-tag">Proper Boundaries</span>
+                                        <span class="topic-tag">Engagement Navigation</span>
+                                    </div>
+                                </div>
+                                <div class="accordion-highlights">
+                                    <h4>Key Insights:</h4>
+                                    <blockquote>"Marriage is not a hospital. If you're sick, marriage is not going to help you."</blockquote>
+                                    <blockquote>"Every person was created as an individual... every person has a feeling inside themselves that says I'm special."</blockquote>
+                            </div>
+                                <div class="accordion-platforms">
+                                    <h4>Listen On:</h4>
+                                    <div class="platform-links">
+                                <a href="https://open.spotify.com/show/2hCOZGVEIEJM5gvdAKPLaU?si=fbd9b89c8fd14e8f" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://podcasts.apple.com/us/podcast/dating/id1750872872" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtN" class="platform-link" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shalom Bayis Series -->
+                    <div class="accordion-item" data-category="relationships">
+                        <div class="accordion-header-wrapper">
+                            <button class="accordion-header" aria-expanded="false">
+                                <div class="accordion-summary">
+                                    <div class="accordion-meta">
+                                        <h3 class="accordion-title">Marriage Guidance for Men</h3>
+                                        <span class="accordion-episodes">9 episodes</span>
+                                        <span class="accordion-category">Relationships</span>
+                                        <div class="platform-icons-mini">
+                                            <a href="https://open.spotify.com/show/5P0Hq5D1tZV2dJCqXqP1L8?si=5f8e4b9c9f8a4e8f" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://podcasts.apple.com/us/podcast/shalom-bayis/id1750872873" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                                </svg>
+                                            </a>
+        									<a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtO" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="accordion-hook">For husbands who thought they had marriage figured out during engagement, only to discover they're completely lost in navigating their wife's emotions and relationship dynamics.</p>
+                                </div>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-actions">
+                                <a href="series/shalom-bayis.html" class="btn-quick-listen">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-details">
+                                <div class="accordion-description">
+                                    <p>This podcast series delivers practical marriage guidance specifically for Jewish men through a traditional Torah lens, combining scholarship with real-world relationship advice. Learn how to bring divine presence into your home through prayer and Torah study, understand fundamental psychological and spiritual differences between men and women, master constructive feedback without damaging your relationship, and maintain exclusivity and emotional intimacy in your marriage.</p>
+                                </div>
+                                <div class="accordion-target">
+                                    <h4>For Jewish husbands (22-40) who:</h4>
+                                    <ul>
+                                        <li>Thought they had marriage figured out during engagement, only to discover they're lost six months in</li>
+                                        <li>Have no idea how to navigate their wife's emotions or handle household conflicts</li>
+                                        <li>Are struggling to balance Torah learning with being a present partner</li>
+                                        <li>Realize they're somehow failing at their most important relationship</li>
+                                        <li>Value traditional Torah guidance but feel completely unprepared for marriage reality</li>
+                                    </ul>
+                                </div>
+                                <div class="accordion-topics">
+                                    <h4>Key Topics:</h4>
+                                    <div class="topics-list">
+                                        <span class="topic-tag">Divine Presence in the Home</span>
+                                        <span class="topic-tag">Men vs. Women Psychology</span>
+                                        <span class="topic-tag">Constructive Feedback</span>
+                                        <span class="topic-tag">Emotional Intimacy</span>
+                                        <span class="topic-tag">Marriage as Miracle</span>
+                                        <span class="topic-tag">Spousal Appreciation</span>
+                                    </div>
+                                </div>
+                                <div class="accordion-highlights">
+                                    <h4>Key Insights:</h4>
+                                    <blockquote>"For a man and a woman to live together in peace and harmony is Pasha Danes. It's a miracle."</blockquote>
+                                    <blockquote>"A woman needs to feel that in her husband's mind she's number one. She's me."</blockquote>
+                                    <blockquote>"The more a person expresses his heart for what his wife does for him, the more she'll feel valued."</blockquote>
+                            </div>
+                                <div class="accordion-platforms">
+                                    <h4>Listen On:</h4>
+                                    <div class="platform-links">
+                                <a href="https://open.spotify.com/show/5P0Hq5D1tZV2dJCqXqP1L8?si=5f8e4b9c9f8a4e8f" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://podcasts.apple.com/us/podcast/shalom-bayis/id1750872873" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtO" class="platform-link" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shmiras Einayim Series -->
+                    <div class="accordion-item" data-category="spirituality">
+                        <div class="accordion-header-wrapper">
+                            <button class="accordion-header" aria-expanded="false">
+                                <div class="accordion-summary">
+                                    <div class="accordion-meta">
+                                        <h3 class="accordion-title">Shmiras Einayim (Guarding One's Eyes)</h3>
+                                        <span class="accordion-episodes">25 episodes</span>
+                                        <span class="accordion-category">Spirituality</span>
+                                        <div class="platform-icons-mini">
+                                            <a href="https://open.spotify.com/show/6W0Hq5D1tZV2dJCqXqP1L9?si=6f8e4b9c9f8a4e9f" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://podcasts.apple.com/us/podcast/shemiras-einayim/id1750872874" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtP" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="accordion-hook">For men living with the daily struggle between their convictions and natural urges in an increasingly sexualized world—practical Torah guidance for this universal challenge.</p>
+                                </div>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-actions">
+                                <a href="series/shemiras-einayim.html" class="btn-quick-listen">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-details">
+                                <div class="accordion-description">
+                                    <p>This podcast series provides in-depth Jewish guidance on "Shmiras Einayim" (guarding one's eyes), combining traditional Jewish law and philosophy with practical modern advice for maintaining spiritual purity. Learn about relevant Jewish legal requirements, spiritual benefits of self-control, practical strategies for avoiding temptation in daily life, historical examples from Jewish texts, and honest acknowledgment of modern challenges like smartphones and internet access.</p>
+                                </div>
+                                <div class="accordion-target">
+                                    <h4>For Jewish men (18-45) who:</h4>
+                                    <ul>
+                                        <li>Live with a daily internal war between their convictions and natural human urges</li>
+                                        <li>Are struggling in an increasingly sexualized world with visual temptation</li>
+                                        <li>Genuinely want to live according to Jewish law but keep repeatedly failing</li>
+                                        <li>Carry deep shame and isolation because this struggle is rarely acknowledged openly</li>
+                                        <li>Sit in synagogue feeling like hypocrites, wondering if they're the only ones battling these thoughts</li>
+                                        <li>Question whether they can truly be good husbands or spiritual people</li>
+                                    </ul>
+                                </div>
+                                <div class="accordion-topics">
+                                    <h4>Key Topics:</h4>
+                                    <div class="topics-list">
+                                        <span class="topic-tag">Jewish Legal Requirements</span>
+                                        <span class="topic-tag">Spiritual Benefits of Self-Control</span>
+                                        <span class="topic-tag">Modern Temptation Strategies</span>
+                                        <span class="topic-tag">Historical Jewish Examples</span>
+                                        <span class="topic-tag">Breaking Shame Cycles</span>
+                                        <span class="topic-tag">Building Spiritual Strength</span>
+                                    </div>
+                                </div>
+                                <div class="accordion-highlights">
+                                    <h4>Key Insights:</h4>
+                                    <blockquote>"You're not alone. Every person has to deal with it... Every normal man has the yetzer hara."</blockquote>
+                                    <blockquote>"The eyes are the gateways... We have to keep ourselves Torah in our eyes."</blockquote>
+                                    <blockquote>"Just being here listening to the Yashir is saying, I'm a person who this is important to me."</blockquote>
+                            </div>
+                                <div class="accordion-platforms">
+                                    <h4>Listen On:</h4>
+                                    <div class="platform-links">
+                                <a href="https://open.spotify.com/show/6W0Hq5D1tZV2dJCqXqP1L9?si=6f8e4b9c9f8a4e9f" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://podcasts.apple.com/us/podcast/shemiras-einayim/id1750872874" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtP" class="platform-link" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shmiras Halashon Series -->
+                    <div class="accordion-item" data-category="relationships">
+                        <div class="accordion-header-wrapper">
+                            <button class="accordion-header" aria-expanded="false">
+                                <div class="accordion-summary">
+                                    <div class="accordion-meta">
+                                        <h3 class="accordion-title">Shmeiras Halashon (Proper Speech)</h3>
+                                        <span class="accordion-episodes">125 episodes</span>
+                                        <span class="accordion-category">Relationships</span>
+                                        <div class="platform-icons-mini">
+                                            <a href="https://open.spotify.com/show/7W0Hq5D1tZV2dJCqXqP1L0?si=7f8e4b9c9f8a4e0f" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://podcasts.apple.com/us/podcast/shemiras-halashon-daily/id1750872875" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtQ" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="accordion-hook">For Jews tired of feeling like failures in interpersonal relationships—comprehensive halachic guidance on when speech about others is forbidden versus permitted.</p>
+                                </div>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-actions">
+                                <a href="series/shemiras-halashon.html" class="btn-quick-listen">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-details">
+                                <div class="accordion-description">
+                                    <p>This podcast is a systematic, episode-by-episode study of the Chofetz Chaim's foundational work on the laws of proper speech in Jewish law, covering the intricate halachic rules about when speech about others is forbidden versus permitted. Each episode delves into specific scenarios—from workplace gossip to family dynamics to community leadership situations—providing detailed analysis of complex legal principles with practical real-world applications.</p>
+                                </div>
+                                <div class="accordion-target">
+                                    <h4>For Jewish adults (25-55) who:</h4>
+                                    <ul>
+                                        <li>Are tired of feeling like failures in their interpersonal relationships</li>
+                                        <li>Know their speech habits are sabotaging their spiritual growth and community connections</li>
+                                        <li>Genuinely care about following Jewish law but find themselves constantly gossiping</li>
+                                        <li>Are sharing negative information or speaking thoughtlessly about others</li>
+                                        <li>Lie awake at night feeling guilty about the damage they've caused</li>
+                                        <li>Are ready to master the intricate laws of proper speech</li>
+                                    </ul>
+                                </div>
+                                <div class="accordion-topics">
+                                    <h4>Key Topics:</h4>
+                                    <div class="topics-list">
+                                        <span class="topic-tag">Halachic Rules of Speech</span>
+                                        <span class="topic-tag">Workplace Gossip Scenarios</span>
+                                        <span class="topic-tag">Family Dynamics</span>
+                                        <span class="topic-tag">Community Leadership</span>
+                                        <span class="topic-tag">Digital Communication Ethics</span>
+                                        <span class="topic-tag">Practical Legal Applications</span>
+                                    </div>
+                                </div>
+                                <div class="accordion-highlights">
+                                    <h4>Key Insights:</h4>
+                                    <blockquote>"We have to be so, so sensitive. Would we want to hear that same thing about our son, brother, or mother?"</blockquote>
+                                    <blockquote>"One little thing that somebody said... Send a little text, send a little WhatsApp and all of a sudden it gets spread all over."</blockquote>
+                                    <blockquote>"If a person really cares, he cares about his fellow Jew, he cares about his brothers and sisters, then he's always going to be looking for the best."</blockquote>
+                            </div>
+                                <div class="accordion-platforms">
+                                    <h4>Listen On:</h4>
+                                    <div class="platform-links">
+                                <a href="https://open.spotify.com/show/7W0Hq5D1tZV2dJCqXqP1L0?si=7f8e4b9c9f8a4e0f" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://podcasts.apple.com/us/podcast/shemiras-halashon-daily/id1750872875" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtQ" class="platform-link" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shabbos Malkesa Series -->
+                    <div class="accordion-item" data-category="sabbath">
+                        <div class="accordion-header-wrapper">
+                            <button class="accordion-header" aria-expanded="false">
+                                <div class="accordion-summary">
+                                    <div class="accordion-meta">
+                                        <h3 class="accordion-title">Shabbos Malkesa (The Kingship of Sabbath)</h3>
+                                        <span class="accordion-episodes">46 episodes</span>
+                                        <span class="accordion-category">Shabbos</span>
+                                        <div class="platform-icons-mini">
+                                            <a href="https://open.spotify.com/show/8W0Hq5D1tZV2dJCqXqP1L1?si=8f8e4b9c9f8a4e1f" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://podcasts.apple.com/us/podcast/shabbos-malkesa/id1750872876" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtR" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="accordion-hook">For spiritually ambitious Jews trapped in routine observance—scholarly deep-dive into Shabbos as the weekly manifestation of divine kingship in the world.</p>
+                                </div>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-actions">
+                                <a href="series/shabbos.html" class="btn-quick-listen">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-details">
+                                <div class="accordion-description">
+                                    <p>This podcast is a scholarly deep-dive into Jewish mystical and philosophical teachings about Shabbos, structured as weekly study sessions exploring the sefer "Shabbos Malkesa." Learn how Shabbos represents the manifestation of divine kingship (Malchus) in the world, combining Talmudic analysis, Kabbalistic concepts, and practical spirituality to explain the profound transformation Shabbos promises to those who keep it with intention and understanding.</p>
+                                </div>
+                                <div class="accordion-target">
+                                    <h4>For spiritually ambitious Jews (30-55) who:</h4>
+                                    <ul>
+                                        <li>Are trapped in the frustration of routine observance</li>
+                                        <li>Faithfully keep every Shabbos law but feel disconnected from the profound transformation they know should be happening</li>
+                                        <li>Light their candles and make kiddush every week while privately wondering why they don't feel the divine presence</li>
+                                        <li>Privately wonder why their souls aren't being elevated and why Shabbos feels more like obligation than encounter with the sacred</li>
+                                        <li>Have families and community responsibilities but crave deeper spiritual meaning</li>
+                                    </ul>
+                                </div>
+                                <div class="accordion-topics">
+                                    <h4>Key Topics:</h4>
+                                    <div class="topics-list">
+                                        <span class="topic-tag">Divine Kingship (Malchus)</span>
+                                        <span class="topic-tag">Talmudic Analysis</span>
+                                        <span class="topic-tag">Kabbalistic Concepts</span>
+                                        <span class="topic-tag">Spiritual Elevation</span>
+                                        <span class="topic-tag">Divine Presence (Shechina)</span>
+                                        <span class="topic-tag">Weekly Transformation</span>
+                                    </div>
+                                </div>
+                                <div class="accordion-highlights">
+                                    <h4>Key Insights:</h4>
+                                    <blockquote>"People don't make an Esek out of Shabbos because they don't know what Shabbos is."</blockquote>
+                                    <blockquote>"This is Hashem's day. Shabbos is not about us. Shabbos is about Hashem."</blockquote>
+                                    <blockquote>"Everything stops on Shabbos... because it's Hashem's day. Nobody does anything."</blockquote>
+                            </div>
+                                <div class="accordion-platforms">
+                                    <h4>Listen On:</h4>
+                                    <div class="platform-links">
+                                <a href="https://open.spotify.com/show/8W0Hq5D1tZV2dJCqXqP1L1?si=8f8e4b9c9f8a4e1f" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://podcasts.apple.com/us/podcast/shabbos-malkesa/id1750872876" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtR" class="platform-link" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mesilas Yesharim Series -->
+                    <div class="accordion-item" data-category="growth">
+                        <div class="accordion-header-wrapper">
+                            <button class="accordion-header" aria-expanded="false">
+                                <div class="accordion-summary">
+                                    <div class="accordion-meta">
+                                        <h3 class="accordion-title">Mesilas Yesharim (Path of the Upright)</h3>
+                                        <span class="accordion-episodes">30 episodes</span>
+                                        <span class="accordion-category">Personal Growth</span>
+                                        <div class="platform-icons-mini">
+                                            <a href="https://open.spotify.com/show/9W0Hq5D1tZV2dJCqXqP1L2?si=9f8e4b9c9f8a4e2f" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://podcasts.apple.com/us/podcast/mesilas-yesharim/id1750872877" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtS" class="platform-icon-mini" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                                <svg viewBox="0 0 24 24" class="platform-svg-mini">
+                                                    <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    <p class="accordion-hook">For adults wrestling with the frustrating gap between knowing what's right and actually living it—systematic character development through the Ramchal's foundational text.</p>
+                                </div>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-actions">
+                                <a href="series/mesilas-yesharim.html" class="btn-quick-listen">Listen Now</a>
+                            </div>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-details">
+                                <div class="accordion-description">
+                                    <p>This podcast series consists of detailed lectures on "Mesilas Yesharim" (Path of the Upright), a foundational Jewish text on character development and spiritual growth by Rabbi Moshe Chaim Luzzatto (Ramchal). The teacher methodically works through the text's introduction and early chapters, emphasizing the practical application of concepts like fear of God, love of God, and character refinement through stories, analogies, and real-world examples.</p>
+                                </div>
+                                <div class="accordion-target">
+                                    <h4>For Jewish adults (25-45) who:</h4>
+                                    <ul>
+                                        <li>Are intellectually committed to their faith but privately wrestling with the gap between knowing and doing</li>
+                                        <li>Know exactly what kind of person they should be yet keep falling short in predictable ways</li>
+                                        <li>Can teach others about patience and humility then lose their temper in traffic</li>
+                                        <li>Feel secretly superior to others in their community while knowing they should be humble</li>
+                                        <li>Are tired of surface-level inspiration and spiritual Band-Aids</li>
+                                        <li>Want someone who understands the real struggle isn't learning what's right—it's the exhausting gap between knowing and living</li>
+                                    </ul>
+                                </div>
+                                <div class="accordion-topics">
+                                    <h4>Key Topics:</h4>
+                                    <div class="topics-list">
+                                        <span class="topic-tag">Fear of God (Yiras Shamayim)</span>
+                                        <span class="topic-tag">Love of God (Ahavas Hashem)</span>
+                                        <span class="topic-tag">Character Refinement (Midos)</span>
+                                        <span class="topic-tag">Spiritual Perfection (Sheleimus)</span>
+                                        <span class="topic-tag">Practical Application</span>
+                                        <span class="topic-tag">Gradual Growth</span>
+                                    </div>
+                                </div>
+                                <div class="accordion-highlights">
+                                    <h4>Key Insights:</h4>
+                                    <blockquote>"There's a big, big gap between your brain and your heart. There's a big gap between knowing something is true and living it."</blockquote>
+                                    <blockquote>"They say it's easier to learn all of shas than to change one midah."</blockquote>
+                                    <blockquote>"There are so many people putting so much effort into making their bank account big. And they're not putting enough effort into making themselves big."</blockquote>
+                            </div>
+                                <div class="accordion-platforms">
+                                    <h4>Listen On:</h4>
+                                    <div class="platform-links">
+                                <a href="https://open.spotify.com/show/9W0Hq5D1tZV2dJCqXqP1L2?si=9f8e4b9c9f8a4e2f" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Spotify">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://podcasts.apple.com/us/podcast/mesilas-yesharim/id1750872877" class="platform-link" target="_blank" rel="noopener" aria-label="Listen on Apple Podcasts">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.youtube.com/playlist?list=PLiZU2rL9HnBVlN-qtyCiW7GbDsU7bewtS" class="platform-link" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+                                    <svg viewBox="0 0 24 24" class="platform-svg">
+                                        <path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Left Column - About -->
+                <div class="footer-about">
+                    <h3 class="footer-section-title">Real Judaism</h3>
+                    <div class="footer-contact-info">
+                        <p class="contact-label">📧 Contact:</p>
+                        <p><a href="mailto:rabbiariklapper@gmail.com" class="footer-email">rabbiariklapper@gmail.com</a></p>
+                        <p class="contact-label">🛠️ Technical Support:</p>
+                        <p><a href="mailto:eli@elipodcastproductions.com" class="footer-email">eli@elipodcastproductions.com</a></p>
+                    </div>
+                </div>
+                
+                <!-- Center Column - Quick Links -->
+                <div class="footer-explore">
+                    <h4 class="footer-section-title">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="series/dating.html" class="footer-link">Dating</a></li>
+                        <li><a href="series/shalom-bayis.html" class="footer-link">Shalom Bayis</a></li>
+                        <li><a href="series/shemiras-einayim.html" class="footer-link">Shmiras Einayim</a></li>
+                        <li><a href="series/shemiras-halashon.html" class="footer-link">Shmiras Halashon</a></li>
+                        <li><a href="series/shabbos.html" class="footer-link">Shabbos</a></li>
+                        <li><a href="series/mesilas-yesharim.html" class="footer-link">Mesilas Yesharim</a></li>
+                        <li><a href="about.html" class="footer-link">About</a></li>
+                        <li><a href="#contact" class="footer-link">Contact</a></li>
+                        <li><a href="blog.html" class="footer-link">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Right Column - Legal & Credits -->
+                <div class="footer-legal">
+                    <h4 class="footer-section-title">Information</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="footer-link">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-credit-centered">Website & Podcast Design: <a href="https://elipodcastproductions.com" target="_blank" class="footer-credit-link" rel="noopener noreferrer"><strong>Eli Podcast Productions</strong></a></p>
+                <p>&copy; 2025 Real Judaism. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/main.js"></script>
+    <script src="js/podcast.js"></script>
+
+</body>
+</html>

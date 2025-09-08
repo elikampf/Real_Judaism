@@ -1,0 +1,729 @@
+/* ============================================
+   REAL JUDAISM COMPONENT LIBRARY
+   ============================================ */
+
+/* ============================================
+   CARD COMPONENTS SYSTEM
+   ============================================ */
+
+/* Base Card */
+.card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-border);
+}
+
+.card:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.card:hover .card-image {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: var(--space-6);
+}
+
+.card-title {
+    font-family: var(--font-family);
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-charcoal);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+}
+
+.card-description {
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+}
+
+.card-date,
+.card-duration {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ============================================
+   SERIES CARD COMPONENT
+   ============================================ */
+
+.series-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    position: relative;
+}
+
+.series-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.series-card:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.series-image {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.series-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.series-card:hover .series-image img {
+    transform: scale(1.1);
+}
+
+.series-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(55, 65, 81, 0.9),
+        rgba(75, 85, 99, 0.9)
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.series-card:hover .series-overlay {
+    opacity: 1;
+}
+
+.series-play-btn {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-white);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--transition-normal);
+    cursor: pointer;
+}
+
+.series-card:hover .series-play-btn {
+    transform: scale(1.1);
+}
+
+.series-play-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary);
+    font-size: var(--text-xl);
+    margin-left: 3px; /* Optical adjustment for play icon */
+}
+
+.series-content {
+    padding: var(--space-8);
+}
+
+.series-title {
+    font-family: var(--font-family);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-charcoal);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+}
+
+.series-description {
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-gray);
+    line-height: 1.7;
+    margin-bottom: var(--space-6);
+}
+
+.series-stats {
+    display: flex;
+    gap: var(--space-6);
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+}
+
+.series-episodes {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-medium);
+}
+
+.episodes-icon {
+    font-size: var(--text-base);
+}
+
+/* ============================================
+   BLOG CARD COMPONENT
+   ============================================ */
+
+.blog-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.blog-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.blog-card:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.blog-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.blog-card:hover .blog-image {
+    transform: scale(1.05);
+}
+
+.blog-content {
+    padding: var(--space-6);
+}
+
+.blog-title {
+    font-family: var(--font-family);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-charcoal);
+    margin-bottom: var(--space-3);
+    line-height: 1.4;
+}
+
+.blog-excerpt {
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+}
+
+.blog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+}
+
+.blog-date,
+.blog-read-time {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ============================================
+   EPISODE CARD COMPONENT
+   ============================================ */
+
+.episode-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-6);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    border-left: 4px solid var(--color-primary);
+    position: relative;
+}
+
+.episode-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+}
+
+.episode-card:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.episode-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+}
+
+.episode-number {
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+    background-color: rgba(55, 65, 81, 0.1);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-xl);
+    white-space: nowrap;
+}
+
+.episode-date {
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-gray);
+}
+
+.episode-title {
+    font-family: var(--font-family);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-charcoal);
+    margin-bottom: var(--space-3);
+    line-height: 1.4;
+}
+
+.episode-description {
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+}
+
+.episode-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.episode-duration {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+    font-weight: var(--font-weight-medium);
+}
+
+.duration-icon {
+    font-size: var(--text-base);
+}
+
+.episode-play-btn {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    white-space: nowrap;
+}
+
+.episode-play-btn:hover {
+    background-color: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.episode-play-btn:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.episode-play-btn:active {
+    background-color: var(--color-primary-active);
+    transform: translateY(0);
+}
+
+.play-icon {
+    font-size: var(--text-base);
+}
+
+/* ============================================
+   BADGE COMPONENTS
+   ============================================ */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    font-family: var(--font-family);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-xl);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-primary {
+    background-color: rgba(55, 65, 81, 0.1);
+    color: var(--color-primary);
+}
+
+.badge-secondary {
+    background-color: var(--color-light-gray);
+    color: var(--color-gray);
+}
+
+.badge-success {
+    background-color: rgba(56, 161, 105, 0.1);
+    color: #166534;
+}
+
+.badge-error {
+    background-color: rgba(229, 62, 62, 0.1);
+    color: #c53030;
+}
+
+/* ============================================
+   LOADING COMPONENTS
+   ============================================ */
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--color-light-gray);
+    border-top: 4px solid var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: var(--space-8) auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray);
+    text-align: center;
+    margin-top: var(--space-4);
+}
+
+/* ============================================
+   FILTER COMPONENTS
+   ============================================ */
+
+.series-filters {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-12);
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-charcoal);
+    background-color: var(--color-white);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.filter-btn:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   ERROR COMPONENTS
+   ============================================ */
+
+.error-message {
+    background-color: rgba(229, 62, 62, 0.1);
+    border: 1px solid rgba(229, 62, 62, 0.2);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    text-align: center;
+    margin: var(--space-8) 0;
+}
+
+.error-message p {
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    color: #c53030;
+    margin: 0;
+}
+
+.no-episodes {
+    font-family: var(--font-family);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray);
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+    background-color: var(--color-light-gray);
+    border-radius: var(--radius-md);
+    margin: var(--space-8) 0;
+}
+
+/* ============================================
+   RESPONSIVE COMPONENTS
+   ============================================ */
+
+@media (max-width: 767px) {
+    .card-content,
+    .series-content,
+    .blog-content {
+        padding: var(--space-4);
+    }
+
+    .episode-card {
+        padding: var(--space-4);
+    }
+
+    .series-stats {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: flex-start;
+    }
+
+    .blog-footer {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: flex-start;
+    }
+
+    .episode-header {
+        flex-direction: column;
+        gap: var(--space-2);
+        align-items: flex-start;
+    }
+
+    .episode-footer {
+        flex-direction: column;
+        gap: var(--space-3);
+        align-items: flex-start;
+    }
+
+    .episode-play-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .series-filters {
+        justify-content: flex-start;
+        gap: var(--space-2);
+    }
+
+    .filter-btn {
+        font-size: var(--text-xs);
+        padding: var(--space-2) var(--space-3);
+    }
+}
+
+@media (max-width: 479px) {
+    .series-image {
+        height: 200px;
+    }
+
+    .blog-image {
+        height: 150px;
+    }
+
+    .series-title {
+        font-size: var(--text-xl);
+    }
+
+    .blog-title {
+        font-size: var(--text-base);
+    }
+
+    .episode-title {
+        font-size: var(--text-base);
+    }
+}
+
+/* ============================================
+   HOMEPAGE EPISODE COUNT STYLES
+   ============================================ */
+
+.episode-count {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all var(--transition-normal);
+}
+
+.episode-count.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.episode-count-icon {
+    font-size: var(--text-base);
+    opacity: 0.8;
+}
+
+.episode-count-text {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================
+   ENHANCED CARD HOVER EFFECTS
+   ============================================ */
+
+.series-card-main {
+    transition: all var(--transition-normal);
+    transform-style: preserve-3d;
+}
+
+.series-card-main:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.series-card-main:hover .card-image-main {
+    transform: scale(1.08);
+}
+
+.series-card-main:hover .card-overlay {
+    opacity: 1;
+    background: linear-gradient(135deg,
+        rgba(55, 65, 81, 0.95),
+        rgba(75, 85, 99, 0.95)
+    );
+}
+
+.series-card-main:hover .card-play-icon {
+    transform: scale(1.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1.2); }
+    50% { transform: scale(1.3); }
+}
+
+/* Amber border on hover for series cards */
+.series-card-main:hover {
+    border: 2px solid var(--color-primary);
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Lazy loading placeholder */
+.lazy-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Smooth scrolling for all browsers */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optimize transforms for better performance */
+.series-card-main,
+.episode-card,
+.blog-card {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.series-card-main:hover,
+.episode-card:hover,
+.blog-card:hover {
+    will-change: auto;
+}

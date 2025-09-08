@@ -1,0 +1,147 @@
+/*
+==============================================
+RTL Stylesheet for Real Judaism Hebrew Site
+==============================================
+*/
+
+/* General Body and Typography */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Inter', 'Assistant', sans-serif; /* Assistant is a good fallback for Hebrew */
+}
+
+/* Header and Navigation */
+.rtl .header-brand {
+    margin-right: 0;
+    margin-left: 24px;
+}
+
+.rtl .main-nav {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.rtl .nav-list {
+    padding-right: 0; /* Reset padding for RTL */
+}
+
+.rtl .nav-item {
+    margin: 0 0 0 24px;
+}
+
+.rtl .nav-item:last-child {
+    margin-left: 0;
+}
+
+.rtl .dropdown-arrow {
+    margin-right: 8px;
+    margin-left: 0;
+    transform: scaleX(-1); /* Flip the arrow */
+}
+
+.rtl .dropdown-menu {
+    right: 0;
+    left: auto;
+    text-align: right;
+}
+
+.rtl .nav-link-english {
+    margin-right: 16px;
+    margin-left: 0;
+    padding-left: 16px;
+    padding-right: 0;
+    border-left: 1px solid var(--color-border);
+    border-right: none;
+}
+
+/* Hero Section */
+.rtl .hebrew-hero .hero-statement {
+    letter-spacing: -0.5px;
+}
+
+.rtl .hebrew-hero .hebrew-quote {
+    border-right: 4px solid var(--color-primary);
+    border-left: none;
+    padding-right: 24px;
+    padding-left: 0;
+    margin-right: 0;
+    text-align: right;
+}
+
+/* Card Grid */
+.rtl .series-grid-main {
+    justify-content: flex-start; /* Items will start from the right */
+}
+
+.rtl .series-card-main,
+.rtl .hebrew-card {
+    text-align: right;
+}
+
+.rtl .inactive-card .card-badge {
+    left: 16px;
+    right: auto;
+}
+
+/* CTA Section */
+.rtl .cta-actions .btn-icon {
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+/* Series Hero */
+.rtl .series-hero-listen-btn .btn-icon {
+    transform: scaleX(-1);
+}
+
+.rtl .series-hero.shalom-bayis {
+    background-image: url('../../images/shalom-bayis-heb.png');
+}
+
+.rtl .series-hero.shmirat-einayim {
+    background-image: url('../../images/shemiras-einayim-heb.png');
+}
+
+.rtl .episodes-grid-visible {
+    display: grid !important;
+}
+
+/* Footer */
+.rtl .footer-content {
+    justify-content: space-between;
+    text-align: right;
+}
+
+.rtl .footer-links {
+    padding-right: 0;
+}
+
+.rtl .footer-bottom {
+    text-align: center; /* Center is fine for copyright */
+}
+
+/* Responsive adjustments for RTL */
+@media (max-width: 767px) {
+    .rtl .header-brand {
+        margin-left: 0;
+    }
+
+    .rtl .main-nav {
+        left: auto;
+        right: -100%; /* Hide off-screen to the right */
+    }
+
+    .rtl .main-nav.active {
+        right: 0; /* Slide in from the right */
+    }
+
+    .rtl .mobile-menu-toggle {
+        order: -1; /* Move hamburger to the right */
+    }
+
+    .rtl .nav-link-english {
+        border: none;
+        padding: 12px 24px;
+    }
+}

@@ -1,0 +1,34 @@
+# Robots.txt for Real Judaism website
+# Allows all web crawlers to access the site
+
+User-agent: *
+Allow: /
+
+# Allow access to all important content
+Allow: /podcast.html
+Allow: /about.html
+Allow: /blog.html
+Allow: /series/
+Allow: /blog/
+Allow: /hebrew-home/
+Allow: /sitemap.xml
+
+# Disallow access to admin areas (if any in future)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# Disallow access to development files
+Disallow: *.min.js.map
+Disallow: *.min.css.map
+
+# Allow access to CSS and JS files for rendering
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Crawl delay (optional - be respectful to server resources)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://real-judaism.com/sitemap.xml

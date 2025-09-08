@@ -1,0 +1,30 @@
+# Netlify redirects for clean URLs and SEO
+
+# Clean URLs for series pages
+/series/dating  /series/dating.html  200
+/series/shalom-bayis  /series/shalom-bayis.html  200
+/series/shemiras-einayim  /series/shemiras-einayim.html  200
+/series/shemiras-halashon  /series/shemiras-halashon.html  200
+/series/shabbos  /series/shabbos.html  200
+/series/mesilas-yesharim  /series/mesilas-yesharim.html  200
+
+# Clean URLs for other pages
+/podcast  /podcast.html  200
+/blog  /blog.html  200
+/about  /about.html  200
+/hebrew-home  /hebrew-home/index.html  200
+
+# Blog post clean URLs
+/blog/your-spouse-isnt-your-enemy  /blog/your-spouse-isnt-your-enemy.html  200
+/blog/the-weddings-over-now-what  /blog/the-weddings-over-now-what.html  200
+/blog/the-third-partner  /blog/the-third-partner.html  200
+
+# Hebrew section clean URLs
+/hebrew-home/series/shalom-bayis-hebrew  /hebrew-home/series/shalom-bayis-hebrew.html  200
+/hebrew-home/series/shmirat-einayim-hebrew  /hebrew-home/series/shmirat-einayim-hebrew.html  200
+
+# Legacy URL redirects (if needed)
+# Add any old URLs that need to redirect to new locations
+
+# 404 fallback
+/*  /404.html  404

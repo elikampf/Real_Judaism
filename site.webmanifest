@@ -1,0 +1,35 @@
+{
+    "name": "Real Judaism - Unfiltered Wisdom for Jewish Life",
+    "short_name": "Real Judaism",
+    "description": "Practical Torah wisdom for modern Jewish life. Rabbi Ari Klapper combines ancient teachings with contemporary insights.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ed8936",
+    "orientation": "portrait-primary",
+    "categories": ["education", "religion", "podcasts"],
+    "lang": "en",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "images/favicon-16x16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "images/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "images/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "images/mstile-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        }
+    ]
+}
