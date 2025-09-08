@@ -1,12 +1,13 @@
 [build]
-  # Build command (not needed for static site)
-  command = "echo 'Static site - no build needed'"
+  # Build command - simple for static site
+  command = "echo 'Static site deployment - no build needed'"
 
-  # Directory to publish
+  # Directory to publish (root directory)
   publish = "."
 
-  # Include all files and directories
-  ignore = false
+  # Environment variables
+  [build.environment]
+    NODE_VERSION = "18"
 
 [build.processing]
   skip_processing = false
