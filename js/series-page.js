@@ -7,7 +7,7 @@
 let seriesPageCurrentSeries = '';
 let seriesEpisodes = [];
 let allSeriesData = {};
-let currentPage = 1;
+let seriesCurrentPage = 1;
 const episodesPerPage = 9; // 3x3 grid on desktop
 let currentFilter = 'all';
 
@@ -115,7 +115,7 @@ function displayEpisodes() {
     }
 
     // Calculate episodes to show
-    const episodesToShow = filteredEpisodes.slice(0, currentPage * episodesPerPage);
+    const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * episodesPerPage);
     
     // Clear container
     container.innerHTML = '';
@@ -269,7 +269,7 @@ function initializeEpisodeFilters() {
             const filter = this.getAttribute('data-filter');
             setActiveFilter(this, filter);
             currentFilter = filter;
-            currentPage = 1; // Reset to first page
+            seriesCurrentPage = 1; // Reset to first page
             displayEpisodes();
         });
     });
@@ -277,7 +277,7 @@ function initializeEpisodeFilters() {
     // Load more functionality
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', function() {
-            currentPage++;
+            seriesCurrentPage++;
             displayEpisodes();
             
             // Scroll to new content

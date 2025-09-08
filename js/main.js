@@ -226,9 +226,7 @@ function initializeContactForm() {
                 submitBtn.classList.add('loading');
             }
         });
-    }
-
-    // Real-time validation
+        // Real-time validation
         const inputs = contactForm.querySelectorAll('input, textarea');
         inputs.forEach(input => {
             input.addEventListener('blur', function() {
