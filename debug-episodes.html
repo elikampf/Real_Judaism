@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Episodes Data</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 2rem;
+            background: #f8fafc;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+        .success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .warning { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+        .info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+        pre {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+        h2 {
+            color: #1e3a8a;
+            margin-top: 0;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Debug Episodes Data</h1>
+        <p>This page helps debug why your website isn't showing updated podcast data.</p>
+
+        <div id="status" class="status info">Loading...</div>
+
+        <button onclick="testJSONLoad()">Test JSON Loading</button>
+        <button onclick="checkDataStructure()">Check Data Structure</button>
+        <button onclick="testPathResolution()">Test Path Resolution</button>
+        <button onclick="clearCache()">Clear Cache & Reload</button>
+
+        <div class="test-section">
+            <h2>📊 JSON Loading Test</h2>
+            <div id="json-test">Not tested yet</div>
+        </div>
+
+        <div class="test-section">
+            <h2>🏗️ Data Structure Check</h2>
+            <div id="structure-test">Not tested yet</div>
+        </div>
+
+        <div class="test-section">
+            <h2>🛣️ Path Resolution Test</h2>
+            <div id="path-test">Not tested yet</div>
+        </div>
+
+        <div class="test-section">
+            <h2>📋 Raw Data Sample</h2>
+            <div id="raw-data">Not loaded yet</div>
+        </div>
+    </div>
+
+    <script>
+        let episodeData = null;
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        async function testJSONLoad() {
+            updateStatus('Testing JSON loading...', 'info');
+            const testDiv = document.getElementById('json-test');
+
+            try {
+                // Determine the correct path to episodes.json based on current location
+                const currentPath = window.location.pathname;
+                const dataPath = currentPath.includes('/hebrew-home/') ? '../data/episodes.json' : 'data/episodes.json';
+
+                testDiv.innerHTML = `<p>🔍 Attempting to load from: <code>${dataPath}</code></p>`;
+
+                const response = await fetch(dataPath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                episodeData = await response.json();
+
+                testDiv.innerHTML = `
+                    <p>✅ JSON loaded successfully!</p>
+                    <p>📊 Found ${episodeData.episodes ? episodeData.episodes.length : 'unknown'} episodes</p>
+                    <p>🎙️ Found ${episodeData.series ? Object.keys(episodeData.series).length : 'unknown'} series</p>
+                `;
+
+                updateStatus('JSON loading test passed!', 'success');
+
+            } catch (error) {
+                testDiv.innerHTML = `
+                    <p>❌ Failed to load JSON</p>
+                    <p>Error: ${error.message}</p>
+                    <p>Make sure the file <code>data/episodes.json</code> exists and is accessible</p>
+                `;
+                updateStatus('JSON loading test failed!', 'error');
+            }
+        }
+
+        function checkDataStructure() {
+            const testDiv = document.getElementById('structure-test');
+
+            if (!episodeData) {
+                testDiv.innerHTML = '<p>❌ Please run JSON loading test first</p>';
+                return;
+            }
+
+            let structureReport = '<h3>Data Structure Analysis:</h3>';
+
+            // Check episodes array
+            if (episodeData.episodes && Array.isArray(episodeData.episodes)) {
+                structureReport += `<p>✅ episodes: Array with ${episodeData.episodes.length} items</p>`;
+            } else {
+                structureReport += '<p>❌ episodes: Missing or not an array</p>';
+            }
+
+            // Check series object
+            if (episodeData.series && typeof episodeData.series === 'object') {
+                structureReport += `<p>✅ series: Object with ${Object.keys(episodeData.series).length} series</p>`;
+
+                // Check each series
+                Object.keys(episodeData.series).forEach(seriesName => {
+                    const series = episodeData.series[seriesName];
+                    if (series.episodes && Array.isArray(series.episodes)) {
+                        structureReport += `<p>&nbsp;&nbsp;✅ ${seriesName}: ${series.episodes.length} episodes</p>`;
+                    } else {
+                        structureReport += `<p>&nbsp;&nbsp;❌ ${seriesName}: episodes property missing</p>`;
+                    }
+                });
+            } else {
+                structureReport += '<p>❌ series: Missing or not an object</p>';
+            }
+
+            // Check metadata
+            if (episodeData.metadata) {
+                structureReport += '<p>ℹ️ metadata: Present (legacy format)</p>';
+            }
+
+            testDiv.innerHTML = structureReport;
+        }
+
+        function testPathResolution() {
+            const testDiv = document.getElementById('path-test');
+
+            const currentPath = window.location.pathname;
+            const dataPath = currentPath.includes('/hebrew-home/') ? '../data/episodes.json' : 'data/episodes.json';
+
+            testDiv.innerHTML = `
+                <p>📍 Current URL path: <code>${currentPath}</code></p>
+                <p>🎯 Resolved data path: <code>${dataPath}</code></p>
+                <p>🌐 Full URL: <code>${window.location.origin}${dataPath}</code></p>
+                <p>💡 Test this URL: <a href="${dataPath}" target="_blank">${dataPath}</a></p>
+            `;
+        }
+
+        function clearCache() {
+            updateStatus('Clearing cache and reloading...', 'warning');
+            // Clear all caches
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                });
+            }
+            // Reload the page
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
+        }
+
+        // Auto-run basic tests on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus('Page loaded - run tests above', 'info');
+            testPathResolution();
+        });
+
+        // Make functions globally available
+        window.testJSONLoad = testJSONLoad;
+        window.checkDataStructure = checkDataStructure;
+        window.testPathResolution = testPathResolution;
+        window.clearCache = clearCache;
+    </script>
+</body>
+</html>
