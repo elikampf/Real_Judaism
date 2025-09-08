@@ -24,7 +24,7 @@ git push origin main
 
 ### Step 3: Test Admin Panel
 1. Visit: `https://yourdomain.com/admin.html`
-2. Enter admin password: `OujE![;4l:z!EhgO`
+2. Enter admin password: `aMF{.Uvv7OW%UL^6`
 3. Enter your GitHub token (one-time per session)
 4. Click "Update All Podcasts"
 
