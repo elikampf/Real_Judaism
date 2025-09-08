@@ -172,8 +172,8 @@
             <div class="security-notice">
                 🔒 <strong>Private Access Only:</strong> This page is not linked from the main site and is intended for authorized administrators only.
                 <br><br>
-                <strong>⚠️ Note:</strong> To enable manual updates, you need to add a GitHub Personal Access Token.
-                <a href="https://github.com/settings/tokens" target="_blank" style="color: #92400e; text-decoration: underline;">Create token here</a> with 'repo' and 'workflow' permissions.
+                <strong>🔑 GitHub Token Setup:</strong> You'll need to enter your GitHub Personal Access Token once per browser session.
+                <a href="GITHUB_TOKEN_SETUP.html" target="_blank" style="color: #92400e; text-decoration: underline;">Setup guide here</a> - tokens are stored securely in your browser only.
                 <br><br>
                 <strong>🔗 Alternative:</strong> <a href="https://github.com/elikampf/Real_Judaism/actions/workflows/update-episodes.yml" target="_blank" style="color: #92400e; text-decoration: underline;">Trigger manually on GitHub</a>
             </div>
@@ -187,7 +187,19 @@
             </div>
         </div>
 
-        <!-- Admin Controls (hidden until authenticated) -->
+        <!-- Token Setup (shown if no token stored) -->
+        <div id="token-section" class="hidden">
+            <div class="password-form">
+                <h3 style="color: #1e3a8a; margin-bottom: 1rem; font-size: 1.1rem;">GitHub Token Required</h3>
+                <input type="password" id="github-token" class="password-input" placeholder="Enter GitHub Personal Access Token" autocomplete="off">
+                <button id="token-submit" class="admin-button">Save Token</button>
+                <p style="font-size: 0.8rem; color: #6b7280; margin-top: 0.5rem;">
+                    Token is stored securely in your browser session only.
+                </p>
+            </div>
+        </div>
+
+        <!-- Admin Controls (hidden until authenticated and token set) -->
         <div id="admin-controls" class="hidden">
             <button id="update-all" class="admin-button">
                 Update All Podcasts
@@ -234,7 +246,8 @@
         // GitHub repository details
         const GITHUB_OWNER = 'elikampf';
         const GITHUB_REPO = 'Real_Judaism';
-        const GITHUB_TOKEN = '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';
+        let GITHUB_TOKEN = sessionStorage.getItem('github_token') || '';
+
         let isAuthenticated = false;
 
         // Password authentication
@@ -244,11 +257,40 @@
             if (password === ADMIN_PASSWORD) {
                 isAuthenticated = true;
                 document.getElementById('password-section').classList.add('hidden');
-                document.getElementById('admin-controls').classList.remove('hidden');
+
+                // Check if token is already stored
+                if (GITHUB_TOKEN) {
+                    document.getElementById('admin-controls').classList.remove('hidden');
+                } else {
+                    document.getElementById('token-section').classList.remove('hidden');
+                }
+
                 showStatus('Authentication successful!', 'success');
             } else {
                 showStatus('Incorrect password. Please try again.', 'error');
                 document.getElementById('admin-password').value = '';
+            }
+        });
+
+        // Token setup
+        document.getElementById('token-submit').addEventListener('click', function() {
+            const token = document.getElementById('github-token').value.trim();
+
+            if (token) {
+                GITHUB_TOKEN = token;
+                sessionStorage.setItem('github_token', token);
+                document.getElementById('token-section').classList.add('hidden');
+                document.getElementById('admin-controls').classList.remove('hidden');
+                showStatus('GitHub token saved! You can now trigger updates.', 'success');
+            } else {
+                showStatus('Please enter a valid GitHub token.', 'error');
+            }
+        });
+
+        // Enter key support for token input
+        document.getElementById('github-token').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('token-submit').click();
             }
         });
 
@@ -368,7 +410,13 @@
         if (sessionStorage.getItem('admin_authenticated') === 'true') {
             isAuthenticated = true;
             document.getElementById('password-section').classList.add('hidden');
-            document.getElementById('admin-controls').classList.remove('hidden');
+
+            // Check if token is also stored
+            if (GITHUB_TOKEN) {
+                document.getElementById('admin-controls').classList.remove('hidden');
+            } else {
+                document.getElementById('token-section').classList.remove('hidden');
+            }
         }
 
         // Store authentication in session
