@@ -2,8 +2,9 @@ name: Update Podcast Episodes
 
 on:
   schedule:
-    # Run daily at 12:00 PM UTC (adjust timezone as needed)
-    - cron: '0 12 * * *'
+    # Run daily at 12:00 PM Israel Time (9:00 AM UTC)
+    # This accounts for DST (UTC+3) - will be 11:00 AM IST during standard time (UTC+2)
+    - cron: '0 9 * * *'
   workflow_dispatch:
     inputs:
       podcast_filter:
