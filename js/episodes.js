@@ -34,12 +34,8 @@ async function loadEpisodeData() {
         const currentPath = window.location.pathname;
         let dataPath;
 
-        if (currentPath.includes('/hebrew-home/')) {
+        if (currentPath.includes('/hebrew-home/') || currentPath.includes('/series/')) {
             dataPath = '../data/episodes.json';
-        } else if (currentPath.includes('/series/') || currentPath.includes('/podcast.html')) {
-            dataPath = '../data/episodes.json';
-        } else if (currentPath === '/' || currentPath.endsWith('/index.html')) {
-            dataPath = 'data/episodes.json';
         } else {
             dataPath = 'data/episodes.json';
         }
@@ -82,6 +78,7 @@ function displayEpisodes(episodes, resetPage = true) {
     let container = document.getElementById('episodesGrid') ||
                    document.getElementById('episodes-grid');
     if (!container) return;
+    container.style.display = '';
 
     if (resetPage) {
         currentPage = 1;
@@ -165,6 +162,7 @@ function displaySeries() {
     const container = document.getElementById('seriesGrid');
     if (!container || !episodeData) return;
 
+    container.style.display = '';
     container.innerHTML = '';
 
     Object.keys(episodeData.series).forEach(seriesName => {
