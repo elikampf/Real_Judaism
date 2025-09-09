@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Feedback - Real Judaism</title>
+    <meta name="description" content="Help us improve the Real Judaism website by sharing your feedback about our beta version.">
+    <meta name="keywords" content="Real Judaism, feedback, beta testing, website improvement">
+    <meta name="author" content="Real Judaism">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <!-- Google Analytics 4 -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        // Check for cookie consent before enabling GA
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('cookie-consent');
+            if (consent === 'accepted') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_features': false
+                });
+            }
+        }
+
+        // Initialize GA with consent check
+        checkCookieConsent();
+
+        // Listen for consent changes
+        window.addEventListener('cookie-consent-changed', function(e) {
+            if (e.detail.consent === 'accepted') {
+                gtag('config', 'GA_MEASUREMENT_ID', {
+                    'anonymize_ip': true,
+                    'allow_google_signals': false,
+                    'allow_ad_features': false
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <nav class="main-navigation">
+            <div class="nav-container">
+                <div class="nav-brand-left">
+                    <a href="index.html" class="brand-link">
+                        <span class="tagline">Real Judaism</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">Podcast <span class="dropdown-icon">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="podcast.html" class="dropdown-link">All Podcasts</a></li>
+                            <li><a href="series/dating.html" class="dropdown-link">Dating</a></li>
+                            <li><a href="series/shalom-bayis.html" class="dropdown-link">Shalom Bayis</a></li>
+                            <li><a href="series/shmiras-einayim.html" class="dropdown-link">Shmiras Einayim</a></li>
+                            <li><a href="series/shmiras-halashon.html" class="dropdown-link">Shmiras Halashon</a></li>
+                            <li><a href="series/shabbos.html" class="dropdown-link">Shabbos Malkesa</a></li>
+                            <li><a href="series/mesilas-yesharim.html" class="dropdown-link">Mesilas Yesharim</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="hebrew-home/index.html" class="nav-link hebrew-link">הבית הישראלי</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Beta Banner Notice -->
+    <div class="beta-banner">
+        <div class="beta-banner-content">
+            <div class="beta-banner-text">
+                <span class="beta-warning-icon">⚠️</span>
+                <strong>Beta Version – Under Active Development</strong>
+                <span class="beta-description">This site is in beta and is being updated frequently. Features and content may change at any time.</span>
+            </div>
+            <button class="beta-banner-close" aria-label="Close banner" onclick="closeBetaBanner()">×</button>
+        </div>
+    </div>
+
+    <main class="main-content" id="main-content">
+        <!-- Feedback Hero Section -->
+        <section class="hero-section-dark">
+            <div class="hero-background">
+                <img src="images/background2.png" alt="" class="hero-bg-image" aria-hidden="true">
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="hero-container">
+                <div class="hero-content-center">
+                    <h1 class="hero-title">
+                        Share Your Feedback
+                    </h1>
+                    <p class="hero-description">
+                        Help us make Real Judaism the best it can be! Your thoughts and suggestions are incredibly valuable as we continue to improve our beta version.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Form Section -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2 class="contact-title">We'd Love Your Feedback</h2>
+                        <p class="contact-description">
+                            Please fill out the form below — it only takes a minute. Your input helps us create a better experience for everyone.
+                        </p>
+                        <div class="feedback-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">💡</span>
+                                <div class="feature-text">
+                                    <h4>What We Love Hearing</h4>
+                                    <p>What's working well, what you enjoy, and what features you'd like to see</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔧</span>
+                                <div class="feature-text">
+                                    <h4>How We Can Improve</h4>
+                                    <p>Suggestions for new features, design changes, or functionality enhancements</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🐛</span>
+                                <div class="feature-text">
+                                    <h4>Bug Reports</h4>
+                                    <p>Any issues, errors, or problems you've encountered while using the site</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="contact-form feedback-form" name="feedback" method="POST" netlify-honeypot="bot-field" data-netlify="true" action="/thank-you">
+                        <input type="hidden" name="form-name" value="feedback">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                        </p>
+
+                        <div class="form-group">
+                            <label for="name" class="label">Name (optional)</label>
+                            <input type="text" id="name" name="name" class="input" placeholder="Your name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="label">Email (optional, if you'd like us to follow up)</label>
+                            <input type="email" id="email" name="email" class="input" placeholder="your.email@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label">How would you rate your experience on this site so far?</label>
+                            <div class="rating-stars">
+                                <div class="stars-container">
+                                    <input type="radio" id="star5" name="rating" value="5" class="star-radio">
+                                    <label for="star5" class="star-label">★</label>
+                                    <input type="radio" id="star4" name="rating" value="4" class="star-radio">
+                                    <label for="star4" class="star-label">★</label>
+                                    <input type="radio" id="star3" name="rating" value="3" class="star-radio">
+                                    <label for="star3" class="star-label">★</label>
+                                    <input type="radio" id="star2" name="rating" value="2" class="star-radio">
+                                    <label for="star2" class="star-label">★</label>
+                                    <input type="radio" id="star1" name="rating" value="1" class="star-radio">
+                                    <label for="star1" class="star-label">★</label>
+                                </div>
+                                <div class="rating-text">
+                                    <span class="rating-label" data-rating="1">Poor</span>
+                                    <span class="rating-label" data-rating="2">Fair</span>
+                                    <span class="rating-label" data-rating="3">Good</span>
+                                    <span class="rating-label" data-rating="4">Very Good</span>
+                                    <span class="rating-label" data-rating="5">Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="likes" class="label">What do you like about the new site?</label>
+                            <textarea id="likes" name="likes" class="textarea" rows="4" placeholder="What features or aspects of the site do you enjoy? What's working well for you?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="improvements" class="label">What could be improved or added?</label>
+                            <textarea id="improvements" name="improvements" class="textarea" rows="4" placeholder="Any suggestions for new features, design changes, or functionality improvements?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bugs" class="label">Any bugs or issues you ran into?</label>
+                            <textarea id="bugs" name="bugs" class="textarea" rows="4" placeholder="Describe any problems, errors, or technical issues you've encountered."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-cta-white-blue btn-full">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Left Column - About -->
+                <div class="footer-about">
+                    <h3 class="footer-section-title">Real Judaism</h3>
+                    <div class="footer-contact-info">
+                        <p class="contact-label">📧 Contact:</p>
+                        <p><a href="mailto:rabbiariklapper@gmail.com" class="footer-email">rabbiariklapper@gmail.com</a></p>
+                        <p class="contact-label">🛠️ Technical Support:</p>
+                        <p><a href="mailto:eli@elipodcastproductions.com" class="footer-email">eli@elipodcastproductions.com</a></p>
+                    </div>
+                </div>
+
+                <!-- Center Column - Quick Links -->
+                <div class="footer-explore">
+                    <h4 class="footer-section-title">Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="podcast.html" class="footer-link">All Podcast Series</a></li>
+                        <li><a href="about.html" class="footer-link">About Rabbi Klapper</a></li>
+                        <li><a href="#contact" class="footer-link">Contact</a></li>
+                        <li><a href="blog.html" class="footer-link">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Right Column - Legal & Credits -->
+                <div class="footer-legal">
+                    <h4 class="footer-section-title">Information</h4>
+                    <ul class="footer-links">
+                        <li><a href="privacy-policy.html" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html" class="footer-link">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="beta-footer-note">
+                    <span class="beta-icon">🚧</span>
+                    This site is currently in beta and updated frequently (every few days). Thanks for your patience and feedback as we improve!
+                </p>
+                <p class="footer-credit-centered">Website & Podcast Design: <a href="https://elipodcastproductions.com" target="_blank" rel="noopener" class="footer-credit-link"><strong>Eli Podcast Productions</strong></a></p>
+                <p>&copy; 2025 Real Judaism. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/main.js"></script>
+    <script src="js/feedback.js"></script>
+    <script src="js/cookie-consent.js"></script>
+
+</body>
+</html>
+
+
+
+
