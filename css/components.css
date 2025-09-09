@@ -866,6 +866,49 @@ html {
     z-index: 2;
 }
 
+/* Season Navigation */
+.season-navigation {
+    margin: var(--space-6) 0 var(--space-4) 0;
+    display: flex;
+    justify-content: center;
+}
+
+.season-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: linear-gradient(135deg,
+        rgba(55, 65, 81, 0.1) 0%,
+        rgba(55, 65, 81, 0.15) 100%);
+    color: var(--color-primary);
+    text-decoration: none;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-base);
+    transition: all var(--transition-normal);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.season-nav-link:hover {
+    background: linear-gradient(135deg,
+        rgba(55, 65, 81, 0.15) 0%,
+        rgba(55, 65, 81, 0.25) 100%);
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.season-nav-link:active {
+    transform: translateY(0);
+}
+
+.nav-icon {
+    font-size: var(--text-lg);
+    opacity: 0.8;
+}
+
 /* ============================================
    RESPONSIVE DESIGN FOR SEASON HEADERS
    ============================================ */
@@ -911,6 +954,19 @@ html {
     }
 
     .season-title::before {
+        font-size: var(--text-base);
+    }
+
+    .season-navigation {
+        margin: var(--space-4) 0 var(--space-2) 0;
+    }
+
+    .season-nav-link {
+        padding: var(--space-2) var(--space-4);
+        font-size: var(--text-sm);
+    }
+
+    .nav-icon {
         font-size: var(--text-base);
     }
 }

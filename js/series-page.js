@@ -149,13 +149,18 @@ function displayEpisodes() {
             seasonGroups[season].push(episode);
         });
 
-        // Display seasons in order (Season 2 first, then Season 1)
-        const seasonOrder = ['Season 2', 'Season 1', 'Other'];
+        // Display seasons in order (Season 1 first, then Season 2)
+        const seasonOrder = ['Season 1', 'Season 2', 'Other'];
         seasonOrder.forEach(seasonName => {
             if (seasonGroups[seasonName] && seasonGroups[seasonName].length > 0) {
                 // Create season section
                 const seasonSection = document.createElement('div');
                 seasonSection.className = 'season-section';
+
+                // Add ID for Season 2 navigation
+                if (seasonName === 'Season 2') {
+                    seasonSection.id = 'season-2';
+                }
 
                 // Add season header
                 const seasonHeader = createSeasonHeader(seasonName);
