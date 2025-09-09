@@ -727,3 +727,77 @@ html {
 .blog-card:hover {
     will-change: auto;
 }
+
+/* ============================================
+   SEASON HEADERS FOR SERIES PAGES
+   ============================================ */
+
+.season-header {
+    width: 100%;
+    margin: var(--space-8) 0 var(--space-4) 0;
+    padding: 0;
+}
+
+.season-header-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+}
+
+.season-title {
+    font-family: var(--font-family);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-charcoal);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    flex-shrink: 0;
+}
+
+.season-divider {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--color-primary) 20%,
+        var(--color-primary) 80%,
+        transparent 100%);
+    border-radius: 1px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN FOR SEASON HEADERS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .season-header-content {
+        gap: var(--space-3);
+        padding: var(--space-3) 0;
+    }
+
+    .season-title {
+        font-size: var(--text-xl);
+    }
+
+    .season-divider {
+        height: 1px;
+    }
+}
+
+@media (max-width: 480px) {
+    .season-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+    }
+
+    .season-title {
+        font-size: var(--text-lg);
+    }
+}

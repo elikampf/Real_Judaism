@@ -115,7 +115,7 @@ function displayEpisodes() {
     const container = document.getElementById('episodes-grid');
     const loadingElement = document.getElementById('episodes-loading');
     const loadMoreContainer = document.getElementById('load-more-container');
-    
+
     if (!container) return;
 
     // Hide loading state
@@ -125,7 +125,7 @@ function displayEpisodes() {
 
     // Filter episodes based on current filter
     let filteredEpisodes = filterEpisodes(seriesEpisodes, currentFilter);
-    
+
     if (filteredEpisodes.length === 0) {
         showNoEpisodesState();
         return;
@@ -133,12 +133,28 @@ function displayEpisodes() {
 
     // Calculate episodes to show
     const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
-    
+
     // Clear container
     container.innerHTML = '';
 
-    // Create episode cards
+    // Track seasons for Shemiras Einayim
+    let currentSeason = null;
+    let seasonHeaderShown = false;
+
+    // Create episode cards with season demarcation for Shemiras Einayim
     episodesToShow.forEach((episode, index) => {
+        // Check if we need to add season demarcation for Shemiras Einayim
+        if (seriesPageCurrentSeries === 'shmiras-einayim') {
+            const episodeSeason = getEpisodeSeason(episode);
+            if (episodeSeason !== currentSeason) {
+                // Add season header
+                const seasonHeader = createSeasonHeader(episodeSeason);
+                container.appendChild(seasonHeader);
+                currentSeason = episodeSeason;
+                seasonHeaderShown = true;
+            }
+        }
+
         const episodeCard = createEpisodeCard(episode, index + 1);
         container.appendChild(episodeCard);
     });
@@ -653,6 +669,45 @@ function animateNumber(element, start, end, duration) {
     }
     
     requestAnimationFrame(updateNumber);
+}
+
+/**
+ * Get episode season based on date
+ */
+function getEpisodeSeason(episode) {
+    if (!episode.date) return null;
+
+    // Parse date (DD-MM-YY format)
+    const dateStr = episode.date;
+    const year = parseInt(dateStr.split('-')[2]);
+
+    // Season 2: 2025 episodes
+    if (year === 25 || year === 2025) {
+        return 'Season 2';
+    }
+    // Season 1: 2021-2022 episodes
+    else if (year === 21 || year === 22 || year === 2021 || year === 2022) {
+        return 'Season 1';
+    }
+
+    return null;
+}
+
+/**
+ * Create season header element
+ */
+function createSeasonHeader(seasonName) {
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'season-header';
+
+    headerDiv.innerHTML = `
+        <div class="season-header-content">
+            <h3 class="season-title">${seasonName}</h3>
+            <div class="season-divider"></div>
+        </div>
+    `;
+
+    return headerDiv;
 }
 
 /**
