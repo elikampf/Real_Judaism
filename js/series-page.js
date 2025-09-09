@@ -166,17 +166,17 @@ function displayEpisodes() {
                 const seasonHeader = createSeasonHeader(seasonName);
                 seasonSection.appendChild(seasonHeader);
 
-                // Create episodes grid for this season
-                const seasonGrid = document.createElement('div');
-                seasonGrid.className = 'season-episodes-grid';
+                // Create a container for the episodes within this season
+                const seasonEpisodesContainer = document.createElement('div');
+                seasonEpisodesContainer.className = 'season-episodes-grid';
 
                 // Add episodes for this season
                 seasonGroups[seasonName].forEach((episode, index) => {
                     const episodeCard = createEpisodeCard(episode, index + 1, seasonName);
-                    seasonGrid.appendChild(episodeCard);
+                    seasonEpisodesContainer.appendChild(episodeCard);
                 });
 
-                seasonSection.appendChild(seasonGrid);
+                seasonSection.appendChild(seasonEpisodesContainer); // Append the grid container to the season section
                 container.appendChild(seasonSection);
             }
         });
