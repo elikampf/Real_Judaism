@@ -137,27 +137,51 @@ function displayEpisodes() {
     // Clear container
     container.innerHTML = '';
 
-    // Track seasons for Shemiras Einayim
-    let currentSeason = null;
-    let seasonHeaderShown = false;
-
-    // Create episode cards with season demarcation for Shemiras Einayim
-    episodesToShow.forEach((episode, index) => {
-        // Check if we need to add season demarcation for Shemiras Einayim
-        if (seriesPageCurrentSeries === 'shmiras-einayim') {
-            const episodeSeason = getEpisodeSeason(episode);
-            if (episodeSeason !== currentSeason) {
-                // Add season header
-                const seasonHeader = createSeasonHeader(episodeSeason);
-                container.appendChild(seasonHeader);
-                currentSeason = episodeSeason;
-                seasonHeaderShown = true;
+    // For Shmiras Einayim, organize episodes by seasons
+    if (seriesPageCurrentSeries === 'shmiras-einayim') {
+        // Group episodes by season
+        const seasonGroups = {};
+        episodesToShow.forEach(episode => {
+            const season = getEpisodeSeason(episode) || 'Other';
+            if (!seasonGroups[season]) {
+                seasonGroups[season] = [];
             }
-        }
+            seasonGroups[season].push(episode);
+        });
 
-        const episodeCard = createEpisodeCard(episode, index + 1);
-        container.appendChild(episodeCard);
-    });
+        // Display seasons in order (Season 2 first, then Season 1)
+        const seasonOrder = ['Season 2', 'Season 1', 'Other'];
+        seasonOrder.forEach(seasonName => {
+            if (seasonGroups[seasonName] && seasonGroups[seasonName].length > 0) {
+                // Create season section
+                const seasonSection = document.createElement('div');
+                seasonSection.className = 'season-section';
+
+                // Add season header
+                const seasonHeader = createSeasonHeader(seasonName);
+                seasonSection.appendChild(seasonHeader);
+
+                // Create episodes grid for this season
+                const seasonGrid = document.createElement('div');
+                seasonGrid.className = 'season-episodes-grid';
+
+                // Add episodes for this season
+                seasonGroups[seasonName].forEach((episode, index) => {
+                    const episodeCard = createEpisodeCard(episode, index + 1, seasonName);
+                    seasonGrid.appendChild(episodeCard);
+                });
+
+                seasonSection.appendChild(seasonGrid);
+                container.appendChild(seasonSection);
+            }
+        });
+    } else {
+        // For other series, display normally
+        episodesToShow.forEach((episode, index) => {
+            const episodeCard = createEpisodeCard(episode, index + 1);
+            container.appendChild(episodeCard);
+        });
+    }
 
     // Show/hide load more button
     const loadMoreBtn = document.getElementById('load-more-btn');
@@ -179,7 +203,7 @@ function displayEpisodes() {
 /**
  * Create episode card element
  */
-function createEpisodeCard(episode, displayIndex) {
+function createEpisodeCard(episode, displayIndex, seasonName = null) {
     const card = document.createElement('div');
     card.className = 'episode-card-series';
 
@@ -192,7 +216,11 @@ function createEpisodeCard(episode, displayIndex) {
 
     console.log(`Creating episode card for: ${title}, Spotify URL: ${spotifyUrl}`);
 
+    // Add season badge if provided
+    const seasonBadge = seasonName ? `<div class="episode-season-badge">${seasonName.replace('Season ', 'S')}</div>` : '';
+
     card.innerHTML = `
+        ${seasonBadge}
         <div class="episode-spotify-container">
             ${spotifyUrl ? `
                 <iframe
@@ -700,9 +728,13 @@ function createSeasonHeader(seasonName) {
     const headerDiv = document.createElement('div');
     headerDiv.className = 'season-header';
 
+    // Add episode count for this season if possible
+    const episodeCount = seriesEpisodes.filter(ep => getEpisodeSeason(ep) === seasonName).length;
+    const countText = episodeCount > 0 ? ` (${episodeCount} episodes)` : '';
+
     headerDiv.innerHTML = `
         <div class="season-header-content">
-            <h3 class="season-title">${seasonName}</h3>
+            <h3 class="season-title">${seasonName}${countText}</h3>
             <div class="season-divider"></div>
         </div>
     `;
