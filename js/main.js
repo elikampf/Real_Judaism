@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLazyLoading();
     initializeCardHoverEffects();
     initializePerformanceOptimizations();
+    initializeBetaBanner();
+    initializeBetaPopup();
 });
 
 /**
@@ -463,6 +465,84 @@ function handleSeriesCardClick(e) {
     if (titleElement) {
         const seriesName = titleElement.textContent.trim();
         trackSeriesCardClick(seriesName, 'main');
+    }
+}
+
+/**
+ * Initialize Beta Banner
+ */
+function initializeBetaBanner() {
+    const banner = document.querySelector('.beta-banner');
+    if (banner) {
+        // Check if user has already dismissed the banner
+        const bannerDismissed = localStorage.getItem('beta-banner-dismissed');
+        if (bannerDismissed === 'true') {
+            banner.classList.add('hidden');
+        }
+
+        // Make closeBetaBanner function globally available
+        window.closeBetaBanner = closeBetaBanner;
+    }
+}
+
+/**
+ * Initialize Beta Popup for Homepage
+ */
+function initializeBetaPopup() {
+    // Only show popup on homepage
+    if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+        const popup = document.getElementById('beta-welcome-popup');
+        if (popup) {
+            // Check if user has already seen the popup this session
+            const popupShown = sessionStorage.getItem('beta-popup-shown');
+            if (!popupShown) {
+                // Show popup after a short delay
+                setTimeout(() => {
+                    showBetaPopup();
+                }, 1500); // 1.5 seconds delay
+            }
+
+            // Make closeBetaPopup function globally available
+            window.closeBetaPopup = closeBetaPopup;
+        }
+    }
+}
+
+/**
+ * Close Beta Banner
+ */
+function closeBetaBanner() {
+    const banner = document.querySelector('.beta-banner');
+    if (banner) {
+        banner.classList.add('hidden');
+        // Store preference in localStorage
+        localStorage.setItem('beta-banner-dismissed', 'true');
+    }
+}
+
+/**
+ * Show Beta Popup
+ */
+function showBetaPopup() {
+    const popup = document.getElementById('beta-welcome-popup');
+    if (popup) {
+        popup.classList.add('show');
+        // Prevent body scrolling when popup is open
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+/**
+ * Close Beta Popup
+ */
+function closeBetaPopup() {
+    const popup = document.getElementById('beta-welcome-popup');
+    if (popup) {
+        popup.classList.remove('show');
+        // Restore body scrolling
+        document.body.style.overflow = '';
+        // Mark as shown for this session
+        sessionStorage.setItem('beta-popup-shown', 'true');
     }
 }
 

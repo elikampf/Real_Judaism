@@ -61,6 +61,18 @@
         </nav>
     </header>
 
+    <!-- Beta Banner Notice -->
+    <div class="beta-banner">
+        <div class="beta-banner-content">
+            <div class="beta-banner-text">
+                <span class="beta-warning-icon">⚠️</span>
+                <strong>Beta Version – Under Active Development</strong>
+                <span class="beta-description">This site is in beta and is being updated frequently. Features and content may change at any time.</span>
+            </div>
+            <button class="beta-banner-close" aria-label="Close banner" onclick="closeBetaBanner()">×</button>
+        </div>
+    </div>
+
     <main class="main-content" id="main-content">
         <!-- Hero Section -->
         <section class="hero-section-dark">
@@ -308,11 +320,46 @@
             </div>
             
             <div class="footer-bottom">
+                <p class="beta-footer-note">
+                    <span class="beta-icon">🚧</span>
+                    This site is currently in beta and updated frequently (every few days). Thanks for your patience and feedback as we improve!
+                </p>
                 <p class="footer-credit-centered">Website & Podcast Design: <a href="https://elipodcastproductions.com" target="_blank" rel="noopener" class="footer-credit-link"><strong>Eli Podcast Productions</strong></a></p>
                 <p>&copy; 2025 Real Judaism. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <!-- Beta Welcome Popup -->
+    <div id="beta-welcome-popup" class="beta-popup-overlay">
+        <div class="beta-popup-content">
+            <button class="beta-popup-close" onclick="closeBetaPopup()" aria-label="Close popup">×</button>
+
+            <div class="beta-popup-header">
+                <span class="beta-popup-icon">🚀</span>
+                <h2 class="beta-popup-title">Welcome to the Beta Version of Our New Site!</h2>
+            </div>
+
+            <div class="beta-popup-body">
+                <p class="beta-popup-message">
+                    Thank you for visiting our new site. This version is still in beta testing, which means we're actively improving it over the next few weeks. You may notice missing features, design changes, or the occasional bug as we update and refine.
+                </p>
+
+                <p class="beta-popup-message">
+                    Your feedback is incredibly valuable. Please take a few minutes to share your thoughts — what's working well, what's confusing, and what you'd like to see improved.
+                </p>
+
+                <div class="beta-popup-actions">
+                    <a href="feedback.html" class="beta-popup-btn beta-popup-btn-primary">
+                        Share Your Feedback
+                    </a>
+                    <button class="beta-popup-btn beta-popup-btn-secondary" onclick="closeBetaPopup()">
+                        Continue to Site
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- JavaScript Files -->
     <script src="js/main.js"></script>

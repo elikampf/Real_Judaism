@@ -58,7 +58,12 @@ async function loadSeriesData() {
 
         // Load from specific series JSON file
         const seriesFileName = `${seriesPageCurrentSeries}_episodes.json`;
-        const response = await fetch(`../data/${seriesFileName}?v=` + Date.now());
+
+        // Check if we're on a Hebrew page (in hebrew-home directory)
+        const isHebrewPage = window.location.pathname.includes('/hebrew-home/');
+        const dataPath = isHebrewPage ? '../../data/' : '../data/';
+
+        const response = await fetch(`${dataPath}${seriesFileName}?v=` + Date.now());
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -131,17 +136,14 @@ function displayEpisodes() {
         return;
     }
 
-    // Calculate episodes to show
-    const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
-
     // Clear container
     container.innerHTML = '';
 
     // For Shmiras Einayim, organize episodes by seasons
     if (seriesPageCurrentSeries === 'shmiras-einayim') {
-        // Group episodes by season
+        // Group episodes by season using ALL filtered episodes
         const seasonGroups = {};
-        episodesToShow.forEach(episode => {
+        filteredEpisodes.forEach(episode => {
             const season = getEpisodeSeason(episode) || 'Other';
             if (!seasonGroups[season]) {
                 seasonGroups[season] = [];
@@ -157,9 +159,11 @@ function displayEpisodes() {
                 const seasonSection = document.createElement('div');
                 seasonSection.className = 'season-section';
 
-                // Add ID for Season 2 navigation
+                // Add ID for season navigation
                 if (seasonName === 'Season 2') {
                     seasonSection.id = 'season-2';
+                } else if (seasonName === 'Season 1') {
+                    seasonSection.id = 'season-1';
                 }
 
                 // Add season header
@@ -170,27 +174,70 @@ function displayEpisodes() {
                 const seasonEpisodesContainer = document.createElement('div');
                 seasonEpisodesContainer.className = 'season-episodes-grid';
 
-                // Add episodes for this season
+                // For Season 1, limit initial episodes and add load more
+                if (seasonName === 'Season 1') {
+                    const initialEpisodes = seasonGroups[seasonName].slice(0, 9); // Show first 9 episodes (3 rows)
+                    const remainingEpisodes = seasonGroups[seasonName].slice(9);
+
+                    // Add initial episodes
+                    initialEpisodes.forEach((episode, index) => {
+                        const episodeCard = createEpisodeCard(episode, index + 1, seasonName);
+                        seasonEpisodesContainer.appendChild(episodeCard);
+                    });
+
+                    seasonSection.appendChild(seasonEpisodesContainer);
+
+                    // Add load more button for Season 1 if there are more episodes
+                    if (remainingEpisodes.length > 0) {
+                        const loadMoreContainer = document.createElement('div');
+                        loadMoreContainer.className = 'season-load-more';
+                        loadMoreContainer.id = 'season1-load-more';
+
+                        const loadMoreBtn = document.createElement('button');
+                        loadMoreBtn.className = 'btn-secondary';
+                        loadMoreBtn.id = 'season1-load-more-btn';
+                        loadMoreBtn.textContent = `Load More Season 1 Episodes (${remainingEpisodes.length} remaining)`;
+
+                        loadMoreBtn.addEventListener('click', function() {
+                            // Hide the button
+                            loadMoreContainer.style.display = 'none';
+
+                            // Add remaining episodes
+                            remainingEpisodes.forEach((episode, index) => {
+                                const episodeCard = createEpisodeCard(episode, initialEpisodes.length + index + 1, seasonName);
+                                seasonEpisodesContainer.appendChild(episodeCard);
+                            });
+                        });
+
+                        loadMoreContainer.appendChild(loadMoreBtn);
+                        seasonSection.appendChild(loadMoreContainer);
+                    }
+                } else {
+                    // For other seasons, show all episodes
                 seasonGroups[seasonName].forEach((episode, index) => {
                     const episodeCard = createEpisodeCard(episode, index + 1, seasonName);
                     seasonEpisodesContainer.appendChild(episodeCard);
                 });
 
-                seasonSection.appendChild(seasonEpisodesContainer); // Append the grid container to the season section
+                    seasonSection.appendChild(seasonEpisodesContainer);
+                }
+
                 container.appendChild(seasonSection);
             }
         });
     } else {
-        // For other series, display normally
+        // For other series, display normally with pagination
+        const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
         episodesToShow.forEach((episode, index) => {
             const episodeCard = createEpisodeCard(episode, index + 1);
             container.appendChild(episodeCard);
         });
     }
 
-    // Show/hide load more button
+    // Show/hide load more button (only for non-season series)
     const loadMoreBtn = document.getElementById('load-more-btn');
-    if (loadMoreBtn) {
+    if (loadMoreBtn && seriesPageCurrentSeries !== 'shmiras-einayim') {
+        const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
         if (episodesToShow.length < filteredEpisodes.length) {
             loadMoreBtn.style.display = 'block';
         } else {
@@ -453,7 +500,12 @@ async function loadRelatedSeries() {
     for (const seriesName of relatedSeries.slice(0, 3)) {
         try {
             const seriesFileName = `${seriesName}_episodes.json`;
-            const response = await fetch(`../data/${seriesFileName}?v=` + Date.now());
+
+            // Check if we're on a Hebrew page (in hebrew-home directory)
+            const isHebrewPage = window.location.pathname.includes('/hebrew-home/');
+            const dataPath = isHebrewPage ? '../../data/' : '../data/';
+
+            const response = await fetch(`${dataPath}${seriesFileName}?v=` + Date.now());
             if (response.ok) {
                 const seriesData = await response.json();
                 const episodeCount = seriesData.episodes ? seriesData.episodes.length : 0;
