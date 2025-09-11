@@ -4,7 +4,7 @@
 .env.*.local
 
 # Spotify credentials (NEVER commit these!)
-episode_detector_config.json
+# episode_detector_config.json
 
 # Python
 __pycache__/
