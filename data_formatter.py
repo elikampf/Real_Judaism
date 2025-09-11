@@ -103,27 +103,43 @@ class EpisodeFormatter:
     def format_episode(self, spotify_episode, series_name, episode_number=None):
         """Format a single Spotify episode to match existing structure"""
         try:
-            # Use provided episode number or determine from existing data
+            # Ensure episode_number is an integer
             if episode_number is None:
-                # This would need existing episodes to determine - will be handled by caller
-                pass
+                episode_number = 1
+
+            # Handle potential None values in spotify_episode
+            episode_id = spotify_episode.get('id') or 'unknown'
+            episode_name = spotify_episode.get('name') or 'Unknown Title'
+            description = spotify_episode.get('description') or ''
+            release_date = spotify_episode.get('release_date') or ''
+            duration_ms = spotify_episode.get('duration_ms') or 0
 
             formatted_episode = {
-                "title": spotify_episode.get('name', 'Unknown Title'),
-                "description": self.clean_description(spotify_episode.get('description', '')),
-                "date": self.format_date(spotify_episode.get('release_date', '')),
-                "length": self.format_duration(spotify_episode.get('duration_ms', 0)),
-                "spotify_embed_url": self.generate_embed_url(spotify_episode.get('id', '')),
+                "title": episode_name,
+                "description": self.clean_description(description),
+                "date": self.format_date(release_date),
+                "length": self.format_duration(duration_ms),
+                "spotify_embed_url": self.generate_embed_url(episode_id),
                 "series": series_name,
-                "episode_number": episode_number or 1,  # Will be updated by caller
+                "episode_number": int(episode_number),  # Ensure it's an integer
                 "file_path": self.generate_file_path(series_name)
             }
 
             return formatted_episode
 
         except Exception as e:
-            print(f"❌ Error formatting episode '{spotify_episode.get('name', 'Unknown')}': {e}")
-            return None
+            print(f"⚠️  Warning: Error formatting episode '{spotify_episode.get('name', 'Unknown') if spotify_episode else 'Unknown'}': {e}")
+            # Return a minimal valid episode instead of None
+            return {
+                "title": "Episode formatting error",
+                "description": f"Error processing episode: {str(e)}",
+                "date": "01-01-25",
+                "length": "00:00",
+                "spotify_embed_url": "https://open.spotify.com/embed/episode/error",
+                "series": series_name,
+                "episode_number": episode_number or 1,
+                "file_path": self.generate_file_path(series_name)
+            }
 
     def format_multiple_episodes(self, spotify_episodes, series_name, existing_episodes=None):
         """Format multiple episodes and assign proper episode numbers"""
@@ -146,7 +162,8 @@ class EpisodeFormatter:
             formatted = self.format_episode(spotify_episode, series_name, next_episode_num)
             if formatted:
                 formatted_episodes.append(formatted)
-                next_episode_num += 1
+            # Always increment episode number, even if formatting failed
+            next_episode_num += 1
 
         return formatted_episodes
 
