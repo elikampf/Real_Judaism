@@ -1,26 +1,6 @@
 {
   "episodes": [
     {
-      "title": "Daily Chafetz Chaim - Day 156",
-      "description": "Don’t Speak to Non-JewsLashon Hara to a non-Jew can damage far more than just reputations. It harms communities, violates halacha, and desecrates Hashem’s name.Hosted by Rabbi Ari Klapper and produced by Eli Podcast Productions, this episode is part of the Real Judaism series, available on RealJudaism.org. Don't forget to subscribe and share to stay connected with our daily lessons and timeless Torah insights!",
-      "date": "10-09-25",
-      "length": "2:09",
-      "spotify_embed_url": "https://open.spotify.com/embed/episode/5UrHFilHVxrhqUdWmA5bk9",
-      "series": "shmiras-halashon",
-      "episode_number": 157,
-      "file_path": "data\\Shmiras Halashon_episodes.csv"
-    },
-    {
-      "title": "Daily Chafetz Chaim - Day 157",
-      "description": "The Sin of InformingReporting a fellow Jew to authorities—even with true information—falls under malshinus, one of the gravest aveiros. Always consult a Rav before taking such steps.Hosted by Rabbi Ari Klapper and produced by Eli Podcast Productions, this episode is part of the Real Judaism series, available on RealJudaism.org. Don't forget to subscribe and share to stay connected with our daily lessons and timeless Torah insights!",
-      "date": "11-09-25",
-      "length": "1:59",
-      "spotify_embed_url": "https://open.spotify.com/embed/episode/1ARFTDuLdmvpxkozq5uRZP",
-      "series": "shmiras-halashon",
-      "episode_number": 156,
-      "file_path": "data\\Shmiras Halashon_episodes.csv"
-    },
-    {
       "title": "Daily Chafetz Chaim - Day 155",
       "description": "Tochacha or Talk?If you're truly seeking tochacha, why not give it yourself? Don't use others as messengers unless they're better suited—with care and humility.Hosted by Rabbi Ari Klapper and produced by Eli Podcast Productions, this episode is part of the Real Judaism series, available on RealJudaism.org. Don't forget to subscribe and share to stay connected with our daily lessons and timeless Torah insights! ",
       "date": "07-09-25",
@@ -311,16 +291,6 @@
       "file_path": ""
     },
     {
-      "title": "Daily Chafetz Chaim - Day 126",
-      "description": "Public Doesn't Mean ProvenEven if Lashon Hara is widely publicized or shared online, you still may not believe it. Truth isn't determined by volume or visibility—only by proper investigation.Hosted by Rabbi Ari Klapper and produced by Eli Podcast Productions, this episode is part of the Real Judaism series, available on RealJudaism.org. Don't forget to subscribe and share to stay connected with our daily lessons and timeless Torah insights!",
-      "date": "02-07-25",
-      "length": "00:01:55",
-      "spotify_embed_url": "https://open.spotify.com/embed/episode/0kRVOQAlxKr3aYljIQxHwv",
-      "series": "Daily Chafetz Chaim",
-      "episode_number": 126,
-      "file_path": ""
-    },
-    {
       "title": "Daily Chafetz Chaim - Day 125",
       "description": "Undoing the Damage of BeliefIf you already accepted Lashon Hara, do teshuvaâ€”reject it in your heart, reflect on alternate explanations, and work to uproot belief from within.Hosted by Rabbi Ari Klapper and produced by Eli Podcast Productions, this episode is part of the Real Judaism series, available on RealJudaism.org. Don't forget to subscribe and share to stay connected with our daily lessons and timeless Torah insights!",
       "date": "29-06-25",
@@ -328,6 +298,16 @@
       "spotify_embed_url": "https://open.spotify.com/embed/episode/3KAGA4sfYzdyrNfh67imwD",
       "series": "Daily Chafetz Chaim",
       "episode_number": 125,
+      "file_path": ""
+    },
+    {
+      "title": "Daily Chafetz Chaim - Day 126",
+      "description": "Public Doesn't Mean ProvenEven if Lashon Hara is widely publicized or shared online, you still may not believe it. Truth isn't determined by volume or visibility—only by proper investigation.Hosted by Rabbi Ari Klapper and produced by Eli Podcast Productions, this episode is part of the Real Judaism series, available on RealJudaism.org. Don't forget to subscribe and share to stay connected with our daily lessons and timeless Torah insights!",
+      "date": "02-07-25",
+      "length": "00:01:55",
+      "spotify_embed_url": "https://open.spotify.com/embed/episode/0kRVOQAlxKr3aYljIQxHwv",
+      "series": "Daily Chafetz Chaim",
+      "episode_number": 126,
       "file_path": ""
     },
     {
