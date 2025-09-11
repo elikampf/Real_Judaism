@@ -30,32 +30,77 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /**
- * Load episode data from JSON file
+ * Load episode data from individual series JSON files
  */
 async function loadEpisodeData() {
     try {
-        // Determine the correct path to episodes.json based on current location
+        // Determine the correct data path based on current location
         const currentPath = window.location.pathname;
         let dataPath;
 
         if (currentPath.includes('/hebrew-home/') || currentPath.includes('/series/')) {
-            dataPath = '../data/episodes.json';
+            dataPath = '../data/';
         } else {
-            dataPath = 'data/episodes.json';
+            dataPath = 'data/';
         }
 
-        console.log('Loading episodes from:', dataPath);
-        console.log('Current path:', currentPath);
+        console.log('Loading episodes from individual series files in:', dataPath);
 
-        const response = await fetch(dataPath + '?v=' + Date.now());
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        // List of all series files to load
+        const seriesFiles = [
+            'dating_episodes.json',
+            'shalom-bayis_episodes.json',
+            'shalom-bayis-hebrew_episodes.json',
+            'shmiras-einayim_episodes.json',
+            'shmiras-einayim-hebrew_episodes.json',
+            'shmiras-halashon_episodes.json',
+            'shabbos_episodes.json',
+            'mesilas-yesharim_episodes.json'
+        ];
+
+        allEpisodes = [];
+        let totalSeries = 0;
+
+        // Load each series file and combine episodes
+        for (const fileName of seriesFiles) {
+            try {
+                const response = await fetch(dataPath + fileName + '?v=' + Date.now());
+                if (response.ok) {
+                    const seriesData = await response.json();
+                    const episodes = seriesData.episodes || [];
+
+                    // Add series info to each episode if not present
+                    episodes.forEach(episode => {
+                        if (!episode.series) {
+                            episode.series = fileName.replace('_episodes.json', '');
+                        }
+                    });
+
+                    allEpisodes.push(...episodes);
+                    totalSeries++;
+                    console.log(`✅ Loaded ${episodes.length} episodes from ${fileName}`);
+                } else {
+                    console.warn(`⚠️ Failed to load ${fileName}: ${response.status}`);
+                }
+            } catch (fileError) {
+                console.warn(`⚠️ Error loading ${fileName}:`, fileError.message);
+            }
         }
 
-        episodeData = await response.json();
-        allEpisodes = episodeData.episodes || [];
+        // Sort all episodes by date (newest first)
+        allEpisodes.sort((a, b) => {
+            const dateA = new Date(a.date.split('-').reverse().join('-'));
+            const dateB = new Date(b.date.split('-').reverse().join('-'));
+            return dateB - dateA;
+        });
 
-        console.log(`✅ Loaded ${allEpisodes.length} episodes from ${episodeData.series_count || Object.keys(episodeData.series || {}).length} series`);
+        console.log(`✅ Loaded ${allEpisodes.length} total episodes from ${totalSeries} series`);
+
+        // Store the data for other functions to use
+        episodeData = {
+            episodes: allEpisodes,
+            series_count: totalSeries
+        };
 
         // Display episodes and series
         displayEpisodes(allEpisodes);
