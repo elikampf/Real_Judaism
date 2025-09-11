@@ -97,8 +97,12 @@ def load_config(config_file="episode_detector_config.json"):
         # Validate that we have the required credentials
         if not config['spotify']['client_id'] or not config['spotify']['client_secret']:
             raise Exception(
-                "Spotify credentials not found. Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET environment variables, "
-                "or ensure they are in the config file (but do NOT commit the config file with real credentials to GitHub)"
+                "\n🚨 Spotify credentials not found!\n\n"
+                "For GitHub Actions: Add SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET to GitHub Secrets\n"
+                "For local testing: Set environment variables or create a .env file\n\n"
+                "See env-example.txt for instructions on setting up credentials securely.\n\n"
+                "🔗 GitHub Secrets setup: https://github.com/YOUR_USERNAME/YOUR_REPO/settings/secrets/actions\n"
+                "📝 Local setup: Copy env-example.txt to .env and fill in your credentials"
             )
 
         return config
