@@ -38,8 +38,9 @@ jobs:
 
     - name: Run episode update
       env:
-        # Add any additional environment variables here if needed
         PYTHONPATH: ${{ github.workspace }}
+        SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+        SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
       run: |
         echo "🎙️ Starting automated episode detection..."
         python episode_update.py --verbose

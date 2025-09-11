@@ -7,6 +7,7 @@ Handles OAuth2 authentication and token management for Spotify Web API
 import json
 import base64
 import requests
+import os
 from datetime import datetime, timedelta
 import time
 
@@ -84,10 +85,24 @@ class SpotifyAuth:
             raise Exception(f"API request failed: {e}")
 
 def load_config(config_file="episode_detector_config.json"):
-    """Load configuration from JSON file"""
+    """Load configuration from JSON file with environment variable override for secrets"""
     try:
         with open(config_file, 'r', encoding='utf-8-sig') as f:
-            return json.load(f)
+            config = json.load(f)
+
+        # Override with environment variables for security
+        config['spotify']['client_id'] = os.getenv('SPOTIFY_CLIENT_ID', config['spotify']['client_id'])
+        config['spotify']['client_secret'] = os.getenv('SPOTIFY_CLIENT_SECRET', config['spotify']['client_secret'])
+
+        # Validate that we have the required credentials
+        if not config['spotify']['client_id'] or not config['spotify']['client_secret']:
+            raise Exception(
+                "Spotify credentials not found. Please set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET environment variables, "
+                "or ensure they are in the config file (but do NOT commit the config file with real credentials to GitHub)"
+            )
+
+        return config
+
     except FileNotFoundError:
         raise Exception(f"Configuration file '{config_file}' not found")
     except json.JSONDecodeError as e:
