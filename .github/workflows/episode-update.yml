@@ -101,10 +101,11 @@ jobs:
 
     - name: Upload summary as artifact
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: episode-update-summary
         path: summary.md
+        retention-days: 7
 
     - name: Notification on failure
       if: failure()
