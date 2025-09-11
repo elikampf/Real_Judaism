@@ -102,7 +102,8 @@ def test_python_imports():
             failed_imports.append(f"{module}: {e}")
 
     if failed_imports:
-        print("❌ Import failures:"        for failure in failed_imports:
+        print("❌ Import failures:")
+        for failure in failed_imports:
             print(f"   {failure}")
         return False
     else:
