@@ -79,16 +79,6 @@
                          "series":  "dating",
                          "episode_number":  1,
                          "file_path":  "data\\Dating_episodes.csv"
-                     },
-                     {
-                         "title":  "Ep1. Dating Shiur",
-                         "description":  "Understand why the shidduch system is the best way to find your Bashert. A step by step approach to dating\u0026nbsp;for marriage.\n]]\u003e",
-                         "date":  "07-06-24",
-                         "length":  "00:35:02",
-                         "spotify_embed_url":  "https://open.spotify.com/embed/episode/95634081",
-                         "series":  "dating",
-                         "episode_number":  1,
-                         "file_path":  "data/dating_episodes.csv"
                      }
                  ]
 }
