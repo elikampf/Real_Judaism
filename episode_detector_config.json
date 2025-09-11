@@ -1,0 +1,22 @@
+{
+  "spotify": {
+    "client_id": "c48734ed315c407b9c8682f9e17f45a4",
+    "client_secret": "bd31df28cf7546219dae3aaf8eabf6e6"
+  },
+  "shows": {
+    "shalom-bayis-hebrew": "2MTsLf5Qgk7j4ZorxsbXfs",
+    "shmiras-einayim-hebrew": "53fPXignUtc4ZCwNwVSP70",
+    "shmiras-halashon": "1fPL0gdBoECQ27ZmIHSn4V",
+    "shabbos": "2GLIzh7FPz3opaDuHqT8bz",
+    "dating": "2hCOZGVEIEJM5gvdAKPLaU",
+    "mesilas-yesharim": "4jbmIA2oktnELbzhU3uXwf",
+    "shalom-bayis": "644HQbfnHosBd9vscuYxFy",
+    "shmiras-einayim": "548Vqsw1GzzAGKjmKYi0yc"
+  },
+  "settings": {
+    "trailer_keywords": ["trailer", "preview", "teaser", "coming soon", "sneak peek"],
+    "min_episode_duration_ms": 120000,
+    "backup_files": true,
+    "dry_run": false
+  }
+}
