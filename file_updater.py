@@ -63,21 +63,39 @@ class FileUpdater:
             print(f"❌ Error loading {file_path}: {e}")
             return [], {"episodes": []}
 
+    def get_episode_key(self, episode):
+        """Generate a unique key for episode comparison"""
+        # Handle None or invalid episode data
+        if not episode or not isinstance(episode, dict):
+            return None
+
+        # Extract Spotify episode ID from either 'id' field (Spotify API) or 'spotify_embed_url' (existing JSON)
+        if episode.get('id'):
+            return episode.get('id')
+        elif episode.get('spotify_embed_url'):
+            # Extract ID from URL: https://open.spotify.com/embed/episode/{ID}
+            url = episode.get('spotify_embed_url', '')
+            if '/episode/' in url:
+                return url.split('/episode/')[-1]
+        return None
+
     def merge_episodes(self, existing_episodes, new_episodes):
         """Merge new episodes with existing ones, avoiding duplicates"""
         # Create a set of existing episode keys for quick lookup
-        existing_keys = {episode.get('spotify_embed_url') for episode in existing_episodes}
+        existing_keys = {self.get_episode_key(ep) for ep in existing_episodes if self.get_episode_key(ep) is not None}
 
         # Filter out duplicates from new episodes
         unique_new_episodes = []
         duplicates_found = 0
 
         for episode in new_episodes:
-            episode_key = episode.get('spotify_embed_url')
-            if episode_key not in existing_keys:
+            episode_key = self.get_episode_key(episode)
+            if episode_key and episode_key not in existing_keys:
                 unique_new_episodes.append(episode)
             else:
                 duplicates_found += 1
+                if episode_key:
+                    print(f"🚫 Skipped duplicate episode: {episode.get('name', 'Unknown')} (ID: {episode_key})")
 
         if duplicates_found > 0:
             print(f"🚫 Skipped {duplicates_found} duplicate episodes")
