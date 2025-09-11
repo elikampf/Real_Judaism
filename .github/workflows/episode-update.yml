@@ -18,7 +18,8 @@ on:
 jobs:
   update-episodes:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write # Required to allow the Action to push commits
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

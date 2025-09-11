@@ -53,6 +53,11 @@ class EpisodeDetector:
                 }
             )
 
+            # Add a check to ensure the response is valid
+            if not episodes_data or not isinstance(episodes_data, dict):
+                print(f"⚠️  Invalid or empty response from Spotify API for show {show_id}. Skipping.")
+                return []
+
             episodes = []
             for episode in episodes_data.get('items', []):
                 if not self.is_trailer(episode):
