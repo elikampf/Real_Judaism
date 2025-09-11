@@ -15,7 +15,6 @@
   },
   "settings": {
     "trailer_keywords": ["trailer", "preview", "teaser", "coming soon", "sneak peek"],
-    "min_episode_duration_ms": 120000,
     "backup_files": true,
     "dry_run": false
   }

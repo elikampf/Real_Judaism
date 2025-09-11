@@ -19,23 +19,16 @@ class EpisodeDetector:
             config['spotify']['client_secret']
         )
         self.trailer_keywords = config['settings']['trailer_keywords']
-        self.min_duration = config['settings']['min_episode_duration_ms']
 
     def is_trailer(self, episode):
         """Determine if an episode is a trailer based on various criteria"""
         title = episode.get('name', '').lower()
-        duration = episode.get('duration_ms', 0)
 
         # Check for trailer keywords in title
         for keyword in self.trailer_keywords:
             if keyword in title:
                 print(f"🚫 Filtering trailer: '{episode.get('name')}' (keyword: {keyword})")
                 return True
-
-        # Check duration (trailers are usually very short)
-        if duration < self.min_duration:
-            print(f"🚫 Filtering trailer: '{episode.get('name')}' (duration: {duration}ms)")
-            return True
 
         return False
 
