@@ -174,7 +174,6 @@ function createEpisodeCard(episode, episodeNumber) {
 
     const title = episode.title || 'Untitled Episode';
     const description = episode.description || 'No description available';
-    const date = formatDate(episode.date);
     const duration = episode.length || episode.duration || 'N/A';
     const series = episode.series || 'General';
     const spotifyUrl = episode.spotify_embed_url || '#';
@@ -182,7 +181,6 @@ function createEpisodeCard(episode, episodeNumber) {
     card.innerHTML = `
         <div class="episode-header">
             <span class="episode-number">Episode ${episode.episode_number || episodeNumber}</span>
-            <span class="episode-date">${date}</span>
         </div>
         <h3 class="episode-title">${title}</h3>
         <p class="episode-description">${truncateText(description, 150)}</p>
