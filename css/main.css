@@ -186,6 +186,8 @@
   .series-hero-title,.blog-hero-title{font-size:4.2rem;font-weight:700;margin:0 0 var(--space-10);line-height:1.1;font-family:var(--font-family);}
   .hero-content-center .hero-description,.series-hero-subhead,.blog-hero-subhead{font:400 var(--text-lg)/1.6 var(--font-family);color:rgba(255,255,255,.9)!important;text-align:center;margin-bottom:var(--space-16);max-width:700px;margin-left:auto;margin-right:auto;opacity:.95}
   .series-hero-subhead,.blog-hero-subhead{font-size:var(--text-lg);margin-bottom:var(--space-16)}
+  .hero-breadcrumbs{margin-bottom:var(--space-4)}
+  .breadcrumb-item{font:500 var(--text-sm) var(--font-family);color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px}
   .hero-tagline{font:500 var(--text-base) var(--font-family);color:var(--color-primary);margin:0 auto;max-width:600px}
   .hero-content-center .hero-actions,.series-hero-actions,.blog-hero-actions{justify-content:center;margin-top:var(--space-6);display:flex;gap:var(--space-4);align-items:center}
   .series-hero-actions,.blog-hero-actions{margin-bottom:var(--space-12)}
