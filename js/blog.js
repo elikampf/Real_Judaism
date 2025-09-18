@@ -1,387 +1,157 @@
 /**
- * Blog Management System
- * Handles dynamic blog functionality, filtering, search, and navigation
+ * Blog Page JavaScript
+ * Handles blog functionality, sharing, and interactions
  */
 
-// Global variables
-let currentPosts = [];
-let filteredPosts = [];
-let currentFilter = 'all';
-let currentSearchQuery = '';
-let postsPerPage = 9;
-let currentPage = 1;
-
-/**
- * Initialize blog system based on current page
- */
 document.addEventListener('DOMContentLoaded', function() {
-    // Load blog data
-    if (typeof blogPosts === 'undefined') {
-        // Load blog-data.js if not already loaded
-        const script = document.createElement('script');
-        script.src = 'js/blog-data.js';
-        script.onload = initializeBlogSystem;
-        document.head.appendChild(script);
-    } else {
-        initializeBlogSystem();
-    }
+    initializeBlogPage();
+    loadBlogPosts();
 });
 
 /**
- * Initialize the appropriate blog functionality based on current page
+ * Initialize blog page functionality
  */
-function initializeBlogSystem() {
-    const isBlogHomePage = document.querySelector('.blog-posts-grid') !== null;
-    const isBlogPostPage = document.querySelector('.blog-post-article') !== null;
-
-    if (isBlogHomePage) {
-        initializeBlogHomePage();
-    } else if (isBlogPostPage) {
-        initializeBlogPostPage();
-    }
-
-    // Common functionality for all blog pages
-    initializeNewsletterForm();
+function initializeBlogPage() {
     initializeShareButtons();
-}
-
-/**
- * Initialize blog homepage functionality
- */
-function initializeBlogHomePage() {
-    // Populate featured posts
-    populateFeaturedPosts();
-
-    // Initialize filters and search
-    initializeFilters();
-    initializeSearch();
-
-    // Load initial posts
-    loadPosts();
-
-    // Initialize load more
+    initializeNewsletterForm();
+    initializePostFilters();
     initializeLoadMore();
 }
 
 /**
- * Initialize blog post page functionality
+ * Load and render blog posts from JSON data
  */
-function initializeBlogPostPage() {
-    // Extract post ID from URL or content
-    const postId = getCurrentPostId();
+async function loadBlogPosts() {
+    try {
+        const response = await fetch('../data/blog_posts.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const posts = await response.json();
+        
+        // --- Date-aware logic to find the current post ---
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalize today's date to midnight
 
-    if (postId) {
-        populateSeriesNavigation(postId);
-        populateRelatedPosts(postId);
+        let latestPostIndex = -1;
+
+        // Find the index of the most recent post that has been published
+        posts.forEach((post, index) => {
+            const postDate = new Date(post.date);
+            if (postDate <= today) {
+                latestPostIndex = index;
+            }
+        });
+        
+        // If no posts are published yet (e.g., all future dates), default to the first post.
+        if (latestPostIndex === -1) {
+            latestPostIndex = 0;
+        }
+
+        const latestPost = posts[latestPostIndex];
+        const upcomingPosts = posts.slice(latestPostIndex + 1, latestPostIndex + 4); // Get the next 3 posts
+
+        renderLatestPost(latestPost);
+        renderUpcomingPosts(upcomingPosts, latestPostIndex); // Pass a flag if the first post is not the latest
+
+    } catch (error) {
+        console.error("Could not load blog posts:", error);
+        // Optionally display an error message on the page
+        const latestPostContainer = document.getElementById('latest-post-container');
+        if (latestPostContainer) {
+            latestPostContainer.innerHTML = '<p class="error-message">Could not load the latest post. Please try again later.</p>';
+        }
+        const upcomingPostsContainer = document.getElementById('upcoming-posts-container');
+        if (upcomingPostsContainer) {
+            upcomingPostsContainer.innerHTML = '<p class="error-message">Could not load upcoming posts. Please try again later.</p>';
+        }
     }
-
-    // Add reading progress indicator
-    addReadingProgress();
 }
 
 /**
- * Populate featured posts section
+ * Render the latest post on the blog homepage
  */
-function populateFeaturedPosts() {
-    const featuredPosts = getFeaturedPosts();
-    const featuredGrid = document.querySelector('.blog-posts-grid');
+function renderLatestPost(post) {
+    const container = document.getElementById('latest-post-container');
+    if (!container || !post) return;
 
-    if (!featuredGrid) return;
+    const weekNumber = post.week_number.split(' ')[1];
 
-    // Clear existing content
-    featuredGrid.innerHTML = '';
-
-    // Only show first 6 featured posts for homepage
-    const postsToShow = featuredPosts.slice(0, 6);
-
-    postsToShow.forEach(post => {
-        const postCard = createPostCard(post);
-        featuredGrid.appendChild(postCard);
-    });
-}
-
-/**
- * Create a post card element
- */
-function createPostCard(post) {
-    const article = document.createElement('article');
-    article.className = 'blog-post-card';
-
-    article.innerHTML = `
-        <div class="blog-post-content">
-            <div class="post-meta">
-                <span class="post-category">${post.category}</span>
-                <span class="post-date">${formatDate(post.date)}</span>
-                <span class="post-read-time">${post.readTime}</span>
-            </div>
-            <h3 class="blog-post-title">
-                <a href="${post.url}">${post.title}</a>
-            </h3>
-            <p class="blog-post-excerpt">${post.excerpt}</p>
-            <div class="blog-post-actions">
-                <a href="${post.url}" class="btn-cta-white-blue">
-                    <span class="btn-icon">▶</span>
-                    Read Now
-                </a>
+    container.innerHTML = `
+        <div class="featured-post-card-light">
+            <div class="accent-bar accent-${(parseInt(weekNumber) % 4) + 1}"></div>
+            <div class="card-content">
+                <div class="card-header">
+                    <span class="card-eyebrow">Latest Published Post</span>
+                    <div class="week-badge-light">
+                         <span class="week-label">Week</span>
+                         <span class="week-number">${weekNumber}</span>
+                    </div>
+                </div>
+                <h2 class="card-title">${post.title}</h2>
+                <p class="card-excerpt">${post.excerpt}</p>
+                <div class="card-footer">
+                    <span class="card-meta">Published on ${post.date} • ${post.read_time}</span>
+                    <a href="blog/${post.slug}.html" class="btn-primary">
+                        Start Reading <span class="btn-icon">→</span>
+                    </a>
+                </div>
             </div>
         </div>
     `;
-
-    return article;
 }
 
 /**
- * Initialize filter functionality
+ * Render all subsequent posts as a journey/timeline
  */
-function initializeFilters() {
-    const categoryFilter = document.getElementById('category-filter');
-    const sortFilter = document.getElementById('sort-filter');
+function renderUpcomingPosts(posts, latestPostIndex) {
+    const container = document.getElementById('upcoming-posts-container');
+    if (!container || !posts) return;
 
-    if (categoryFilter) {
-        // Populate categories
-        const categories = getCategories();
-        categories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category;
-            option.textContent = category;
-            categoryFilter.appendChild(option);
-        });
-
-        categoryFilter.addEventListener('change', function() {
-            currentFilter = this.value;
-            currentPage = 1;
-            filterAndLoadPosts();
-        });
+    if (posts.length === 0) {
+        container.innerHTML = '<p class="no-more-posts">You are all caught up! More posts coming soon.</p>';
+        return;
     }
 
-    if (sortFilter) {
-        sortFilter.addEventListener('change', function() {
-            currentPage = 1;
-            loadPosts();
-        });
-    }
-}
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-/**
- * Initialize search functionality
- */
-function initializeSearch() {
-    const searchInput = document.getElementById('search-input');
-    const searchButton = document.getElementById('search-button');
-
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            currentSearchQuery = this.value.trim();
-            currentPage = 1;
-            filterAndLoadPosts();
-        });
-    }
-
-    if (searchButton) {
-        searchButton.addEventListener('click', function() {
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) {
-                currentSearchQuery = searchInput.value.trim();
-                currentPage = 1;
-                filterAndLoadPosts();
-            }
-        });
-    }
-}
-
-/**
- * Filter and load posts based on current criteria
- */
-function filterAndLoadPosts() {
-    let posts = [...blogPosts];
-
-    // Apply search filter
-    if (currentSearchQuery) {
-        posts = searchPosts(currentSearchQuery);
-    }
-
-    // Apply category filter
-    if (currentFilter !== 'all') {
-        posts = posts.filter(post => post.category === currentFilter);
-    }
-
-    filteredPosts = posts;
-    loadPosts();
-}
-
-/**
- * Load posts into the browse section
- */
-function loadPosts() {
-    const postsGrid = document.getElementById('all-posts-grid');
-    if (!postsGrid) return;
-
-    // Clear existing content
-    postsGrid.innerHTML = '';
-
-    // Get posts to display
-    let postsToShow = [...filteredPosts];
-
-    // Apply sorting
-    const sortFilter = document.getElementById('sort-filter');
-    if (sortFilter) {
-        const sortValue = sortFilter.value;
-        if (sortValue === 'oldest') {
-            postsToShow.sort((a, b) => new Date(a.date) - new Date(b.date));
-        } else {
-            postsToShow.sort((a, b) => new Date(b.date) - new Date(a.date));
-        }
-    }
-
-    // Apply pagination
-    const startIndex = 0;
-    const endIndex = currentPage * postsPerPage;
-    postsToShow = postsToShow.slice(startIndex, endIndex);
-
-    // Display posts
-    if (postsToShow.length === 0) {
-        postsGrid.innerHTML = '<div class="no-posts">No posts found matching your criteria.</div>';
-    } else {
-        postsToShow.forEach(post => {
-            const postCard = createPostCard(post);
-            postsGrid.appendChild(postCard);
-        });
-    }
-
-    // Update load more button
-    updateLoadMoreButton();
-}
-
-/**
- * Initialize load more functionality
- */
-function initializeLoadMore() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (!loadMoreBtn) return;
-
-    loadMoreBtn.addEventListener('click', function() {
-        currentPage++;
-        loadPosts();
-    });
-}
-
-/**
- * Update load more button visibility
- */
-function updateLoadMoreButton() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (!loadMoreBtn) return;
-
-    const totalPosts = filteredPosts.length;
-    const loadedPosts = currentPage * postsPerPage;
-
-    if (loadedPosts >= totalPosts) {
-        loadMoreBtn.style.display = 'none';
-    } else {
-        loadMoreBtn.style.display = 'block';
-    }
-}
-
-/**
- * Get current post ID from URL or page content
- */
-function getCurrentPostId() {
-    // Try to extract from URL
-    const urlParts = window.location.pathname.split('/');
-    const filename = urlParts[urlParts.length - 1];
-
-    // Extract ID from filename (e.g., "01-the-core-of-judaism.html" -> 1)
-    const match = filename.match(/^(\d+)/);
-    if (match) {
-        return parseInt(match[1]);
-    }
-
-    return null;
-}
-
-/**
- * Populate series navigation for blog post pages
- */
-function populateSeriesNavigation(currentId) {
-    const prevPost = getPreviousPost(currentId);
-    const nextPost = getNextPost(currentId);
-
-    const prevButton = document.querySelector('.nav-prev');
-    const nextButton = document.querySelector('.nav-next');
-
-    if (prevButton && prevPost) {
-        prevButton.href = prevPost.url;
-        prevButton.classList.remove('disabled');
-        prevButton.querySelector('.nav-icon').textContent = '⬅';
-    } else if (prevButton) {
-        prevButton.classList.add('disabled');
-        prevButton.removeAttribute('href');
-    }
-
-    if (nextButton && nextPost) {
-        nextButton.href = nextPost.url;
-        nextButton.classList.remove('disabled');
-        nextButton.querySelector('.nav-icon').textContent = '➡';
-    } else if (nextButton) {
-        nextButton.classList.add('disabled');
-        nextButton.removeAttribute('href');
-    }
-
-    // Update series progress
-    const currentPost = getPostById(currentId);
-    if (currentPost) {
-        const progressElements = document.querySelectorAll('.series-progress');
-        progressElements.forEach(element => {
-            element.textContent = `Week ${currentPost.seriesNumber} of 100+`;
-        });
-    }
-}
-
-/**
- * Populate related posts section
- */
-function populateRelatedPosts(currentId) {
-    const currentPost = getPostById(currentId);
-    if (!currentPost) return;
-
-    const relatedPostsGrid = document.querySelector('.related-posts-grid');
-    if (!relatedPostsGrid) return;
-
-    // Get previous and next posts
-    const prevPost = getPreviousPost(currentId);
-    const nextPost = getNextPost(currentId);
-
-    const postsToShow = [];
-    if (prevPost) postsToShow.push(prevPost);
-    if (nextPost) postsToShow.push(nextPost);
-
-    // Clear existing content
-    relatedPostsGrid.innerHTML = '';
-
-    postsToShow.forEach(post => {
-        const relatedCard = document.createElement('article');
-        relatedCard.className = 'related-post-card';
-
-        relatedCard.innerHTML = `
-            <div class="related-post-content">
-                <div class="post-meta">
-                    <span class="post-category">${post.category}</span>
-                    <span class="post-date">${formatDate(post.date)}</span>
-                    <span class="post-read-time">${post.readTime}</span>
+    let postsHtml = '';
+    posts.forEach((post, index) => {
+        const weekNumber = post.week_number.split(' ')[1];
+        const postDate = new Date(post.date);
+        const isPublished = postDate <= today;
+        const cardState = isPublished ? 'published' : 'locked';
+        
+        postsHtml += `
+            <div class="journey-post-card-wrapper">
+                <div class="journey-line"></div>
+                <div class="journey-post-card ${cardState}">
+                    <div class="journey-card-header">
+                        <div class="week-badge-journey">
+                            <span class="week-number-journey">${weekNumber}</span>
+                        </div>
+                        <div class="journey-card-meta">
+                            <h3 class="journey-card-title">${post.title}</h3>
+                            <span class="journey-card-date">${ isPublished ? `Published on ${post.date}` : `Coming on ${post.date}` }</span>
+                        </div>
+                    </div>
+                    <p class="journey-card-excerpt">${post.excerpt}</p>
+                    <div class="journey-card-footer">
+                        ${ isPublished
+                            ? `<a href="blog/${post.slug}.html" class="btn-secondary">Read Article <span class="btn-icon">→</span></a>`
+                            : `<span class="status-badge-locked">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></svg>
+                                Locked
+                               </span>`
+                        }
+                    </div>
                 </div>
-                <h4 class="related-post-title">
-                    <a href="${post.url}">${post.title}</a>
-                </h4>
-                <p class="related-post-excerpt">${post.excerpt}</p>
-                <a href="${post.url}" class="btn-cta-white-blue">
-                    <span class="btn-icon">▶</span>
-                    Read ${post.id < currentId ? 'Previous' : 'Next'}
-                </a>
             </div>
         `;
-
-        relatedPostsGrid.appendChild(relatedCard);
     });
+
+    container.innerHTML = postsHtml;
 }
 
 /**
@@ -393,52 +163,33 @@ function initializeShareButtons() {
     shareButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            const platform = this.classList.contains('share-facebook') ? 'facebook' :
-                           this.classList.contains('share-twitter') ? 'twitter' :
-                           this.classList.contains('share-whatsapp') ? 'whatsapp' : 'copy';
+            const platform = this.getAttribute('data-share');
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
 
-            shareOnPlatform(platform);
+            let shareUrl = '';
+
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${title}%20${url}`;
+                    break;
+                case 'copy':
+                    copyToClipboard(window.location.href);
+                    showCopySuccess();
+                    return;
+            }
+
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
         });
     });
-}
-
-/**
- * Share on specific platform
- */
-function shareOnPlatform(platform) {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent(document.title);
-    const description = encodeURIComponent(getMetaDescription());
-
-    let shareUrl = '';
-
-    switch(platform) {
-        case 'facebook':
-            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${title}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}&via=RealJudaism`;
-            break;
-        case 'whatsapp':
-            shareUrl = `https://wa.me/?text=${title}%20${url}`;
-            break;
-        case 'copy':
-            copyToClipboard(window.location.href);
-            showCopySuccess();
-            return;
-    }
-
-    if (shareUrl) {
-        window.open(shareUrl, '_blank', 'width=600,height=400');
-    }
-}
-
-/**
- * Get meta description for sharing
- */
-function getMetaDescription() {
-    const metaDesc = document.querySelector('meta[name="description"]');
-    return metaDesc ? metaDesc.getAttribute('content') : '';
 }
 
 /**
@@ -446,9 +197,7 @@ function getMetaDescription() {
  */
 function copyToClipboard(text) {
     if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-            showCopySuccess();
-        });
+        navigator.clipboard.writeText(text);
     } else {
         // Fallback for older browsers
         const textArea = document.createElement('textarea');
@@ -462,7 +211,6 @@ function copyToClipboard(text) {
 
         try {
             document.execCommand('copy');
-            showCopySuccess();
         } catch (err) {
             console.error('Fallback: Could not copy text: ', err);
         }
@@ -475,15 +223,16 @@ function copyToClipboard(text) {
  * Show copy success message
  */
 function showCopySuccess() {
-    const copyBtn = document.querySelector('.share-link');
-    if (copyBtn) {
-        const originalHTML = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<span class="share-icon">✓</span> Copied!';
+    const button = document.querySelector('[data-share="copy"]');
+    const originalText = button.textContent;
 
-        setTimeout(() => {
-            copyBtn.innerHTML = originalHTML;
-        }, 2000);
-    }
+    button.textContent = '✓ Copied!';
+    button.style.backgroundColor = '#10b981';
+
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.style.backgroundColor = '';
+    }, 2000);
 }
 
 /**
@@ -511,7 +260,7 @@ function initializeNewsletterForm() {
         setTimeout(() => {
             showFormMessage('Thank you for subscribing! Check your email for confirmation.', 'success');
             emailInput.value = '';
-            submitBtn.textContent = 'Subscribe to Series';
+            submitBtn.textContent = 'Subscribe';
             submitBtn.disabled = false;
         }, 2000);
     });
@@ -539,6 +288,74 @@ function showFormMessage(message, type) {
 }
 
 /**
+ * Initialize post filters (if needed for future expansion)
+ */
+function initializePostFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    if (filterButtons.length === 0) return;
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const filter = this.getAttribute('data-filter');
+            filterPosts(filter);
+        });
+    });
+}
+
+/**
+ * Filter blog posts (placeholder for future implementation)
+ */
+function filterPosts(filter) {
+    // This would filter posts based on category, date, etc.
+    // For now, just log the filter
+    console.log('Filtering posts by:', filter);
+}
+
+/**
+ * Initialize load more functionality
+ */
+function initializeLoadMore() {
+    const loadMoreBtn = document.getElementById('load-more-posts');
+    if (!loadMoreBtn) return;
+
+    loadMoreBtn.addEventListener('click', function() {
+        this.textContent = 'Loading...';
+
+        // Simulate loading more posts
+        setTimeout(() => {
+            // In a real implementation, this would fetch more posts from an API
+            // For now, just hide the button
+            this.style.display = 'none';
+
+            // Show message that there are no more posts
+            const message = document.createElement('p');
+            message.className = 'no-more-posts';
+            message.textContent = 'No more posts to load.';
+            this.parentNode.appendChild(message);
+        }, 1500);
+    });
+}
+
+/**
+ * Scroll to posts section
+ */
+function scrollToPosts() {
+    const postsSection = document.getElementById('posts');
+    if (postsSection) {
+        postsSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+/**
  * Add reading progress indicator
  */
 function addReadingProgress() {
@@ -549,10 +366,10 @@ function addReadingProgress() {
         top: 0;
         left: 0;
         width: 0%;
-        height: 4px;
-        background: var(--color-primary);
+        height: 3px;
+        background: linear-gradient(90deg, #ed8936, #d97706);
         z-index: 1000;
-        transition: width 0.1s ease;
+        transition: width 0.25s ease;
     `;
 
     document.body.appendChild(progressBar);
@@ -566,5 +383,10 @@ function addReadingProgress() {
 
     window.addEventListener('scroll', updateProgress);
     updateProgress();
+}
+
+// Initialize reading progress on blog post pages
+if (document.querySelector('.article-content')) {
+    addReadingProgress();
 }
 
