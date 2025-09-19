@@ -174,13 +174,14 @@ body.rtl {
     color: var(--color-charcoal-dark);
 }
 
-.rtl .article-meta {
+.rtl .article-meta,
+.rtl .article-meta span,
+.rtl .article-meta .meta-item,
+.rtl .article-category,
+.rtl .article-date,
+.rtl .article-read-time {
     font-size: var(--text-base);
-    color: var(--color-gray);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-3);
+    color: var(--color-white) !important;
 }
 
 .rtl .article-content {
