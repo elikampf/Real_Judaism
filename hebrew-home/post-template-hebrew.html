@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טעינת מאמר...</title>
+    <meta name="description" content="">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/rtl.css">
+</head>
+<body class="rtl">
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <nav class="main-navigation">
+            <div class="nav-container">
+                <div class="nav-brand-left">
+                    <a href="index.html" class="brand-link">
+                        <span class="tagline">יהדות אמיתית</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html" class="nav-link">אנגלית</a></li>
+                    <li><a href="index.html" class="nav-link">דף הבית</a></li>
+                    <li class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">פודקאסט <span class="dropdown-icon">▼</span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="series/shalom-bayis-hebrew.html" class="dropdown-link">שלום בית</a></li>
+                            <li><a href="series/shmiras-einayim-hebrew.html" class="dropdown-link">שמירת עיניים</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="blog-hebrew.html" class="nav-link">בלוג</a></li>
+                    <li><a href="about-hebrew.html" class="nav-link">אודות</a></li>
+                </ul>
+                <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content" id="main-content">
+        <article class="blog-article-page" id="article-container">
+            <!-- Content will be injected here -->
+            <div class="loading-spinner"></div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <!-- Footer content from blog-hebrew.html -->
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticleContent();
+        });
+
+        async function loadArticleContent() {
+            const container = document.getElementById('article-container');
+            try {
+                const slug = getSlugFromUrl();
+                if (!slug) {
+                    throw new Error('No slug found in URL.');
+                }
+
+                const response = await fetch('../hebrew-home/data/blog_posts.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const posts = await response.json();
+                
+                const post = posts.find(p => p.slug === slug);
+
+                if (post) {
+                    document.title = `${post.title} - Real Judaism`;
+                    document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt);
+
+                    container.innerHTML = `
+                        <header class="article-header">
+                            <h1 class="article-title">${post.title}</h1>
+                            <p class="article-meta">
+                                <span class="meta-item">${formatDateHebrew(post.date)}</span> | 
+                                <span class="meta-item">${post.read_time}</span>
+                            </p>
+                        </header>
+                        <div class="article-content">
+                            ${post.full_content}
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = '<p class="error-message">מאמר לא נמצא.</p>';
+                }
+
+            } catch (error) {
+                console.error("Could not load article:", error);
+                container.innerHTML = '<p class="error-message">לא ניתן היה לטעון את המאמר. אנא נסו שוב מאוחר יותר.</p>';
+            }
+        }
+
+        function getSlugFromUrl() {
+            const path = window.location.pathname;
+            const slugWithExtension = path.substring(path.lastIndexOf('/') + 1);
+            return slugWithExtension.replace('.html', '');
+        }
+        
+        function formatDateHebrew(dateString) {
+            const date = new Date(dateString);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return new Intl.DateTimeFormat('he-IL', options).format(date);
+        }
+    </script>
+    <script src="../js/main.js"></script>
+
+</body>
+</html>
