@@ -22,17 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
  * Initialize the series page
  */
 async function initializeSeriesPage() {
-    // Extract series name from URL path
-    const pathParts = window.location.pathname.split('/');
-    const currentHtmlFile = pathParts[pathParts.length - 1];
-    const isHebrewPage = window.location.pathname.includes('/hebrew-home/');
-
-    if (isHebrewPage && currentHtmlFile === 'shmirat-einayim-hebrew.html') {
-        seriesPageCurrentSeries = 'shmiras-einayim-hebrew'; // Force correct name for Hebrew Shmiras Einayim
+    // Explicitly set series name for Hebrew Shmiras Einayim page due to naming discrepancy
+    if (window.location.pathname.includes('/hebrew-home/series/shmirat-einayim-hebrew.html')) {
+        seriesPageCurrentSeries = 'shmiras-einayim-hebrew';
     } else {
+        // Generic logic for other series pages
+        const pathParts = window.location.pathname.split('/');
+        const currentHtmlFile = pathParts[pathParts.length - 1];
         seriesPageCurrentSeries = currentHtmlFile.replace('.html', '') || pathParts[pathParts.length - 2].replace('.html', '');
     }
-    
+
     if (!seriesPageCurrentSeries) {
         console.error('No series found in URL');
         showNoEpisodesState();
