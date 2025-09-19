@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 async function initializeSeriesPage() {
     // Explicitly set series name for Hebrew Shmiras Einayim page due to naming discrepancy
-    if (window.location.pathname.includes('/hebrew-home/series/shmirat-einayim-hebrew.html')) {
+    if (window.location.pathname.endsWith('/hebrew-home/series/shmirat-einayim-hebrew.html')) {
         seriesPageCurrentSeries = 'shmiras-einayim-hebrew';
     } else {
         // Generic logic for other series pages
@@ -68,16 +68,11 @@ async function loadSeriesData() {
         showLoadingState();
 
         // Load from specific series JSON file
-        console.log(`Debug (loadSeriesData): seriesPageCurrentSeries = ${seriesPageCurrentSeries}`);
         const seriesFileName = `${seriesPageCurrentSeries}_episodes.json`;
-        console.log(`Debug (loadSeriesData): seriesFileName = ${seriesFileName}`);
 
         // Check if we're on a Hebrew page (in hebrew-home directory)
         const isHebrewPage = window.location.pathname.includes('/hebrew-home/');
-        console.log(`Debug (loadSeriesData): isHebrewPage = ${isHebrewPage}`);
         const dataPath = isHebrewPage ? '../../data/' : '../data/';
-        console.log(`Debug (loadSeriesData): dataPath = ${dataPath}`);
-        console.log(`Debug (loadSeriesData): Full fetch URL = ${dataPath}${seriesFileName}?v=` + Date.now());
 
         const response = await fetch(`${dataPath}${seriesFileName}?v=` + Date.now());
         if (!response.ok) {
