@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
 async function initializeSeriesPage() {
     // Extract series name from URL path
     const pathParts = window.location.pathname.split('/');
-    seriesPageCurrentSeries = (pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2]).replace('.html', '');
+    // Ensure consistent naming for Hebrew Shmiras Einayim series
+    seriesPageCurrentSeries = (pathParts[pathParts.length - 1] === 'shmirat-einayim-hebrew.html') ? 'shmiras-einayim-hebrew' : (pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2]).replace('.html', '');
     
     if (!seriesPageCurrentSeries) {
         console.error('No series found in URL');
