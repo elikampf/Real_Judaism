@@ -145,3 +145,8 @@ body.rtl {
         padding: 12px 24px;
     }
 }
+
+/* Social Share RTL adjustments */
+.rtl .social-share-buttons {
+    direction: ltr; /* Keep buttons left-to-right for better UX */
+}
