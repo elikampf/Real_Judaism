@@ -22,16 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
  * Initialize the series page
  */
 async function initializeSeriesPage() {
-    // Explicitly set series name for Hebrew Shmiras Einayim page due to naming discrepancy
-    if (window.location.pathname.endsWith('/hebrew-home/series/shmirat-einayim-hebrew.html')) {
-        seriesPageCurrentSeries = 'shmiras-einayim-hebrew';
-    } else {
-        // Generic logic for other series pages
-        const pathParts = window.location.pathname.split('/');
-        const currentHtmlFile = pathParts[pathParts.length - 1];
-        seriesPageCurrentSeries = currentHtmlFile.replace('.html', '') || pathParts[pathParts.length - 2].replace('.html', '');
-    }
-
+    // Extract series name from URL path
+    const pathParts = window.location.pathname.split('/');
+    seriesPageCurrentSeries = (pathParts[pathParts.length - 1] || pathParts[pathParts.length - 2]).replace('.html', '');
+    
     if (!seriesPageCurrentSeries) {
         console.error('No series found in URL');
         showNoEpisodesState();
@@ -98,6 +92,8 @@ async function loadSeriesData() {
         displayEpisodes();
         loadRelatedSeries();
         
+        console.log(`Loaded ${seriesEpisodes.length} episodes for series: ${seriesPageCurrentSeries}`);
+
     } catch (error) {
         console.error('Error loading series data:', error);
         showNoEpisodesState();
@@ -256,22 +252,29 @@ function createEpisodeCard(episode, displayIndex, seasonName = null) {
  */
 function initializeSpotifyEmbeds() {
     const embedContainers = document.querySelectorAll('.episode-spotify-container');
+    console.log(`Found ${embedContainers.length} Spotify embed containers`);
 
     embedContainers.forEach((container, index) => {
         const iframe = container.querySelector('.episode-spotify-embed');
         const loading = container.querySelector('.episode-spotify-loading');
         const fallback = container.querySelector('.episode-spotify-fallback');
 
+        console.log(`Container ${index}: iframe=${!!iframe}, loading=${!!loading}, fallback=${!!fallback}`);
+
         if (!iframe) {
             // No embed available, show fallback
+            console.log(`Container ${index}: No iframe found, showing fallback`);
             if (loading) loading.style.display = 'none';
             if (fallback) fallback.style.display = 'flex';
             return;
         }
 
+        console.log(`Container ${index}: iframe src = ${iframe.src}`);
+
         // Try to show the iframe after a short delay
         // Since CORS might prevent onload/onerror events, we'll use a simple timeout approach
         setTimeout(() => {
+            console.log(`Attempting to show iframe for container ${index}`);
             if (loading) loading.style.display = 'none';
             iframe.style.display = 'block';
 
@@ -281,12 +284,15 @@ function initializeSpotifyEmbeds() {
                 try {
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                     if (!iframeDoc || iframeDoc.body.innerHTML === '') {
+                        console.log(`Iframe ${index} appears empty, showing fallback`);
                         iframe.style.display = 'none';
                         if (fallback) fallback.style.display = 'flex';
                     } else {
+                        console.log(`Iframe ${index} appears to have loaded content`);
                     }
                 } catch (e) {
                     // Cross-origin iframe, can't check content - assume it's working
+                    console.log(`Iframe ${index} loaded (cross-origin, can't verify content)`);
                 }
             }, 3000);
         }, 1000);

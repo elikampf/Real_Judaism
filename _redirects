@@ -21,7 +21,7 @@
 
 # Hebrew section clean URLs
 /hebrew-home/series/shalom-bayis-hebrew  /hebrew-home/series/shalom-bayis-hebrew.html  200
-/hebrew-home/series/shmirat-einayim-hebrew  /hebrew-home/series/shmirat-einayim-hebrew.html  200
+/hebrew-home/series/shmiras-einayim-hebrew.html /hebrew-home/series/shmirat-einayim-hebrew.html 301
 
 # Legacy URL redirects (if needed)
 # Add any old URLs that need to redirect to new locations
