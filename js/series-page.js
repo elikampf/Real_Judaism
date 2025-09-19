@@ -38,6 +38,11 @@ async function initializeSeriesPage() {
     initializeScrollToEpisodes();
     initializeLazyLoadingForSeries();
     initializeLoadMoreButton();
+
+    // Initialize tabs only for Shmiras Einayim page
+    if (seriesPageCurrentSeries === 'shmiras-einayim') {
+        initializeTabNavigation();
+    }
 }
 
 /**
@@ -117,18 +122,12 @@ function updateSeriesInfo() {
  * Display episodes in the grid
  */
 function displayEpisodes() {
-    const container = document.getElementById('episodes-grid');
     const loadingElement = document.getElementById('episodes-loading');
-    const loadMoreContainer = document.getElementById('load-more-container');
-
-    if (!container) return;
-
-    // Hide loading state
+    
     if (loadingElement) {
         loadingElement.style.display = 'none';
     }
 
-    // Filter episodes based on current filter
     let filteredEpisodes = filterEpisodes(seriesEpisodes, currentFilter);
 
     if (filteredEpisodes.length === 0) {
@@ -136,97 +135,32 @@ function displayEpisodes() {
         return;
     }
 
-    // Clear container
-    container.innerHTML = '';
-
-    // For Shmiras Einayim, organize episodes by seasons
+    // Special handling for Shmiras Einayim with tabs
     if (seriesPageCurrentSeries === 'shmiras-einayim') {
-        // Group episodes by season using ALL filtered episodes
-        const seasonGroups = {};
-        filteredEpisodes.forEach(episode => {
-            const season = getEpisodeSeason(episode) || 'Other';
-            if (!seasonGroups[season]) {
-                seasonGroups[season] = [];
-            }
-            seasonGroups[season].push(episode);
-        });
+        const season1Container = document.getElementById('season1-episodes-grid');
+        const season2Container = document.getElementById('season2-episodes-grid');
 
-        // Display seasons in order (Season 1 first, then Season 2)
-        const seasonOrder = ['Season 1', 'Season 2', 'Other'];
-        seasonOrder.forEach(seasonName => {
-            if (seasonGroups[seasonName] && seasonGroups[seasonName].length > 0) {
-                // Create season section
-                const seasonSection = document.createElement('div');
-                seasonSection.className = 'season-section';
+        if (!season1Container || !season2Container) return;
 
-                // Add ID for season navigation
-                if (seasonName === 'Season 2') {
-                    seasonSection.id = 'season-2';
-                } else if (seasonName === 'Season 1') {
-                    seasonSection.id = 'season-1';
-                }
+        season1Container.innerHTML = '';
+        season2Container.innerHTML = '';
 
-                // Add season header
-                const seasonHeader = createSeasonHeader(seasonName);
-                seasonSection.appendChild(seasonHeader);
-
-                // Create a container for the episodes within this season
-                const seasonEpisodesContainer = document.createElement('div');
-                seasonEpisodesContainer.className = 'season-episodes-grid';
-
-                // For Season 1, limit initial episodes and add load more
-                if (seasonName === 'Season 1') {
-                    const initialEpisodes = seasonGroups[seasonName].slice(0, 9); // Show first 9 episodes (3 rows)
-                    const remainingEpisodes = seasonGroups[seasonName].slice(9);
-
-                    // Add initial episodes
-                    initialEpisodes.forEach((episode, index) => {
-                        const episodeCard = createEpisodeCard(episode, index + 1, seasonName);
-                        seasonEpisodesContainer.appendChild(episodeCard);
-                    });
-
-                    seasonSection.appendChild(seasonEpisodesContainer);
-
-                    // Add load more button for Season 1 if there are more episodes
-                    if (remainingEpisodes.length > 0) {
-                        const loadMoreContainer = document.createElement('div');
-                        loadMoreContainer.className = 'season-load-more';
-                        loadMoreContainer.id = 'season1-load-more';
-
-                        const loadMoreBtn = document.createElement('button');
-                        loadMoreBtn.className = 'btn-secondary';
-                        loadMoreBtn.id = 'season1-load-more-btn';
-                        loadMoreBtn.textContent = `Load More Season 1 Episodes (${remainingEpisodes.length} remaining)`;
-
-                        loadMoreBtn.addEventListener('click', function() {
-                            // Hide the button
-                            loadMoreContainer.style.display = 'none';
-
-                            // Add remaining episodes
-                            remainingEpisodes.forEach((episode, index) => {
-                                const episodeCard = createEpisodeCard(episode, initialEpisodes.length + index + 1, seasonName);
-                                seasonEpisodesContainer.appendChild(episodeCard);
-                            });
-                        });
-
-                        loadMoreContainer.appendChild(loadMoreBtn);
-                        seasonSection.appendChild(loadMoreContainer);
-                    }
-                } else {
-                    // For other seasons, show all episodes
-                seasonGroups[seasonName].forEach((episode, index) => {
-                    const episodeCard = createEpisodeCard(episode, index + 1, seasonName);
-                    seasonEpisodesContainer.appendChild(episodeCard);
-                });
-
-                    seasonSection.appendChild(seasonEpisodesContainer);
-                }
-
-                container.appendChild(seasonSection);
+        filteredEpisodes.forEach((episode, index) => {
+            const season = getEpisodeSeason(episode);
+            const episodeCard = createEpisodeCard(episode, index + 1, season);
+            if (season === 'Season 1') {
+                season1Container.appendChild(episodeCard);
+            } else if (season === 'Season 2') {
+                season2Container.appendChild(episodeCard);
             }
         });
+
     } else {
-        // For other series, display normally with pagination
+        // Standard display for other series pages
+        const container = document.getElementById('episodes-grid');
+        if (!container) return;
+        container.innerHTML = '';
+
         const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
         episodesToShow.forEach((episode, index) => {
             const episodeCard = createEpisodeCard(episode, index + 1);
@@ -234,7 +168,7 @@ function displayEpisodes() {
         });
     }
 
-    // Show/hide load more button (only for non-season series)
+    // Show/hide load more button (only for non-tabbed series)
     const loadMoreBtn = document.getElementById('load-more-btn');
     if (loadMoreBtn && seriesPageCurrentSeries !== 'shmiras-einayim') {
         const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
@@ -245,11 +179,10 @@ function displayEpisodes() {
         }
     }
 
-    // Initialize Spotify embeds with delay for better performance
+    // Initialize Spotify embeds
     setTimeout(() => {
-        console.log('Initializing Spotify embeds...');
         initializeSpotifyEmbeds();
-    }, 1000);
+    }, 500);
 }
 
 /**
@@ -265,13 +198,10 @@ function createEpisodeCard(episode, displayIndex, seasonName = null) {
     const episodeNumber = episode.episode_number || displayIndex;
     const spotifyUrl = episode.spotify_embed_url || '';
 
-    console.log(`Creating episode card for: ${title}, Spotify URL: ${spotifyUrl}`);
-
-    // Add season badge if provided
-    const seasonBadge = seasonName ? `<div class="episode-season-badge">${seasonName.replace('Season ', 'S')}</div>` : '';
+    // Remove season from title if it exists, as tabs now show this
+    const cleanTitle = title.replace(/^S[12]\sEp\.\s\d+\s-\s/, '');
 
     card.innerHTML = `
-        ${seasonBadge}
         <div class="episode-spotify-container">
             ${spotifyUrl ? `
                 <iframe
@@ -298,7 +228,7 @@ function createEpisodeCard(episode, displayIndex, seasonName = null) {
                     <span class="episode-length">${duration}</span>
                 </div>
             </div>
-            <h3 class="episode-card-title">${title}</h3>
+            <h3 class="episode-card-title">${cleanTitle}</h3>
             <p class="episode-card-description">${truncateText(description, 120)}</p>
             <div class="episode-card-footer">
                 <div class="episode-duration">
@@ -373,7 +303,7 @@ function initializeSpotifyEmbeds() {
  * Initialize episode filters
  */
 function initializeEpisodeFilters() {
-    const filterButtons = document.querySelectorAll('.episode-filters .filter-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn'); // Adjusted selector for tabs
     const loadMoreBtn = document.getElementById('load-more-btn');
     
     filterButtons.forEach(button => {
@@ -408,11 +338,8 @@ function initializeEpisodeFilters() {
  * Set active filter button
  */
 function setActiveFilter(activeButton, filter) {
-    // Remove active class from all buttons
-    const filterButtons = document.querySelectorAll('.episode-filters .filter-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(btn => btn.classList.remove('active'));
-    
-    // Add active class to clicked button
     activeButton.classList.add('active');
 }
 
@@ -473,6 +400,33 @@ function filterEpisodes(episodes, filter) {
             }
             return episodes;
     }
+}
+
+/**
+ * Initialize tab navigation for Shmiras Einayim page
+ */
+function initializeTabNavigation() {
+    const tabs = document.querySelectorAll('.tab-link');
+    const panes = document.querySelectorAll('.tab-pane');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetPaneId = tab.getAttribute('data-tab');
+            
+            // Update tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Update panes
+            panes.forEach(pane => {
+                if (pane.id === targetPaneId) {
+                    pane.classList.add('active');
+                } else {
+                    pane.classList.remove('active');
+                }
+            });
+        });
+    });
 }
 
 /**
@@ -760,16 +714,17 @@ function animateNumber(element, start, end, duration) {
 function getEpisodeSeason(episode) {
     if (!episode.date) return null;
 
-    // Parse date (DD-MM-YY format)
+    // Check title first for explicit season "S1" or "S2"
+    if (episode.title && episode.title.startsWith('S1')) return 'Season 1';
+    if (episode.title && episode.title.startsWith('S2')) return 'Season 2';
+
+    // Fallback to date parsing
     const dateStr = episode.date;
     const year = parseInt(dateStr.split('-')[2]);
 
-    // Season 2: 2025 episodes
-    if (year === 25 || year === 2025) {
+    if (year >= 25 || year === 2025) {
         return 'Season 2';
-    }
-    // Season 1: 2021-2022 episodes
-    else if (year === 21 || year === 22 || year === 2021 || year === 2022) {
+    } else if (year <= 22 || year === 2021 || year === 2022) {
         return 'Season 1';
     }
 

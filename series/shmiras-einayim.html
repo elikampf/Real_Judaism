@@ -140,32 +140,12 @@
             <div class="container">
                 <div class="episodes-header">
                     <h2 class="section-title">Reclaim Your Spiritual Purity</h2>
-                    <p class="section-description">Stop carrying shame in silence. These episodes provide the Torah framework and practical tools for maintaining kedusha in a world that profits from your spiritual struggle.</p>
+                    <p class="section-description">This series is presented in two parts. Season 1 provides the foundational concepts, while Season 2 offers practical tools to maintain kedusha in a modern world.</p>
 
-                    <!-- Season Navigation Menu -->
-                    <div class="season-navigation">
-                        <div class="season-nav-info">
-                            <h3 class="season-nav-title">Choose Your Season</h3>
-                            <p class="season-nav-description">Explore both seasons of Shmiras Einayim content</p>
-                        </div>
-                        <div class="season-nav-links">
-                            <a href="#season-1" class="season-nav-link" id="season1-link">
-                                <span class="nav-icon">📚</span>
-                                Season 1 (2021-2022)
-                                <span class="season-badge">Foundational</span>
-                            </a>
-                            <a href="#season-2" class="season-nav-link" id="season2-link">
-                                <span class="nav-icon">🎧</span>
-                                Season 2 (2025)
-                                <span class="season-badge">Latest</span>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Episode Filters -->
-                    <div class="episode-filters">
-                        <button class="filter-btn active" data-filter="oldest">Oldest First</button>
-                        <button class="filter-btn" data-filter="newest">Newest First</button>
+                    <!-- Tab Navigation -->
+                    <div class="tabs-navigation">
+                        <button class="tab-link active" data-tab="season1">Season 1: Foundations</button>
+                        <button class="tab-link" data-tab="season2">Season 2: Practical Tools</button>
                     </div>
                 </div>
 
@@ -175,14 +155,23 @@
                     <p class="loading-text">Loading episodes...</p>
                 </div>
 
-                <!-- Episodes Grid -->
-                <div id="episodes-grid">
-                    <!-- Episodes will be loaded dynamically -->
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <div id="season1" class="tab-pane active">
+                        <div class="episodes-grid" id="season1-episodes-grid">
+                            <!-- Season 1 Episodes will be loaded here -->
+                        </div>
+                    </div>
+                    <div id="season2" class="tab-pane">
+                        <div class="episodes-grid" id="season2-episodes-grid">
+                            <!-- Season 2 Episodes will be loaded here -->
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Load More Button -->
+                <!-- Load More Button - This can be hidden/removed if not needed for tabs -->
                 <div class="episodes-load-more">
-                    <button class="btn-secondary" id="load-more-btn">
+                    <button class="btn-secondary" id="load-more-btn" style="display: none;">
                         Load More Episodes
                     </button>
                 </div>
@@ -259,7 +248,7 @@
                 <h2 class="section-title">Strengthen Your Spiritual Foundation</h2>
                 <p class="section-description">Purity of vision is just one aspect of spiritual growth. Explore other areas of Torah wisdom that build your complete Jewish identity.</p>
                 
-                <div class="related-series-grid" id="related-series">
+                <div class="compact-series-grid" id="related-series">
                     <!-- Related series will be loaded dynamically -->
                 </div>
             </div>

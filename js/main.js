@@ -396,7 +396,6 @@ function handleCardHover(e) {
     // Show overlay with animation
     if (overlay) {
         overlay.style.opacity = '1';
-        overlay.style.background = 'linear-gradient(135deg, rgba(237, 137, 54, 0.95), rgba(217, 119, 6, 0.95))';
     }
 
     // Animate play icon
