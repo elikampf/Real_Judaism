@@ -491,7 +491,7 @@
     cursor: pointer;
     transition: all var(--transition-normal);
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
     letter-spacing: 0.025em;
@@ -688,7 +688,7 @@
 
 .series-card-main:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-xl);
 }
 
 .series-card-main:hover .card-image-main {
@@ -922,7 +922,7 @@ html {
         rgba(55, 65, 81, 0.25) 100%);
     border-color: var(--color-primary);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .season-nav-link:active {

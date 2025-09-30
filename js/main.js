@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeContactForm();
     initializeLazyLoading();
     initializeCardHoverEffects();
+    initializeCardStaggerAnimation();
     initializePerformanceOptimizations();
 });
 
@@ -365,12 +366,51 @@ function initializeCardHoverEffects() {
         card.addEventListener('mouseleave', handleCardLeave);
         card.addEventListener('click', handleSeriesCardClick);
     });
+}
 
-    // Add hover effects to other cards
-    const allCards = document.querySelectorAll('.card, .episode-card, .blog-card');
-    allCards.forEach(card => {
-        card.addEventListener('mouseenter', handleGenericCardHover);
-        card.addEventListener('mouseleave', handleGenericCardLeave);
+/**
+ * Initialize Card Stagger Animation
+ */
+function initializeCardStaggerAnimation() {
+    // Only run on homepage
+    if (!document.querySelector('.series-showcase')) return;
+
+    const cards = document.querySelectorAll('.series-card-main');
+    if (cards.length === 0) return;
+
+    // Set initial state (hidden)
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+    });
+
+    // Create Intersection Observer
+    const observerOptions = {
+        threshold: 0.1, // Trigger when 10% of card is visible
+        rootMargin: '0px 0px -50px 0px' // Trigger slightly before card enters viewport
+    };
+
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add stagger delay: 100ms per card
+                const delay = index * 100;
+
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, delay);
+
+                // Unobserve after animation starts
+                cardObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards
+    cards.forEach(card => {
+        cardObserver.observe(card);
     });
 }
 

@@ -96,9 +96,22 @@ async function loadEpisodeData() {
 
         console.log(`✅ Loaded ${allEpisodes.length} total episodes from ${totalSeries} series`);
 
+        // Organize episodes by series
+        const seriesData = {};
+        allEpisodes.forEach(episode => {
+            const seriesName = episode.series;
+            if (!seriesData[seriesName]) {
+                seriesData[seriesName] = {
+                    episodes: []
+                };
+            }
+            seriesData[seriesName].episodes.push(episode);
+        });
+
         // Store the data for other functions to use
         episodeData = {
             episodes: allEpisodes,
+            series: seriesData,
             series_count: totalSeries
         };
 
@@ -328,29 +341,22 @@ function getSeriesNameFromCard(card) {
  * Add episode count to series card
  */
 function addEpisodeCountToCard(card, count) {
-    // Remove existing episode count if present
-    const existingCount = card.querySelector('.episode-count');
+    // Update existing card-episode-count element if present
+    const existingCount = card.querySelector('.card-episode-count');
     if (existingCount) {
-        existingCount.remove();
+        existingCount.textContent = `${count} Episodes`;
+        return;
     }
 
-    // Create episode count element
-    const countElement = document.createElement('div');
-    countElement.className = 'episode-count';
-    countElement.innerHTML = `
-        <span class="episode-count-icon">🎧</span>
-        <span class="episode-count-text">${count} Episodes</span>
-    `;
+    // Create episode count element if it doesn't exist
+    const countElement = document.createElement('p');
+    countElement.className = 'card-episode-count';
+    countElement.textContent = `${count} Episodes`;
 
     // Find the card content and append the count
     const cardContent = card.querySelector('.card-content-main');
     if (cardContent) {
         cardContent.appendChild(countElement);
-
-        // Add show class after a small delay for smooth animation
-        setTimeout(() => {
-            countElement.classList.add('show');
-        }, 100);
     }
 }
 
