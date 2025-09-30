@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLazyLoading();
     initializeCardHoverEffects();
     initializePerformanceOptimizations();
-    initializeBetaBanner();
 });
 
 /**
@@ -466,35 +465,8 @@ function handleSeriesCardClick(e) {
     }
 }
 
-/**
- * Initialize Beta Banner
- */
-function initializeBetaBanner() {
-    const banner = document.querySelector('.beta-banner');
-    if (banner) {
-        // Check if user has already dismissed the banner
-        const bannerDismissed = localStorage.getItem('beta-banner-dismissed');
-        if (bannerDismissed === 'true') {
-            banner.classList.add('hidden');
-        }
-
-        // Make closeBetaBanner function globally available
-        window.closeBetaBanner = closeBetaBanner;
-    }
-}
 
 
-/**
- * Close Beta Banner
- */
-function closeBetaBanner() {
-    const banner = document.querySelector('.beta-banner');
-    if (banner) {
-        banner.classList.add('hidden');
-        // Store preference in localStorage
-        localStorage.setItem('beta-banner-dismissed', 'true');
-    }
-}
 
 
 /**
