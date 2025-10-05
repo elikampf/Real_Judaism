@@ -78,7 +78,6 @@
                     <li class="nav-dropdown">
                         <a href="#" class="nav-link dropdown-toggle">Podcast <span class="dropdown-icon">▼</span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="podcast.html" class="dropdown-link">All Podcasts</a></li>
                             <li><a href="series/dating.html" class="dropdown-link">Dating</a></li>
                             <li><a href="series/shalom-bayis.html" class="dropdown-link">Shalom Bayis</a></li>
                             <li><a href="series/shmiras-einayim.html" class="dropdown-link">Shmiras Einayim</a></li>
@@ -101,7 +100,6 @@
         <!-- Hero Section -->
         <section class="hero-section-dark">
             <div class="hero-background">
-                <img src="images/background.png" alt="" class="hero-bg-image" aria-hidden="true">
                 <div class="hero-overlay"></div>
             </div>
             <div class="hero-container">
@@ -111,6 +109,13 @@
                     <p class="hero-subtitle">
                         Weekly Torah guidance for Jewish marriage. Practical wisdom for building your Jewish home, one week at a time.
                     </p>
+                    <!-- Blog Series Progress Indicator -->
+                    <div class="blog-progress-container">
+                        <div class="blog-progress-bar">
+                            <span class="progress-fill" id="progress-fill"></span>
+                        </div>
+                        <p class="progress-text" id="progress-text">Week X of Y • Z more weeks of wisdom</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -121,6 +126,13 @@
 
                 <!-- Featured Post (Latest Week) -->
                 <div id="latest-post-container">
+                    <!-- Skeleton loader for latest post -->
+                    <div class="skeleton-post-card">
+                        <div class="skeleton skeleton-image"></div>
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-excerpt"></div>
+                        <div class="skeleton skeleton-date"></div>
+                    </div>
                     <!-- Latest post will be dynamically injected here -->
                 </div>
 
@@ -130,6 +142,25 @@
                 <div class="upcoming-posts-section">
                     <h2 class="upcoming-title">Continue Your Journey</h2>
                     <div id="upcoming-posts-container" class="upcoming-posts-grid">
+                        <!-- Skeleton loaders for upcoming posts -->
+                        <div class="skeleton-upcoming-card">
+                            <div class="skeleton skeleton-week"></div>
+                            <div class="skeleton skeleton-upcoming-title"></div>
+                            <div class="skeleton skeleton-upcoming-excerpt"></div>
+                            <div class="skeleton skeleton-upcoming-date"></div>
+                        </div>
+                        <div class="skeleton-upcoming-card">
+                            <div class="skeleton skeleton-week"></div>
+                            <div class="skeleton skeleton-upcoming-title"></div>
+                            <div class="skeleton skeleton-upcoming-excerpt"></div>
+                            <div class="skeleton skeleton-upcoming-date"></div>
+                        </div>
+                        <div class="skeleton-upcoming-card">
+                            <div class="skeleton skeleton-week"></div>
+                            <div class="skeleton skeleton-upcoming-title"></div>
+                            <div class="skeleton skeleton-upcoming-excerpt"></div>
+                            <div class="skeleton skeleton-upcoming-date"></div>
+                        </div>
                         <!-- Upcoming posts will be dynamically injected here -->
                     </div>
                 </div>
@@ -138,15 +169,24 @@
 
                 <!-- Newsletter Signup -->
                 <section class="premium-newsletter-section">
-                    <div class="newsletter-content">
-                        <h2 class="newsletter-title">Weekly Torah Wisdom</h2>
-                        <p class="newsletter-description">Get notified when new posts are published in our "Building Your Jewish Home" series. Fresh Torah wisdom delivered every week to guide your marriage journey!</p>
-                        <form class="newsletter-form" method="post" action="https://formspree.io/f/your-form-id">
-                            <div class="form-group">
-                                <input type="email" name="email" id="newsletter-email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn-cta-white-blue">Subscribe to Weekly Posts</button>
+                    <div class="newsletter-card">
+                        <div class="newsletter-content">
+                            <div class="newsletter-header">
+                                <span class="newsletter-icon">✉️</span>
+                                <h2 class="newsletter-title">Weekly Torah Wisdom</h2>
                             </div>
-                        </form>
+                            <p class="newsletter-description">Get notified when new posts are published in our "Building Your Jewish Home" series. Fresh Torah wisdom delivered every week to guide your marriage journey!</p>
+                            <p class="newsletter-social-proof">Join 1,200+ subscribers already receiving weekly wisdom</p>
+                            <form class="newsletter-form" method="post" action="https://formspree.io/f/your-form-id">
+                                <div class="form-group-inline">
+                                    <div class="input-container">
+                                        <input type="email" name="email" id="newsletter-email" placeholder="Enter your email" required>
+                                        <span class="validation-icon" style="display: none;"></span>
+                                    </div>
+                                    <button type="submit" class="btn-primary">Subscribe to Weekly Posts</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -172,7 +212,7 @@
                 <div class="footer-explore">
                     <h4 class="footer-section-title">Explore</h4>
                     <ul class="footer-links">
-                        <li><a href="podcast.html" class="footer-link">All Podcast Series</a></li>
+                        <li><a href="series/dating.html" class="footer-link">Podcast Series</a></li>
                         <li><a href="about.html" class="footer-link">About Rabbi Klapper</a></li>
                         <li><a href="#contact" class="footer-link">Contact</a></li>
                         <li><a href="blog.html" class="footer-link">Blog</a></li>

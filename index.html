@@ -44,7 +44,6 @@
                     <li class="nav-dropdown">
                         <a href="#" class="nav-link dropdown-toggle">Podcast <span class="dropdown-icon">▼</span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="podcast.html" class="dropdown-link">All Podcasts</a></li>
                             <li><a href="series/dating.html" class="dropdown-link">Dating</a></li>
                             <li><a href="series/shalom-bayis.html" class="dropdown-link">Shalom Bayis</a></li>
                             <li><a href="series/shmiras-einayim.html" class="dropdown-link">Shmiras Einayim</a></li>
@@ -67,41 +66,34 @@
         <!-- Hero Section -->
         <section class="hero-section-dark">
             <div class="hero-background">
-                <img src="images/background.png" alt="" class="hero-bg-image" aria-hidden="true">
                 <div class="hero-overlay"></div>
             </div>
             <div class="hero-container">
                 <div class="hero-content-center">
-                    <span class="hero-badge">Real Judaism Podcast</span>
                     <h1 class="hero-title">
-                        Your Journey Starts Here
+                        Welcome to Real Growth
                     </h1>
                     <p class="hero-subtitle">
-                        Join thousands discovering that real Jewish growth isn't about perfection—it's about progress. Find the Torah wisdom that transforms struggle into strength, one small step at a time.
+                        Rabbi Klapper gets the real struggles—the falls, the "tried and failed again" moments. This is about honest progress, one step at a time.
                     </p>
 
-                </div>
-            </div>
-        </section>
+                    <a href="series/dating.html" class="hero-cta-button">
+                        Start Listening
+                    </a>
 
-        <!-- Podcast Section Intro -->
-        <section class="podcast-intro-section">
-            <div class="container">
-                <div class="podcast-intro-content">
-                    <h2 class="podcast-intro-title">Discover Our Podcast Series</h2>
-                    <p class="podcast-intro-description">Whether you're dating, married, or working on yourself—find the guidance you need.</p>
                 </div>
             </div>
         </section>
 
         <!-- Card Grid Section -->
-        <section class="series-showcase">
+        <section class="series-showcase" id="series-showcase">
             <div class="container">
                 <div class="series-grid-main">
                     <!-- Row 1 -->
-                    <a href="series/dating.html" class="series-card-main">
+                    <a href="series/dating.html" class="series-card-main" data-priority="featured">
                         <div class="card-image-container">
-                            <img src="images/dating.png" alt="Dating Series" class="card-image-main">
+                            <p class="card-episode-count">8 Episodes</p>
+                            <img data-src="images/dating.png" alt="Dating Series" class="card-image-main" loading="lazy" width="400" height="240">
                             <div class="card-overlay">
                                 <span class="card-play-icon">▶</span>
                             </div>
@@ -109,13 +101,13 @@
                         <div class="card-content-main">
                             <h3 class="card-title-main">Dating</h3>
                             <p class="card-description-main">Stop Guessing. Start Dating with Purpose.</p>
-                            <p class="card-episode-count">8 Episodes</p>
                         </div>
                     </a>
 
-                    <a href="series/shalom-bayis.html" class="series-card-main">
+                    <a href="series/shalom-bayis.html" class="series-card-main" data-priority="featured">
                         <div class="card-image-container">
-                            <img src="images/shalom-bayis.png" alt="Shalom Bayis Series" class="card-image-main">
+                            <p class="card-episode-count">10 Episodes</p>
+                            <img data-src="images/shalom-bayis.png" alt="Shalom Bayis Series" class="card-image-main" loading="lazy" width="400" height="240">
                             <div class="card-overlay">
                                 <span class="card-play-icon">▶</span>
                             </div>
@@ -123,13 +115,13 @@
                         <div class="card-content-main">
                             <h3 class="card-title-main">Shalom Bayis</h3>
                             <p class="card-description-main">Marriage Isn't What You Expected, Is It?</p>
-                            <p class="card-episode-count">10 Episodes</p>
                         </div>
                     </a>
 
-                    <a href="series/shmiras-einayim.html" class="series-card-main" data-series="shmiras-einayim">
+                    <a href="series/shmiras-einayim.html" class="series-card-main" data-series="shmiras-einayim" data-priority="featured">
                         <div class="card-image-container">
-                            <img src="images/shmiras-einayim.png" alt="Shmiras Einayim Series" class="card-image-main">
+                            <p class="card-episode-count">27 Episodes</p>
+                            <img data-src="images/shmiras-einayim.png" alt="Shmiras Einayim Series" class="card-image-main" loading="lazy" width="400" height="240">
                             <div class="card-overlay">
                                 <span class="card-play-icon">▶</span>
                             </div>
@@ -137,14 +129,15 @@
                         <div class="card-content-main">
                             <h3 class="card-title-main">Shmiras Einayim</h3>
                             <p class="card-description-main">The Struggle Every Jewish Man Faces in Private</p>
-                            <p class="card-episode-count">27 Episodes</p>
                         </div>
                     </a>
 
                     <!-- Row 2 -->
                     <a href="series/shmiras-halashon.html" class="series-card-main" data-series="shmiras-halashon">
                         <div class="card-image-container">
-                            <img src="images/shmiras-halashon.png" alt="Shmiras Halashon Series" class="card-image-main">
+                            <span class="start-badge">Start Here</span>
+                            <p class="card-episode-count">157 Episodes</p>
+                            <img data-src="images/shmiras-halashon.png" alt="Shmiras Halashon Series" class="card-image-main" loading="lazy" width="400" height="240">
                             <div class="card-overlay">
                                 <span class="card-play-icon">▶</span>
                             </div>
@@ -152,13 +145,13 @@
                         <div class="card-content-main">
                             <h3 class="card-title-main">Shmiras Halashon</h3>
                             <p class="card-description-main">Are Your Words Building Relationships?</p>
-                            <p class="card-episode-count">157 Episodes</p>
                         </div>
                     </a>
 
                     <a href="series/shabbos.html" class="series-card-main">
                         <div class="card-image-container">
-                            <img src="images/shabbos.png" alt="Shabbos Series" class="card-image-main">
+                            <p class="card-episode-count">57 Episodes</p>
+                            <img data-src="images/shabbos.png" alt="Shabbos Series" class="card-image-main" loading="lazy" width="400" height="240">
                             <div class="card-overlay">
                                 <span class="card-play-icon">▶</span>
                             </div>
@@ -166,13 +159,13 @@
                         <div class="card-content-main">
                             <h3 class="card-title-main">Shabbos Malkesa</h3>
                             <p class="card-description-main">Your Shabbos Should Transform You</p>
-                            <p class="card-episode-count">57 Episodes</p>
                         </div>
                     </a>
 
                     <a href="series/mesilas-yesharim.html" class="series-card-main">
                         <div class="card-image-container">
-                            <img src="images/mesilas-yesharim.png" alt="Mesilas Yesharim Series" class="card-image-main">
+                            <p class="card-episode-count">41 Episodes</p>
+                            <img data-src="images/mesilas-yesharim.png" alt="Mesilas Yesharim Series" class="card-image-main" loading="lazy" width="400" height="240">
                             <div class="card-overlay">
                                 <span class="card-play-icon">▶</span>
                             </div>
@@ -180,7 +173,6 @@
                         <div class="card-content-main">
                             <h3 class="card-title-main">Mesilas Yesharim</h3>
                             <p class="card-description-main">The Path of the Just</p>
-                            <p class="card-episode-count">41 Episodes</p>
                         </div>
                     </a>
 
@@ -195,12 +187,12 @@
                     <h3 class="cta-title">Ready to start listening?</h3>
                     <p class="cta-description">Join thousands discovering Torah wisdom for real-life challenges</p>
                     <div class="cta-actions">
-                        <a href="podcast.html" class="btn-cta-white-blue btn-large">
+                        <a href="series/shmiras-halashon.html" class="btn-primary btn-large">
                             <span class="cta-icon">🎧</span>
-                            Start Listening Now
+                            Listen to Shmiras Halashon
                         </a>
-                        <a href="series/shalom-bayis.html" class="cta-secondary-btn">
-                            Browse All Series
+                        <a href="series/dating.html" class="cta-secondary-btn">
+                            Explore Dating Series
                         </a>
                     </div>
                 </div>
@@ -214,14 +206,14 @@
                     <div class="about-text">
                         <h2 class="about-title">About Rabbi Ari Klapper</h2>
                         <p class="about-description">
-                            Rabbi Klapper brings nearly two decades of teaching experience to his role as Maggid Shiur at Yeshivas Ateres Yaakov. A certified mohel and chosson teacher with semicha from Yeshivas Ohr Hachaim, he's built a reputation for transforming deep Torah concepts into practical life guidance.
+                            Thousands of listeners have discovered that real Jewish growth isn't about perfection—it's about honest progress. Rabbi Klapper combines deep Torah scholarship with practical guidance that makes change actually possible.
                         </p>
                         <p class="about-description">
                             Based in Ramat Beit Shemesh since 2007, Rabbi Klapper reaches thousands through his podcasts on topics ranging from Shmiras Einayim to building strong Jewish homes. His "practical hashkafa" approach -- taking profound ideas and making them liveable -- has resonated with students and listeners worldwide who seek authentic Torah wisdom for modern challenges.
                         </p>
 
                         <div class="about-actions">
-                            <a href="/about" class="about-read-more">Read More</a>
+                            <a href="/about" class="btn btn-secondary">Read More</a>
                         </div>
                     </div>
 
@@ -238,13 +230,13 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Newsletter Section -->
         <section class="contact-section" id="contact">
             <div class="container">
                 <div class="contact-content">
                     <div class="contact-info">
-                        <h2 class="contact-title">Get in Touch</h2>
-                        <p class="contact-description">Have questions or want to connect? We'd love to hear from you.</p>
+                        <h2 class="contact-title">Get notified when new episodes drop</h2>
+                        <p class="contact-description">Join 1,200+ subscribers receiving weekly Torah wisdom</p>
                         <div class="contact-emails">
                             <a href="mailto:rabbiariklapper@gmail.com" class="contact-email">
                                 <span class="email-label">Rabbi:</span>
@@ -256,29 +248,22 @@
                             </a>
                         </div>
                     </div>
-                    
-                    <form class="contact-form" name="contact" method="POST" netlify-honeypot="bot-field" data-netlify="true" action="/thank-you">
-                        <input type="hidden" name="form-name" value="contact">
+
+                    <form class="contact-form newsletter-signup" name="newsletter" method="POST" netlify-honeypot="bot-field" data-netlify="true" action="/thank-you">
+                        <input type="hidden" name="form-name" value="newsletter">
                         <p class="hidden">
                             <label>Don't fill this out if you're human: <input name="bot-field"></label>
                         </p>
-                        
+
                         <div class="form-group">
-                            <label for="name" class="label">Name *</label>
-                            <input type="text" id="name" name="name" class="input" required>
+                            <label for="newsletter-email" class="label">Email *</label>
+                            <div class="input-container">
+                                <input type="email" id="newsletter-email" name="email" class="input" placeholder="your.email@example.com" required>
+                                <span class="validation-icon" style="display: none;"></span>
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="label">Email *</label>
-                            <input type="email" id="email" name="email" class="input" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="label">Message *</label>
-                            <textarea id="message" name="message" class="textarea" rows="5" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-cta-white-blue btn-full">Send Message</button>
+
+                        <button type="submit" class="btn btn-primary btn-full">Subscribe</button>
                     </form>
                 </div>
             </div>
@@ -304,7 +289,7 @@
                 <div class="footer-explore">
                     <h4 class="footer-section-title">Explore</h4>
                     <ul class="footer-links">
-                        <li><a href="podcast.html" class="footer-link">All Podcast Series</a></li>
+                        <li><a href="series/dating.html" class="footer-link">Podcast Series</a></li>
                         <li><a href="about.html" class="footer-link">About Rabbi Klapper</a></li>
                         <li><a href="#contact" class="footer-link">Contact</a></li>
                         <li><a href="blog.html" class="footer-link">Blog</a></li>

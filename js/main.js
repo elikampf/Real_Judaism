@@ -3,6 +3,18 @@
  * Handles navigation, smooth scrolling, and general site functionality
  */
 
+// Page load transition
+document.addEventListener('DOMContentLoaded', function() {
+    // Add page loading class initially
+    document.body.classList.add('page-loading');
+
+    // Remove loading class after a brief delay to trigger transition
+    setTimeout(() => {
+        document.body.classList.remove('page-loading');
+        document.body.classList.add('page-loaded');
+    }, 100);
+});
+
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
@@ -14,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLazyLoading();
     initializeCardHoverEffects();
     initializeCardStaggerAnimation();
+    initializeQuoteOverlayAnimation();
+    initializeButtonRippleEffects();
+    initializeFormValidation();
     initializePerformanceOptimizations();
 });
 
@@ -44,7 +59,7 @@ function initializeNavigation() {
 }
 
 /**
- * Initialize Smooth Scrolling
+ * Initialize Smooth Scrolling and Internal Navigation
  */
 function initializeSmoothScrolling() {
     const links = document.querySelectorAll('a[href^="#"]');
@@ -60,6 +75,14 @@ function initializeSmoothScrolling() {
                 const headerHeight = document.querySelector('.site-header').offsetHeight;
                 const targetPosition = targetElement.offsetTop - headerHeight - 20;
 
+                // Use native smooth scrolling
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'nearest'
+                });
+
+                // Fallback for older browsers
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -70,10 +93,10 @@ function initializeSmoothScrolling() {
 }
 
 /**
- * Initialize Mobile Menu (for future responsive design)
+ * Initialize Mobile Navigation Drawer
  */
 function initializeMobileMenu() {
-    // Create mobile menu button if it doesn't exist
+    // Create mobile menu button and drawer if they don't exist
     if (window.innerWidth <= 768 && !document.querySelector('.mobile-menu-btn')) {
         const navContainer = document.querySelector('.nav-container');
         const navMenu = document.querySelector('.nav-menu');
@@ -83,31 +106,102 @@ function initializeMobileMenu() {
         mobileBtn.className = 'mobile-menu-btn';
         mobileBtn.innerHTML = '☰';
         mobileBtn.setAttribute('aria-label', 'Toggle mobile menu');
+        mobileBtn.setAttribute('aria-expanded', 'false');
 
-        // Create mobile menu overlay
-        const mobileMenu = document.createElement('div');
-        mobileMenu.className = 'mobile-menu';
-        mobileMenu.innerHTML = navMenu.innerHTML;
+        // Create mobile navigation drawer
+        const mobileDrawer = document.createElement('div');
+        mobileDrawer.className = 'mobile-menu-drawer';
+        mobileDrawer.innerHTML = `
+            <div class="mobile-drawer-header">
+                <button class="mobile-drawer-close" aria-label="Close menu">✕</button>
+            </div>
+            <nav class="mobile-drawer-nav">
+                <a href="index.html" class="mobile-drawer-link">
+                    <span class="mobile-drawer-text">Home</span>
+                </a>
+                <a href="series/dating.html" class="mobile-drawer-link">
+                    <span class="mobile-drawer-text">Podcast Series</span>
+                </a>
+                <a href="about.html" class="mobile-drawer-link">
+                    <span class="mobile-drawer-text">About Rabbi Klapper</span>
+                </a>
+                <a href="blog.html" class="mobile-drawer-link">
+                    <span class="mobile-drawer-text">Blog</span>
+                </a>
+                <div class="mobile-drawer-series">
+                    <h4 class="mobile-drawer-subtitle">Series</h4>
+                    <a href="series/dating.html" class="mobile-drawer-link">
+                        <span class="mobile-drawer-text">Dating</span>
+                    </a>
+                    <a href="series/shalom-bayis.html" class="mobile-drawer-link">
+                        <span class="mobile-drawer-text">Shalom Bayis</span>
+                    </a>
+                    <a href="series/shmiras-einayim.html" class="mobile-drawer-link">
+                        <span class="mobile-drawer-text">Shmiras Einayim</span>
+                    </a>
+                    <a href="series/shmiras-halashon.html" class="mobile-drawer-link">
+                        <span class="mobile-drawer-text">Shmiras Halashon</span>
+                    </a>
+                    <a href="series/shabbos.html" class="mobile-drawer-link">
+                        <span class="mobile-drawer-text">Shabbos</span>
+                    </a>
+                    <a href="series/mesilas-yesharim.html" class="mobile-drawer-link">
+                        <span class="mobile-drawer-text">Mesilas Yesharim</span>
+                    </a>
+                </div>
+            </nav>
+        `;
+
+        // Create backdrop overlay
+        const backdrop = document.createElement('div');
+        backdrop.className = 'mobile-drawer-backdrop';
 
         // Insert elements
         navContainer.appendChild(mobileBtn);
-        navContainer.appendChild(mobileMenu);
+        document.body.appendChild(mobileDrawer);
+        document.body.appendChild(backdrop);
 
-        // Add event listener
-        mobileBtn.addEventListener('click', toggleMobileMenu);
+        // Add event listeners
+        mobileBtn.addEventListener('click', () => toggleMobileDrawer(true));
+        backdrop.addEventListener('click', () => toggleMobileDrawer(false));
+        mobileDrawer.querySelector('.mobile-drawer-close').addEventListener('click', () => toggleMobileDrawer(false));
+
+        // Close drawer on link clicks
+        mobileDrawer.querySelectorAll('.mobile-drawer-link').forEach(link => {
+            link.addEventListener('click', () => toggleMobileDrawer(false));
+        });
     }
 }
 
 /**
- * Toggle Mobile Menu
+ * Toggle Mobile Navigation Drawer
  */
-function toggleMobileMenu() {
+function toggleMobileDrawer(open) {
     const mobileBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenu = document.querySelector('.mobile-menu');
+    const mobileDrawer = document.querySelector('.mobile-menu-drawer');
+    const backdrop = document.querySelector('.mobile-drawer-backdrop');
 
-    if (mobileBtn && mobileMenu) {
-        mobileMenu.classList.toggle('active');
-        mobileBtn.innerHTML = mobileMenu.classList.contains('active') ? '✕' : '☰';
+    if (mobileBtn && mobileDrawer && backdrop) {
+        const isOpen = mobileDrawer.classList.contains('is-open');
+
+        if (open === undefined) {
+            // Toggle based on current state
+            open = !isOpen;
+        }
+
+        if (open) {
+            mobileDrawer.classList.add('is-open');
+            backdrop.classList.add('is-visible');
+            mobileBtn.innerHTML = '✕';
+            mobileBtn.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        } else {
+            mobileDrawer.classList.remove('is-open');
+            backdrop.classList.remove('is-visible');
+            mobileBtn.innerHTML = '☰';
+            mobileBtn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
     }
 }
 
@@ -369,40 +463,82 @@ function initializeCardHoverEffects() {
 }
 
 /**
- * Initialize Card Stagger Animation
+ * Initialize Card Stagger Animation for all card grids
  */
 function initializeCardStaggerAnimation() {
-    // Only run on homepage
-    if (!document.querySelector('.series-showcase')) return;
+    // Select all card types that should animate
+    const cardSelectors = [
+        '.series-card-main',
+        '.episode-card-series',
+        '.featured-card',
+        '.series-card',
+        '.podcast-card',
+        '.blog-post-card',
+        '.popular-card',
+        '.quick-link-card'
+    ];
 
-    const cards = document.querySelectorAll('.series-card-main');
-    if (cards.length === 0) return;
+    // Find all card containers that should trigger animations
+    const cardGrids = [
+        '.series-grid-main',
+        '.episodes-grid',
+        '.series-grid',
+        '.podcast-grid',
+        '.blog-grid',
+        '.popular-grid'
+    ];
 
-    // Set initial state (hidden)
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
+    // Check if any cards exist on the page
+    let cards = [];
+    cardSelectors.forEach(selector => {
+        const foundCards = document.querySelectorAll(selector);
+        if (foundCards.length > 0) {
+            cards = [...cards, ...foundCards];
+        }
     });
+
+    if (cards.length === 0) return;
 
     // Create Intersection Observer
     const observerOptions = {
-        threshold: 0.1, // Trigger when 10% of card is visible
-        rootMargin: '0px 0px -50px 0px' // Trigger slightly before card enters viewport
+        threshold: 0.01, // Trigger when 1% of card is visible (faster)
+        rootMargin: '50px 0px' // Trigger when card is 50px from entering viewport
     };
 
     const cardObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                // Add stagger delay: 100ms per card
-                const delay = index * 100;
+                // Get the index of this card among all cards in its grid
+                const card = entry.target;
+                let grid = null;
+                let cardIndex = 0;
+
+                // Find the grid this card belongs to
+                for (const gridSelector of cardGrids) {
+                    const potentialGrid = card.closest(gridSelector);
+                    if (potentialGrid) {
+                        grid = potentialGrid;
+                        break;
+                    }
+                }
+
+                // If no grid found, fall back to global index
+                if (!grid) {
+                    cardIndex = Array.from(cards).indexOf(card);
+                } else {
+                    const cardsInGrid = Array.from(grid.querySelectorAll(cardSelectors.join(', ')));
+                    cardIndex = cardsInGrid.indexOf(card);
+                }
+
+                // Add stagger delay: 50ms per card (reduced for faster loading)
+                const delay = cardIndex * 50;
 
                 setTimeout(() => {
-                    entry.target.classList.add('animate-in');
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
                 }, delay);
 
-                // Unobserve after animation starts
+                // Unobserve after animation starts (only trigger once)
                 cardObserver.unobserve(entry.target);
             }
         });
@@ -412,6 +548,338 @@ function initializeCardStaggerAnimation() {
     cards.forEach(card => {
         cardObserver.observe(card);
     });
+}
+
+/**
+ * Initialize Quote Overlay Animation
+ */
+function initializeQuoteOverlayAnimation() {
+    // Find quote overlay elements
+    const quoteOverlays = document.querySelectorAll('.photo-quote-overlay');
+    if (quoteOverlays.length === 0) return;
+
+    // Create Intersection Observer for quote overlay
+    const observerOptions = {
+        threshold: 0.3, // Trigger when 30% of element is visible
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const quoteObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add show class to trigger animation
+                entry.target.classList.add('show');
+
+                // Unobserve after animation starts
+                quoteObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all quote overlays
+    quoteOverlays.forEach(overlay => {
+        quoteObserver.observe(overlay);
+    });
+}
+
+/**
+ * Initialize Button Ripple Effects
+ */
+function initializeButtonRippleEffects() {
+    // Select all button classes that should have ripple effects
+    const buttonSelectors = [
+        '.btn-primary',
+        '.btn-secondary'
+    ];
+
+    // Find all buttons
+    const buttons = document.querySelectorAll(buttonSelectors.join(', '));
+    if (buttons.length === 0) return;
+
+    // Add ripple effect to each button
+    buttons.forEach(button => {
+        button.addEventListener('mousedown', function(e) {
+            // Remove any existing ripple class
+            this.classList.remove('ripple');
+
+            // Calculate click position relative to button
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Set custom properties for ripple positioning
+            this.style.setProperty('--ripple-x', `${x}px`);
+            this.style.setProperty('--ripple-y', `${y}px`);
+
+            // Add ripple class to trigger animation
+            this.classList.add('ripple');
+
+            // Remove ripple class after animation completes
+            setTimeout(() => {
+                this.classList.remove('ripple');
+            }, 600);
+        });
+    });
+}
+
+/**
+ * Initialize Form Validation
+ */
+function initializeFormValidation() {
+    // Initialize newsletter form validation
+    initializeNewsletterValidation();
+
+    // Initialize contact form validation (if exists)
+    const contactForm = document.querySelector('.contact-form:not(.newsletter-signup)');
+    if (contactForm) {
+        initializeContactFormValidation(contactForm);
+    }
+}
+
+/**
+ * Initialize Newsletter Form Validation
+ */
+function initializeNewsletterValidation() {
+    const newsletterForms = document.querySelectorAll('.newsletter-form');
+    newsletterForms.forEach(form => {
+        const emailInput = form.querySelector('input[type="email"]');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        if (emailInput) {
+            // Real-time validation on input
+            emailInput.addEventListener('input', function() {
+                validateEmailField(this);
+            });
+
+            // Clear validation on focus
+            emailInput.addEventListener('focus', function() {
+                clearFieldValidation(this);
+            });
+        }
+
+        if (form) {
+            // Form submission validation
+            form.addEventListener('submit', function(e) {
+                if (!validateNewsletterForm(this)) {
+                    e.preventDefault();
+                    // Add shake animation to submit button
+                    if (submitButton) {
+                        submitButton.classList.add('btn-shake');
+                        setTimeout(() => {
+                            submitButton.classList.remove('btn-shake');
+                        }, 500);
+                    }
+                }
+            });
+        }
+    });
+}
+
+/**
+ * Initialize Contact Form Validation (for forms with textareas)
+ */
+function initializeContactFormValidation(form) {
+    const emailInput = form.querySelector('input[type="email"]');
+    const messageTextarea = form.querySelector('textarea');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            validateEmailField(this);
+        });
+        emailInput.addEventListener('focus', function() {
+            clearFieldValidation(this);
+        });
+    }
+
+    if (messageTextarea) {
+        // Add character counter
+        const counterElement = document.createElement('div');
+        counterElement.className = 'character-counter';
+        messageTextarea.parentNode.appendChild(counterElement);
+
+        messageTextarea.addEventListener('input', function() {
+            updateCharacterCounter(this, counterElement);
+        });
+
+        // Initialize counter
+        updateCharacterCounter(messageTextarea, counterElement);
+    }
+
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!validateContactForm(this)) {
+                e.preventDefault();
+                // Add shake animation to submit button
+                if (submitButton) {
+                    submitButton.classList.add('btn-shake');
+                    setTimeout(() => {
+                        submitButton.classList.remove('btn-shake');
+                    }, 500);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * Validate email field and show visual feedback
+ */
+function validateEmailField(input) {
+    const container = input.closest('.input-container');
+    const icon = container ? container.querySelector('.validation-icon') : null;
+
+    const email = input.value.trim();
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    // Remove existing validation classes
+    input.classList.remove('valid', 'invalid');
+
+    if (email.length === 0) {
+        // Empty field - hide icon
+        if (icon) icon.style.display = 'none';
+        return false;
+    }
+
+    if (isValid) {
+        input.classList.add('valid');
+        if (icon) {
+            icon.textContent = '✓';
+            icon.style.color = '#10b981';
+            icon.style.display = 'block';
+        }
+    } else {
+        input.classList.add('invalid');
+        if (icon) {
+            icon.textContent = '✕';
+            icon.style.color = '#ef4444';
+            icon.style.display = 'block';
+        }
+    }
+
+    return isValid;
+}
+
+/**
+ * Clear field validation state
+ */
+function clearFieldValidation(input) {
+    const container = input.closest('.input-container');
+    const icon = container ? container.querySelector('.validation-icon') : null;
+
+    input.classList.remove('valid', 'invalid');
+    if (icon) {
+        icon.style.display = 'none';
+    }
+}
+
+/**
+ * Update character counter for textarea
+ */
+function updateCharacterCounter(textarea, counterElement) {
+    const maxLength = 500;
+    const currentLength = textarea.value.length;
+    const remaining = maxLength - currentLength;
+
+    counterElement.textContent = `${currentLength}/${maxLength} characters`;
+
+    if (remaining < 0) {
+        counterElement.style.color = '#ef4444';
+        textarea.classList.add('invalid');
+    } else if (remaining < 50) {
+        counterElement.style.color = '#f59e0b';
+        textarea.classList.remove('invalid');
+    } else {
+        counterElement.style.color = 'var(--color-gray)';
+        textarea.classList.remove('invalid');
+    }
+}
+
+/**
+ * Validate newsletter form
+ */
+function validateNewsletterForm(form) {
+    const emailInput = form.querySelector('input[type="email"]');
+    let isValid = true;
+
+    if (emailInput) {
+        if (!validateEmailField(emailInput)) {
+            showFieldError(emailInput, 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            clearFieldError(emailInput);
+        }
+    }
+
+    return isValid;
+}
+
+/**
+ * Validate contact form
+ */
+function validateContactForm(form) {
+    const emailInput = form.querySelector('input[type="email"]');
+    const messageTextarea = form.querySelector('textarea');
+    let isValid = true;
+
+    // Validate email
+    if (emailInput) {
+        if (!validateEmailField(emailInput)) {
+            showFieldError(emailInput, 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            clearFieldError(emailInput);
+        }
+    }
+
+    // Validate message
+    if (messageTextarea) {
+        const message = messageTextarea.value.trim();
+        if (message.length === 0) {
+            showFieldError(messageTextarea, 'Please enter your message');
+            isValid = false;
+        } else if (message.length > 500) {
+            showFieldError(messageTextarea, 'Message must be 500 characters or less');
+            isValid = false;
+        } else {
+            clearFieldError(messageTextarea);
+        }
+    }
+
+    return isValid;
+}
+
+/**
+ * Show field error message
+ */
+function showFieldError(field, message) {
+    // Remove existing error
+    clearFieldError(field);
+
+    // Add error class to field
+    field.classList.add('invalid');
+
+    // Create error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'field-error';
+    errorDiv.textContent = message;
+
+    // Insert after field
+    field.parentNode.insertBefore(errorDiv, field.nextSibling);
+}
+
+/**
+ * Clear field error message
+ */
+function clearFieldError(field) {
+    // Remove error class
+    field.classList.remove('invalid');
+
+    // Remove error message
+    const errorElement = field.parentNode.querySelector('.field-error');
+    if (errorElement) {
+        errorElement.remove();
+    }
 }
 
 /**

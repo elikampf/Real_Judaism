@@ -9,7 +9,7 @@
 /series/mesilas-yesharim  /series/mesilas-yesharim.html  200
 
 # Clean URLs for other pages
-/podcast  /podcast.html  200
+/podcast  /  200
 /blog  /blog.html  200
 /about  /about.html  200
 /hebrew-home  /hebrew-home/index.html  200

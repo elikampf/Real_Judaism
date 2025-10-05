@@ -10,6 +10,7 @@ let allSeriesData = {};
 let seriesCurrentPage = 1;
 const seriesPageEpisodesPerPage = 9; // 3x3 grid on desktop
 let currentFilter = 'all';
+let previousFilter = 'all';
 
 /**
  * Initialize series page functionality
@@ -89,14 +90,27 @@ async function loadSeriesData() {
         
         // Update page with series data
         updateSeriesInfo();
-        displayEpisodes();
+
+        // Check if episodes are already rendered (server-side)
+        const renderedEpisodes = document.querySelectorAll('.episode-card-rendered');
+        if (renderedEpisodes.length === 0) {
+            // No pre-rendered episodes, show loading and load all episodes
+            displayEpisodes();
+        } else {
+            // Episodes already rendered, just update load more button and initialize embeds
+            updateLoadMoreButton();
+            setTimeout(() => {
+                initializeSpotifyEmbeds();
+            }, 500);
+        }
+
         loadRelatedSeries();
         
         console.log(`Loaded ${seriesEpisodes.length} episodes for series: ${seriesPageCurrentSeries}`);
 
     } catch (error) {
-        console.error('Error loading series data:', error);
-        showNoEpisodesState();
+        console.error('Failed to load episodes:', error);
+        showErrorState();
     }
 }
 
@@ -123,10 +137,13 @@ function updateSeriesInfo() {
  */
 function displayEpisodes() {
     const loadingElement = document.getElementById('episodes-loading');
-    
+
     if (loadingElement) {
         loadingElement.style.display = 'none';
     }
+
+    // Hide any visible empty states first
+    hideEmptyStates();
 
     let filteredEpisodes = filterEpisodes(seriesEpisodes, currentFilter);
 
@@ -135,6 +152,32 @@ function displayEpisodes() {
         return;
     }
 
+    // Check if filter changed and add animation
+    const episodesGrid = document.getElementById('episodes-grid');
+    if (episodesGrid && previousFilter !== currentFilter) {
+        // Add fading class for animation
+        episodesGrid.classList.add('fading');
+
+        // After 200ms, reorder the episodes
+        setTimeout(() => {
+            performEpisodeReorder(episodesGrid, filteredEpisodes);
+            previousFilter = currentFilter;
+        }, 200);
+    } else {
+        performEpisodeReorder(episodesGrid, filteredEpisodes);
+    }
+
+    performEpisodeReorder(episodesGrid, filteredEpisodes);
+}
+
+/**
+ * Perform the actual episode reordering with animation
+ */
+function performEpisodeReorder(episodesGrid, filteredEpisodes) {
+    // Check if episodes are already rendered (server-side)
+    const existingEpisodes = document.querySelectorAll('.episode-card-rendered');
+    const episodesPerPage = seriesPageCurrentSeries === 'shmiras-einayim' ? 9 : 6; // Adjust for tabs vs standard
+
     // Special handling for Shmiras Einayim with tabs
     if (seriesPageCurrentSeries === 'shmiras-einayim') {
         const season1Container = document.getElementById('season1-episodes-grid');
@@ -142,16 +185,24 @@ function displayEpisodes() {
 
         if (!season1Container || !season2Container) return;
 
-        season1Container.innerHTML = '';
-        season2Container.innerHTML = '';
+        // Clear existing content if not pre-rendered
+        if (existingEpisodes.length === 0) {
+            season1Container.innerHTML = '';
+            season2Container.innerHTML = '';
+        }
 
-        filteredEpisodes.forEach((episode, index) => {
+        const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * episodesPerPage);
+        episodesToShow.forEach((episode, index) => {
             const season = getEpisodeSeason(episode);
             const episodeCard = createEpisodeCard(episode, index + 1, season);
-            if (season === 'Season 1') {
-                season1Container.appendChild(episodeCard);
-            } else if (season === 'Season 2') {
-                season2Container.appendChild(episodeCard);
+
+            // Only add if not already rendered
+            if (existingEpisodes.length === 0) {
+                if (season === 'Season 1') {
+                    season1Container.appendChild(episodeCard);
+                } else if (season === 'Season 2') {
+                    season2Container.appendChild(episodeCard);
+                }
             }
         });
 
@@ -159,30 +210,57 @@ function displayEpisodes() {
         // Standard display for other series pages
         const container = document.getElementById('episodes-grid');
         if (!container) return;
-        container.innerHTML = '';
 
-        const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
+        // Clear existing content if not pre-rendered
+        if (existingEpisodes.length === 0) {
+            container.innerHTML = '';
+        }
+
+        const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * episodesPerPage);
         episodesToShow.forEach((episode, index) => {
             const episodeCard = createEpisodeCard(episode, index + 1);
-            container.appendChild(episodeCard);
+
+            // Only add if not already rendered
+            if (existingEpisodes.length === 0) {
+                container.appendChild(episodeCard);
+            }
         });
     }
 
-    // Show/hide load more button (only for non-tabbed series)
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    if (loadMoreBtn && seriesPageCurrentSeries !== 'shmiras-einayim') {
-        const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * seriesPageEpisodesPerPage);
-        if (episodesToShow.length < filteredEpisodes.length) {
-            loadMoreBtn.style.display = 'block';
-        } else {
-            loadMoreBtn.style.display = 'none';
-        }
+    // Update load more button
+    updateLoadMoreButton();
+
+    // Initialize Spotify embeds (only for newly loaded episodes)
+    if (existingEpisodes.length === 0) {
+        setTimeout(() => {
+            initializeSpotifyEmbeds();
+        }, 500);
     }
 
-    // Initialize Spotify embeds
+    // Remove fading class after animation completes
     setTimeout(() => {
-        initializeSpotifyEmbeds();
-    }, 500);
+        if (episodesGrid) {
+            episodesGrid.classList.remove('fading');
+        }
+    }, 300);
+}
+
+/**
+ * Update load more button visibility
+ */
+function updateLoadMoreButton() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (!loadMoreBtn || seriesPageCurrentSeries === 'shmiras-einayim') return;
+
+    let filteredEpisodes = filterEpisodes(seriesEpisodes, currentFilter);
+    const episodesPerPage = 6;
+    const episodesToShow = filteredEpisodes.slice(0, seriesCurrentPage * episodesPerPage);
+
+    if (episodesToShow.length < filteredEpisodes.length) {
+        loadMoreBtn.style.display = 'block';
+    } else {
+        loadMoreBtn.style.display = 'none';
+    }
 }
 
 /**
@@ -304,8 +382,7 @@ function initializeSpotifyEmbeds() {
  */
 function initializeEpisodeFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn'); // Adjusted selector for tabs
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    
+
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             const filter = this.getAttribute('data-filter');
@@ -317,14 +394,15 @@ function initializeEpisodeFilters() {
     });
 
     // Load more functionality
+    const loadMoreBtn = document.getElementById('load-more-btn');
     if (loadMoreBtn) {
         loadMoreBtn.addEventListener('click', function() {
             seriesCurrentPage++;
             displayEpisodes();
-            
+
             // Scroll to new content
             setTimeout(() => {
-                const newCards = document.querySelectorAll('.episode-card-series');
+                const newCards = document.querySelectorAll('.episode-card-series:not(.episode-card-rendered)');
                 if (newCards.length > 0) {
                     const lastCard = newCards[newCards.length - 1];
                     lastCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -591,18 +669,113 @@ function showLoadingState() {
 }
 
 /**
+ * Hide all empty states
+ */
+function hideEmptyStates() {
+    // For shmiras-einayim page with tabs, hide empty states in both grids
+    if (seriesPageCurrentSeries === 'shmiras-einayim') {
+        const season1Grid = document.getElementById('season1-episodes-grid');
+        const season2Grid = document.getElementById('season2-episodes-grid');
+
+        if (season1Grid) {
+            const emptyState1 = season1Grid.querySelector('.empty-state');
+            if (emptyState1) emptyState1.style.display = 'none';
+        }
+        if (season2Grid) {
+            const emptyState2 = season2Grid.querySelector('.empty-state');
+            if (emptyState2) emptyState2.style.display = 'none';
+        }
+    } else {
+        // For regular series pages
+        const gridElement = document.getElementById('episodes-grid');
+        if (gridElement) {
+            const emptyState = gridElement.querySelector('.empty-state');
+            if (emptyState) emptyState.style.display = 'none';
+        }
+    }
+}
+
+/**
+ * Show error state
+ */
+function showErrorState() {
+    const loadingElement = document.getElementById('episodes-loading');
+    const loadMoreContainer = document.getElementById('load-more-container');
+
+    // Hide loading state
+    if (loadingElement) loadingElement.style.display = 'none';
+    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+
+    // For shmiras-einayim page with tabs, show error state in both grids
+    if (seriesPageCurrentSeries === 'shmiras-einayim') {
+        const season1Grid = document.getElementById('season1-episodes-grid');
+        const season2Grid = document.getElementById('season2-episodes-grid');
+
+        if (season1Grid) {
+            season1Grid.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Couldn't load episodes</h3>
+                    <p>Please <button onclick="location.reload()">try again</button> or check your connection</p>
+                </div>
+            `;
+        }
+        if (season2Grid) {
+            season2Grid.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Couldn't load episodes</h3>
+                    <p>Please <button onclick="location.reload()">try again</button> or check your connection</p>
+                </div>
+            `;
+        }
+    } else {
+        // For regular series pages
+        const gridElement = document.getElementById('episodes-grid');
+        if (gridElement) {
+            gridElement.innerHTML = `
+                <div class="error-state">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Couldn't load episodes</h3>
+                    <p>Please <button onclick="location.reload()">try again</button> or check your connection</p>
+                </div>
+            `;
+        }
+    }
+}
+
+/**
  * Show no episodes state
  */
 function showNoEpisodesState() {
     const loadingElement = document.getElementById('episodes-loading');
-    const gridElement = document.getElementById('episodes-grid');
-    const noEpisodesElement = document.getElementById('no-episodes');
     const loadMoreContainer = document.getElementById('load-more-container');
-    
+
+    // Hide loading state
     if (loadingElement) loadingElement.style.display = 'none';
-    if (gridElement) gridElement.innerHTML = '';
-    if (noEpisodesElement) noEpisodesElement.style.display = 'block';
     if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+
+    // For shmiras-einayim page with tabs, show empty state in both grids
+    if (seriesPageCurrentSeries === 'shmiras-einayim') {
+        const season1Grid = document.getElementById('season1-episodes-grid');
+        const season2Grid = document.getElementById('season2-episodes-grid');
+
+        if (season1Grid) {
+            const emptyState1 = season1Grid.querySelector('.empty-state');
+            if (emptyState1) emptyState1.style.display = 'block';
+        }
+        if (season2Grid) {
+            const emptyState2 = season2Grid.querySelector('.empty-state');
+            if (emptyState2) emptyState2.style.display = 'block';
+        }
+    } else {
+        // For regular series pages
+        const gridElement = document.getElementById('episodes-grid');
+        if (gridElement) {
+            const emptyState = gridElement.querySelector('.empty-state');
+            if (emptyState) emptyState.style.display = 'block';
+        }
+    }
 }
 
 /**

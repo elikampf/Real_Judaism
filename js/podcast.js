@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeSearch() {
     const searchInput = document.getElementById('search-input');
+    const seriesCards = document.querySelectorAll('.series-card');
     const accordionItems = document.querySelectorAll('.accordion-item');
 
     if (!searchInput) return;
@@ -34,25 +35,79 @@ function initializeSearch() {
     });
 
     function performSearch(query) {
-        let hasVisibleItems = false;
+        let visibleCount = 0;
 
-        accordionItems.forEach(item => {
-            const title = item.querySelector('.accordion-title').textContent.toLowerCase();
-            const hook = item.querySelector('.accordion-hook').textContent.toLowerCase();
-            const description = item.querySelector('.accordion-description p')?.textContent.toLowerCase() || '';
+        // Search through cards
+        seriesCards.forEach(card => {
+            const title = card.querySelector('.card-title').textContent.toLowerCase();
+            const description = card.querySelector('.card-description').textContent.toLowerCase();
+
+            if (title.includes(query) || description.includes(query)) {
+                // Show card with fade-in animation
+                card.style.display = '';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+
+                // Force reflow
+                card.offsetHeight;
+
+                // Animate in
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+
+                visibleCount++;
+            } else {
+                // Hide card with fade-out animation
+                card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(-20px)';
+
+                // Hide after animation completes
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 300);
+            }
+        });
+
+        // Search through accordions
+        accordionItems.forEach(accordion => {
+            const title = accordion.querySelector('.accordion-title').textContent.toLowerCase();
+            const hook = accordion.querySelector('.accordion-hook').textContent.toLowerCase();
+            const description = accordion.querySelector('.accordion-description')?.textContent.toLowerCase() || '';
 
             if (title.includes(query) || hook.includes(query) || description.includes(query)) {
-                item.style.display = '';
-                hasVisibleItems = true;
+                // Show accordion with fade-in animation
+                accordion.style.display = '';
+                accordion.style.opacity = '0';
+                accordion.style.transform = 'translateY(20px)';
+
+                // Force reflow
+                accordion.offsetHeight;
+
+                // Animate in
+                accordion.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                accordion.style.opacity = '1';
+                accordion.style.transform = 'translateY(0)';
+
+                visibleCount++;
             } else {
-                item.style.display = 'none';
+                // Hide accordion with fade-out animation
+                accordion.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                accordion.style.opacity = '0';
+                accordion.style.transform = 'translateY(-20px)';
+
+                // Hide after animation completes
+                setTimeout(() => {
+                    accordion.style.display = 'none';
+                }, 300);
             }
         });
 
         // Show/hide no results message
         const noResults = document.getElementById('no-results');
         if (noResults) {
-            noResults.style.display = hasVisibleItems ? 'none' : 'block';
+            noResults.style.display = visibleCount > 0 ? 'none' : 'block';
         }
     }
 }
@@ -63,9 +118,13 @@ function initializeSearch() {
 
 function initializeFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
+    const seriesCards = document.querySelectorAll('.series-card');
     const accordionItems = document.querySelectorAll('.accordion-item');
 
     if (!filterButtons.length) return;
+
+    // Add count badges to filter buttons
+    updateFilterCounts(filterButtons, seriesCards, accordionItems);
 
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -75,30 +134,116 @@ function initializeFilters() {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
 
-            // Apply filter
-            applyFilter(filterValue, accordionItems);
+            // Apply filter with smooth transitions
+            applyFilter(filterValue, seriesCards, accordionItems);
         });
     });
 }
 
-function applyFilter(filterValue, items) {
-    let hasVisibleItems = false;
+function updateFilterCounts(filterButtons, seriesCards, accordionItems) {
+    // Count both cards and accordions by category
+    const counts = {};
 
-    items.forEach(item => {
-        const itemCategory = item.getAttribute('data-category');
+    // Count cards
+    seriesCards.forEach(card => {
+        const category = card.getAttribute('data-category') || 'all';
+        counts[category] = (counts[category] || 0) + 1;
+    });
 
-        if (filterValue === 'all' || itemCategory === filterValue) {
-            item.style.display = '';
-            hasVisibleItems = true;
+    // Count accordions (they should match cards)
+    accordionItems.forEach(item => {
+        const category = item.getAttribute('data-category') || 'all';
+        counts[category] = (counts[category] || 0) + 1;
+    });
+
+    // Update button text with counts
+    filterButtons.forEach(button => {
+        const filterValue = button.getAttribute('data-filter');
+        let count = 0;
+
+        if (filterValue === 'all') {
+            count = seriesCards.length; // Use cards as the primary count
         } else {
-            item.style.display = 'none';
+            count = counts[filterValue] || 0;
+        }
+
+        // Update button text to include count
+        const originalText = button.textContent.replace(/\s*\(\d+\)$/, ''); // Remove existing count
+        button.textContent = `${originalText} (${count})`;
+    });
+}
+
+function applyFilter(filterValue, cards, accordions) {
+    let visibleCount = 0;
+
+    // Filter cards
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+
+        if (filterValue === 'all' || cardCategory === filterValue) {
+            // Show card with fade-in animation
+            card.style.display = '';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+
+            // Force reflow
+            card.offsetHeight;
+
+            // Animate in
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+
+            visibleCount++;
+        } else {
+            // Hide card with fade-out animation
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(-20px)';
+
+            // Hide after animation completes
+            setTimeout(() => {
+                card.style.display = 'none';
+            }, 300);
+        }
+    });
+
+    // Filter accordions (same logic as cards)
+    accordions.forEach(accordion => {
+        const accordionCategory = accordion.getAttribute('data-category');
+
+        if (filterValue === 'all' || accordionCategory === filterValue) {
+            // Show accordion with fade-in animation
+            accordion.style.display = '';
+            accordion.style.opacity = '0';
+            accordion.style.transform = 'translateY(20px)';
+
+            // Force reflow
+            accordion.offsetHeight;
+
+            // Animate in
+            accordion.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            accordion.style.opacity = '1';
+            accordion.style.transform = 'translateY(0)';
+
+            visibleCount++;
+        } else {
+            // Hide accordion with fade-out animation
+            accordion.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            accordion.style.opacity = '0';
+            accordion.style.transform = 'translateY(-20px)';
+
+            // Hide after animation completes
+            setTimeout(() => {
+                accordion.style.display = 'none';
+            }, 300);
         }
     });
 
     // Show/hide no results message
     const noResults = document.getElementById('no-results');
     if (noResults) {
-        noResults.style.display = hasVisibleItems ? 'none' : 'block';
+        noResults.style.display = visibleCount > 0 ? 'none' : 'block';
     }
 }
 
@@ -150,10 +295,36 @@ function showAllPodcasts() {
         allButton.classList.add('active');
     }
 
-    // Show all accordion items
+    // Show all series cards with animation
+    const seriesCards = document.querySelectorAll('.series-card');
+    seriesCards.forEach(card => {
+        card.style.display = '';
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+
+        // Force reflow
+        card.offsetHeight;
+
+        // Animate in
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+    });
+
+    // Show all accordion items with animation
     const accordionItems = document.querySelectorAll('.accordion-item');
-    accordionItems.forEach(item => {
-        item.style.display = '';
+    accordionItems.forEach(accordion => {
+        accordion.style.display = '';
+        accordion.style.opacity = '0';
+        accordion.style.transform = 'translateY(20px)';
+
+        // Force reflow
+        accordion.offsetHeight;
+
+        // Animate in
+        accordion.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        accordion.style.opacity = '1';
+        accordion.style.transform = 'translateY(0)';
     });
 
     // Hide no results message
@@ -188,13 +359,13 @@ function trackPodcastInteraction(action, seriesName, platform = null, additional
 
 // Track platform link clicks
 function trackPlatformClick(e) {
-    const link = e.target.closest('.platform-link');
+    const link = e.target.closest('.platform-icon');
     if (!link) return;
 
-    const item = link.closest('.accordion-item');
-    if (!item) return;
+    const card = link.closest('.series-card');
+    if (!card) return;
 
-    const seriesName = item.querySelector('.accordion-title').textContent.trim();
+    const seriesName = card.querySelector('.card-title').textContent.trim();
 
     // Extract platform from link URL
     let platform = 'unknown';
@@ -204,25 +375,38 @@ function trackPlatformClick(e) {
 
     trackPodcastInteraction('podcast_platform_click', seriesName, platform, {
         link_url: link.href,
-        link_text: link.textContent.trim()
+        link_text: link.getAttribute('aria-label') || 'platform link'
     });
 }
 
 // Track "Listen Now" button clicks
 function trackListenNowClick(e) {
-    const button = e.target.closest('.btn-quick-listen');
+    const button = e.target.closest('.btn-primary, .btn-quick-listen');
     if (!button) return;
 
-    const item = button.closest('.accordion-item');
-    if (!item) return;
+    let seriesName = '';
+    let episodeCount = 'unknown';
 
-    const seriesName = item.querySelector('.accordion-title').textContent.trim();
-    const episodeCount = item.querySelector('.accordion-episodes')?.textContent || 'unknown';
+    // Check if it's from a card
+    const card = button.closest('.series-card');
+    if (card) {
+        seriesName = card.querySelector('.card-title').textContent.trim();
+        episodeCount = card.querySelector('.episode-count')?.textContent || 'unknown';
+    }
 
-    trackPodcastInteraction('podcast_listen_now_click', seriesName, null, {
-        episode_count: episodeCount,
-        button_text: button.textContent.trim()
-    });
+    // Check if it's from an accordion
+    const accordion = button.closest('.accordion-item');
+    if (accordion) {
+        seriesName = accordion.querySelector('.accordion-title').textContent.trim();
+        episodeCount = accordion.querySelector('.accordion-episodes')?.textContent || 'unknown';
+    }
+
+    if (seriesName) {
+        trackPodcastInteraction('podcast_listen_now_click', seriesName, null, {
+            episode_count: episodeCount,
+            button_text: button.textContent.trim()
+        });
+    }
 }
 
 // Track search interactions
@@ -253,12 +437,12 @@ function trackFilterInteraction(filterType) {
 // Enhanced click tracking with delegation
 document.addEventListener('click', function(e) {
     // Track platform link clicks
-    if (e.target.closest('.platform-link')) {
+    if (e.target.closest('.platform-icon')) {
         trackPlatformClick(e);
     }
 
     // Track listen now button clicks
-    if (e.target.closest('.btn-quick-listen')) {
+    if (e.target.closest('.btn-primary')) {
         trackListenNowClick(e);
     }
 
@@ -269,113 +453,6 @@ document.addEventListener('click', function(e) {
         trackFilterInteraction(filterType);
     }
 });
-
-// Enhanced search tracking
-function initializeSearch() {
-    const searchInput = document.getElementById('search-input');
-    const accordionItems = document.querySelectorAll('.accordion-item');
-
-    if (!searchInput) return;
-
-    let lastQuery = '';
-    let searchTimeout;
-
-    searchInput.addEventListener('input', function() {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            const query = this.value.toLowerCase().trim();
-            if (query !== lastQuery) {
-                performSearch(query);
-                lastQuery = query;
-            }
-        }, 300);
-    });
-
-    function performSearch(query) {
-        let visibleCount = 0;
-
-        accordionItems.forEach(item => {
-            const title = item.querySelector('.accordion-title').textContent.toLowerCase();
-            const hook = item.querySelector('.accordion-hook').textContent.toLowerCase();
-            const description = item.querySelector('.accordion-description p')?.textContent.toLowerCase() || '';
-
-            if (title.includes(query) || hook.includes(query) || description.includes(query)) {
-                item.style.display = '';
-                visibleCount++;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        // Track search if query is not empty
-        if (query.length > 0) {
-            trackSearchInteraction(query, visibleCount);
-        }
-
-        // Show/hide no results message
-        const noResults = document.getElementById('no-results');
-        if (noResults) {
-            noResults.style.display = visibleCount > 0 ? 'none' : 'block';
-        }
-    }
-}
-
-// ============================================
-// RESPONSIVE BEHAVIOR
-// ============================================
-
-function handleResponsiveLayout() {
-    const isMobile = window.innerWidth < 768;
-    const accordionItems = document.querySelectorAll('.accordion-item');
-
-    accordionItems.forEach(item => {
-        if (isMobile) {
-            // Adjust item layout for mobile
-            item.style.marginBottom = '1rem';
-        } else {
-            item.style.marginBottom = '';
-        }
-    });
-}
-
-// Handle responsive layout on window resize
-let resizeTimeout;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(handleResponsiveLayout, 250);
-});
-
-// Initialize responsive layout on load
-handleResponsiveLayout();
-
-// ============================================
-// ACCESSIBILITY ENHANCEMENTS
-// ============================================
-
-function enhanceAccessibility() {
-    // Add keyboard navigation support
-    const searchInput = document.getElementById('search-input');
-    if (searchInput) {
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                this.value = '';
-                performSearch('');
-                this.blur();
-            }
-        });
-    }
-
-    // Add ARIA labels and roles where needed
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(button => {
-        const filterType = button.getAttribute('data-filter');
-        button.setAttribute('aria-pressed', button.classList.contains('active'));
-        button.setAttribute('aria-label', `Filter podcasts by ${filterType}`);
-    });
-}
-
-// Initialize accessibility enhancements
-enhanceAccessibility();
 
 // ============================================
 // ACCORDION FUNCTIONALITY

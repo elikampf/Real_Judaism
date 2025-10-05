@@ -54,17 +54,29 @@ async function loadBlogPosts() {
         renderLatestPost(latestPost);
         renderUpcomingPosts(upcomingPosts, latestPostIndex); // Pass a flag if the first post is not the latest
 
+        // Hide skeleton loaders when content loads
+        document.getElementById('latest-post-container').classList.add('loaded');
+        document.getElementById('upcoming-posts-container').classList.add('loaded');
+
+        // Update progress indicator
+        updateProgressIndicator(posts, latestPostIndex);
+
     } catch (error) {
         console.error("Could not load blog posts:", error);
         // Optionally display an error message on the page
         const latestPostContainer = document.getElementById('latest-post-container');
         if (latestPostContainer) {
             latestPostContainer.innerHTML = '<p class="error-message">Could not load the latest post. Please try again later.</p>';
+            latestPostContainer.classList.add('loaded');
         }
         const upcomingPostsContainer = document.getElementById('upcoming-posts-container');
         if (upcomingPostsContainer) {
             upcomingPostsContainer.innerHTML = '<p class="error-message">Could not load upcoming posts. Please try again later.</p>';
+            upcomingPostsContainer.classList.add('loaded');
         }
+
+        // Update progress indicator with fallback values
+        updateProgressIndicatorWithFallback();
     }
 }
 
@@ -152,6 +164,46 @@ function renderUpcomingPosts(posts, latestPostIndex) {
     });
 
     container.innerHTML = postsHtml;
+}
+
+/**
+ * Update the blog series progress indicator
+ */
+function updateProgressIndicator(posts, latestPostIndex) {
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+
+    if (!progressFill || !progressText || !posts || posts.length === 0) {
+        return;
+    }
+
+    const totalPosts = posts.length;
+    const currentWeekNumber = parseInt(posts[latestPostIndex].week_number.split(' ')[1]);
+    const progressPercentage = (currentWeekNumber / totalPosts) * 100;
+    const remainingWeeks = totalPosts - currentWeekNumber;
+
+    // Update progress bar width
+    progressFill.style.width = progressPercentage + '%';
+
+    // Update progress text
+    progressText.textContent = `Week ${currentWeekNumber} of ${totalPosts} • ${remainingWeeks} more week${remainingWeeks !== 1 ? 's' : ''} of wisdom`;
+}
+
+/**
+ * Update the blog series progress indicator with fallback values when posts can't be loaded
+ */
+function updateProgressIndicatorWithFallback() {
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+
+    if (!progressFill || !progressText) {
+        return;
+    }
+
+    // Set a default progress (e.g., 25% if we can't load the data)
+    const fallbackProgress = 25;
+    progressFill.style.width = fallbackProgress + '%';
+    progressText.textContent = 'Building Your Jewish Home • Weekly Torah wisdom series';
 }
 
 /**

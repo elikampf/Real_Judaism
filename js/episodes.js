@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const episodesGrid = document.getElementById('episodesGrid');
     const seriesGrid = document.getElementById('seriesGrid');
 
-    // Don't load episodes on the all podcasts page (podcast.html)
-    // since it has manual accordions and we don't want episode dumps
-    const isPodcastPage = window.location.pathname.includes('podcast.html');
+    // Don't load episodes on the homepage (index.html)
+    // since it shows the series overview, not individual episodes
+    const isPodcastPage = window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/');
 
     if ((episodesGrid || seriesGrid) && !isPodcastPage) {
         loadEpisodeData();
@@ -583,8 +583,22 @@ function displayError(message) {
     const container = document.getElementById('episodesGrid') ||
                      document.getElementById('episodes-grid') ||
                      document.getElementById('seriesGrid');
+
     if (container) {
-        container.innerHTML = `<div class="error-message" style="color: red; padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 6px; margin: 1rem 0;">${message}</div>`;
+        // Hide any existing content and show error state
+        container.innerHTML = `
+            <div class="error-state">
+                <div class="error-icon">⚠️</div>
+                <h3>Couldn't load episodes</h3>
+                <p>Please <button onclick="location.reload()">try again</button> or check your connection</p>
+            </div>
+        `;
+
+        // Hide loading states if they exist
+        const loadingElement = document.getElementById('episodes-loading');
+        if (loadingElement) {
+            loadingElement.style.display = 'none';
+        }
     } else {
         console.error('Error:', message);
     }

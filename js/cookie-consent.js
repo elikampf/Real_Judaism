@@ -43,8 +43,8 @@ function showCookieBanner() {
                 <p>We use cookies and similar technologies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies for these purposes.</p>
             </div>
             <div class="cookie-consent-buttons">
-                <button id="cookie-reject" class="cookie-btn cookie-btn-secondary">Reject All</button>
-                <button id="cookie-accept" class="cookie-btn cookie-btn-primary">Accept All</button>
+                <button id="cookie-reject" class="btn btn-utility">Reject All</button>
+                <button id="cookie-accept" class="btn btn-primary">Accept All</button>
             </div>
         </div>
     `;
