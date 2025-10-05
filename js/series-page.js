@@ -235,6 +235,17 @@ function performEpisodeReorder(episodesGrid, filteredEpisodes) {
         setTimeout(() => {
             initializeSpotifyEmbeds();
         }, 500);
+        
+        // Animate cards in
+        setTimeout(() => {
+            const cards = document.querySelectorAll('.episode-card-series');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 50);
+            });
+        }, 100);
     }
 
     // Remove fading class after animation completes
