@@ -1486,7 +1486,12 @@ blockquote {
   max-width: 900px;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+}
+
+/* Homepage hero title should stay on one line since it's short */
+.hero-section-dark .hero-content-center .hero-title {
   text-wrap: nowrap;
+}
 }
 
 .hero-section-light .hero-title {
