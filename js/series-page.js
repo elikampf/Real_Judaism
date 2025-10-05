@@ -536,7 +536,10 @@ async function loadRelatedSeries() {
     };
 
     const relatedSeries = relatedSeriesMap[seriesPageCurrentSeries] || ['dating', 'shalom-bayis', 'mesilas-yesharim'];
-    container.innerHTML = '';
+
+    // Create a grid container for the links
+    const gridContainer = document.createElement('div');
+    gridContainer.className = 'series-links-grid';
 
     for (const seriesName of relatedSeries.slice(0, 3)) {
         try {
@@ -549,67 +552,41 @@ async function loadRelatedSeries() {
             const response = await fetch(`${dataPath}${seriesFileName}?v=` + Date.now());
             if (response.ok) {
                 const seriesData = await response.json();
-                const episodeCount = seriesData.episodes ? seriesData.episodes.length : 0;
-                const relatedCard = createRelatedSeriesCard(seriesName, { episodes: [], episode_count: episodeCount });
-                container.appendChild(relatedCard);
+                const episodes = seriesData.episodes || [];
+                const relatedSeriesLink = createRelatedSeriesListItem(seriesName, episodes);
+                gridContainer.appendChild(relatedSeriesLink);
             }
         } catch (error) {
             console.warn(`Could not load related series ${seriesName}:`, error);
         }
     }
 
-    // Initialize lazy loading after adding cards
-    if (typeof initializeLazyLoading === 'function') {
-        console.log('Initializing lazy loading for related series...');
-        initializeLazyLoading();
-    } else {
-        console.warn('initializeLazyLoading function not found');
-        // Fallback: manually load images
-        const lazyImages = container.querySelectorAll('img[data-src]');
-        lazyImages.forEach(img => {
-            const src = img.getAttribute('data-src');
-            if (src) {
-                img.src = src;
-                img.classList.add('loaded');
-                img.classList.remove('lazy-loading');
-                img.style.opacity = '1';
-            }
-        });
-    }
+    container.innerHTML = '';
+    container.appendChild(gridContainer);
 }
 
 /**
- * Create related series card
+ * Create related series link item
  */
-function createRelatedSeriesCard(seriesName, seriesInfo) {
-    const card = document.createElement('a');
-    card.className = 'series-card-compact';
-    card.href = `/series/${seriesName}`;
+function createRelatedSeriesListItem(seriesName, episodes) {
+    const linkItem = document.createElement('a');
+    linkItem.className = 'series-link-item';
 
-    const episodeCount = seriesInfo.episode_count || seriesInfo.episodes.length;
-    const description = generateSeriesDescription(seriesName);
     const displayName = formatSeriesName(seriesName);
+    const episodeCount = episodes.length;
 
-    card.innerHTML = `
-        <div class="series-card-compact-image">
-            <img data-src="../images/${getSeriesImage(seriesName)}"
-                 alt="${displayName} Series"
-                 class="lazy-loading"
-                 loading="lazy">
+    linkItem.innerHTML = `
+        <div class="series-link-content">
+            <h3 class="series-link-title">${displayName}</h3>
+            <span class="series-link-count">${episodeCount} episodes</span>
         </div>
-        <div class="series-card-compact-content">
-            <div>
-                <h3 class="series-card-compact-title">${displayName}</h3>
-                <p class="series-card-compact-description">${description}</p>
-            </div>
-            <div class="series-card-compact-meta">
-                <span class="series-card-compact-episodes">${episodeCount} episodes</span>
-                <span class="series-card-compact-category">Series</span>
-            </div>
-        </div>
+        <div class="series-link-arrow">→</div>
     `;
 
-    return card;
+    // Set the href to use relative path within the series directory
+    linkItem.href = `${seriesName}.html`;
+
+    return linkItem;
 }
 
 /**

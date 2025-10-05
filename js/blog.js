@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
     loadBlogPosts();
 });
 
+// Global variables for filtering
+let allPosts = [];
+let filteredPosts = [];
+let currentFilter = 'all';
+let currentSort = 'newest';
+let currentSearch = '';
+
 /**
  * Initialize blog page functionality
  */
@@ -16,6 +23,7 @@ function initializeBlogPage() {
     initializeNewsletterForm();
     initializePostFilters();
     initializeLoadMore();
+    initializeBlogFiltering();
 }
 
 /**
@@ -51,15 +59,29 @@ async function loadBlogPosts() {
         const latestPost = posts[latestPostIndex];
         const upcomingPosts = posts.slice(latestPostIndex + 1, latestPostIndex + 4); // Get the next 3 posts
 
+        // Store all posts globally for filtering
+        allPosts = posts;
+
         renderLatestPost(latestPost);
+        renderBlogArchive(posts, latestPostIndex);
         renderUpcomingPosts(upcomingPosts, latestPostIndex); // Pass a flag if the first post is not the latest
 
         // Hide skeleton loaders when content loads
         document.getElementById('latest-post-container').classList.add('loaded');
+        document.getElementById('archive-loading').style.display = 'none';
         document.getElementById('upcoming-posts-container').classList.add('loaded');
 
         // Update progress indicator
         updateProgressIndicator(posts, latestPostIndex);
+
+        // Initialize filter bar visibility after content loads
+        setTimeout(() => {
+            const filterBar = document.getElementById('blog-filter-bar');
+            if (filterBar) {
+                filterBar.style.opacity = '1';
+                filterBar.style.transform = 'translateY(0)';
+            }
+        }, 500);
 
     } catch (error) {
         console.error("Could not load blog posts:", error);
@@ -81,6 +103,50 @@ async function loadBlogPosts() {
 }
 
 /**
+ * Render all published posts in the archive grid (excluding the latest featured post)
+ */
+function renderBlogArchive(posts, latestPostIndex) {
+    const archiveContainer = document.getElementById('blog-archive-grid');
+    if (!archiveContainer || !posts) return;
+
+    // Get all published posts except the latest one (which is featured)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const archivePosts = posts.filter((post, index) => {
+        const postDate = new Date(post.date);
+        return postDate <= today && index !== latestPostIndex;
+    });
+
+    if (archivePosts.length === 0) {
+        archiveContainer.innerHTML = '<p class="no-archive-posts">No archived posts available yet.</p>';
+        return;
+    }
+
+    let archiveHtml = '';
+    archivePosts.forEach(post => {
+        const weekNumber = post.week_number.split(' ')[1];
+        archiveHtml += `
+            <article class="blog-card">
+                <div class="blog-card-header">
+                    <div class="blog-card-week">
+                        Week ${weekNumber}
+                    </div>
+                    <h3 class="blog-card-title">${post.title}</h3>
+                    <p class="blog-card-excerpt">${post.excerpt}</p>
+                </div>
+                <div class="blog-card-footer">
+                    <span class="blog-card-meta">Published on ${post.date} • ${post.read_time}</span>
+                    <a href="blog/${post.slug}.html" class="blog-card-link">Read More</a>
+                </div>
+            </article>
+        `;
+    });
+
+    archiveContainer.innerHTML = archiveHtml;
+}
+
+/**
  * Render the latest post on the blog homepage
  */
 function renderLatestPost(post) {
@@ -89,24 +155,56 @@ function renderLatestPost(post) {
 
     const weekNumber = post.week_number.split(' ')[1];
 
+    // Format the date nicely
+    const postDate = new Date(post.date);
+    const formattedDate = postDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
     container.innerHTML = `
-        <div class="featured-post-card-light">
-            <div class="accent-bar accent-${(parseInt(weekNumber) % 4) + 1}"></div>
-            <div class="card-content">
-                <div class="card-header">
-                    <span class="card-eyebrow">Latest Published Post</span>
-                    <div class="week-badge-light">
-                         <span class="week-label">Week</span>
-                         <span class="week-number">${weekNumber}</span>
+        <div class="featured-post-card-enhanced">
+            <div class="featured-post-bg"></div>
+            <div class="featured-post-content">
+                <div class="featured-post-header">
+                    <div class="featured-post-label">
+                        <span class="featured-badge">Latest Post</span>
+                    </div>
+                    <div class="week-badge-featured">
+                         <span class="week-label-featured">Week</span>
+                         <span class="week-number-featured">${weekNumber}</span>
                     </div>
                 </div>
-                <h2 class="card-title">${post.title}</h2>
-                <p class="card-excerpt">${post.excerpt}</p>
-                <div class="card-footer">
-                    <span class="card-meta">Published on ${post.date} • ${post.read_time}</span>
-                    <a href="blog/${post.slug}.html" class="btn-primary">
-                        Start Reading <span class="btn-icon">→</span>
+
+                <div class="featured-post-main">
+                    <h1 class="featured-post-title">${post.title}</h1>
+                    <p class="featured-post-excerpt">${post.excerpt}</p>
+                </div>
+
+                <div class="featured-post-meta">
+                    <div class="meta-item">
+                        <span class="meta-icon">📅</span>
+                        <span class="meta-text">${formattedDate}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">⏱️</span>
+                        <span class="meta-text">${post.read_time}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-icon">✍️</span>
+                        <span class="meta-text">Rabbi Ari Klapper</span>
+                    </div>
+                </div>
+
+                <div class="featured-post-actions">
+                    <a href="blog/${post.slug}.html" class="btn-featured-primary">
+                        <span class="btn-text">Start Reading</span>
+                        <span class="btn-icon">→</span>
                     </a>
+                    <button onclick="scrollToArchive()" class="btn-featured-secondary">
+                        <span class="btn-text">View All Posts</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -340,24 +438,249 @@ function showFormMessage(message, type) {
 }
 
 /**
+ * Initialize blog filtering functionality
+ */
+function initializeBlogFiltering() {
+    // Initialize filter bar with fade-in animation
+    const filterBar = document.getElementById('blog-filter-bar');
+    if (filterBar) {
+        filterBar.style.opacity = '0';
+        filterBar.style.transform = 'translateY(-20px)';
+        filterBar.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    }
+
+    // Initialize filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            applyFilter(filter);
+        });
+    });
+
+    // Initialize search input
+    const searchInput = document.getElementById('blog-search');
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                applySearch(this.value);
+            }, 300); // Debounce search
+        });
+    }
+
+    // Initialize sort dropdown
+    const sortSelect = document.getElementById('sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            applySort(this.value);
+        });
+    }
+}
+
+/**
+ * Apply category filter
+ */
+function applyFilter(filter) {
+    currentFilter = filter;
+    updateActiveFilters();
+    applyAllFilters();
+}
+
+/**
+ * Apply search filter
+ */
+function applySearch(searchTerm) {
+    currentSearch = searchTerm.toLowerCase();
+    updateActiveFilters();
+    applyAllFilters();
+}
+
+/**
+ * Apply sort order
+ */
+function applySort(sort) {
+    currentSort = sort;
+    applyAllFilters();
+}
+
+/**
+ * Apply all active filters and update display
+ */
+function applyAllFilters() {
+    if (allPosts.length === 0) return;
+
+    // Start with all published posts (excluding latest featured post)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    filteredPosts = allPosts.filter((post, index) => {
+        const postDate = new Date(post.date);
+        return postDate <= today; // Only published posts
+    });
+
+    // Apply category filter
+    if (currentFilter !== 'all') {
+        filteredPosts = filteredPosts.filter(post => {
+            // For demo purposes, categorize based on title/content
+            // In a real implementation, you'd have a category field in the JSON
+            const title = post.title.toLowerCase();
+            const excerpt = post.excerpt.toLowerCase();
+
+            switch(currentFilter) {
+                case 'foundation':
+                    return title.includes('core') || title.includes('foundation') || excerpt.includes('core') || excerpt.includes('foundation');
+                case 'marriage':
+                    return title.includes('marriage') || title.includes('home') || excerpt.includes('marriage') || excerpt.includes('home');
+                case 'spirituality':
+                    return title.includes('spiritual') || title.includes('growth') || excerpt.includes('spiritual') || excerpt.includes('growth');
+                default:
+                    return true;
+            }
+        });
+    }
+
+    // Apply search filter
+    if (currentSearch) {
+        filteredPosts = filteredPosts.filter(post => {
+            const title = post.title.toLowerCase();
+            const excerpt = post.excerpt.toLowerCase();
+            return title.includes(currentSearch) || excerpt.includes(currentSearch);
+        });
+    }
+
+    // Apply sorting
+    filteredPosts = sortPosts(filteredPosts, currentSort);
+
+    // Update display
+    updateBlogArchiveDisplay();
+}
+
+/**
+ * Sort posts based on selected criteria
+ */
+function sortPosts(posts, sortBy) {
+    const sortedPosts = [...posts];
+
+    switch(sortBy) {
+        case 'newest':
+            return sortedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        case 'oldest':
+            return sortedPosts.sort((a, b) => new Date(a.date) - new Date(b.date));
+        case 'alphabetical':
+            return sortedPosts.sort((a, b) => a.title.localeCompare(b.title));
+        default:
+            return sortedPosts;
+    }
+}
+
+/**
+ * Update the blog archive display with filtered results
+ */
+function updateBlogArchiveDisplay() {
+    const gridContainer = document.getElementById('blog-archive-grid');
+    const noResultsContainer = document.getElementById('no-results');
+
+    if (filteredPosts.length === 0) {
+        // Show no results message
+        gridContainer.style.display = 'none';
+        noResultsContainer.style.display = 'block';
+    } else {
+        // Show filtered posts
+        noResultsContainer.style.display = 'none';
+        gridContainer.style.display = 'grid';
+
+        // Re-render the grid with filtered posts
+        let archiveHtml = '';
+        filteredPosts.forEach(post => {
+            const weekNumber = post.week_number.split(' ')[1];
+            archiveHtml += `
+                <article class="blog-card">
+                    <div class="blog-card-header">
+                        <div class="blog-card-week">
+                            Week ${weekNumber}
+                        </div>
+                        <h3 class="blog-card-title">${post.title}</h3>
+                        <p class="blog-card-excerpt">${post.excerpt}</p>
+                    </div>
+                    <div class="blog-card-footer">
+                        <span class="blog-card-meta">Published on ${post.date} • ${post.read_time}</span>
+                        <a href="blog/${post.slug}.html" class="blog-card-link">Read More</a>
+                    </div>
+                </article>
+            `;
+        });
+
+        gridContainer.innerHTML = archiveHtml;
+    }
+}
+
+/**
+ * Update active filters display
+ */
+function updateActiveFilters() {
+    const activeFiltersContainer = document.getElementById('active-filters');
+    if (!activeFiltersContainer) return;
+
+    let activeFiltersHtml = '';
+
+    if (currentFilter !== 'all') {
+        const filterNames = {
+            'foundation': 'Blog',
+            'marriage': 'Marriage',
+            'spirituality': 'Spirituality'
+        };
+        activeFiltersHtml += `
+            <span class="active-filter-tag">
+                ${filterNames[currentFilter] || currentFilter}
+                <button class="remove-filter" onclick="applyFilter('all')">×</button>
+            </span>
+        `;
+    }
+
+    if (currentSearch) {
+        activeFiltersHtml += `
+            <span class="active-filter-tag">
+                Search: "${currentSearch}"
+                <button class="remove-filter" onclick="applySearch('')">×</button>
+            </span>
+        `;
+    }
+
+    activeFiltersContainer.innerHTML = activeFiltersHtml;
+}
+
+/**
+ * Clear all filters
+ */
+function clearFilters() {
+    currentFilter = 'all';
+    currentSearch = '';
+    currentSort = 'newest';
+
+    // Reset UI elements
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+
+    document.getElementById('blog-search').value = '';
+    document.getElementById('sort-select').value = 'newest';
+
+    // Clear active filters display
+    document.getElementById('active-filters').innerHTML = '';
+
+    // Reapply filters (which will show all posts)
+    applyAllFilters();
+}
+
+/**
  * Initialize post filters (if needed for future expansion)
  */
 function initializePostFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    if (filterButtons.length === 0) return;
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-
-            // Add active class to clicked button
-            this.classList.add('active');
-
-            const filter = this.getAttribute('data-filter');
-            filterPosts(filter);
-        });
-    });
+    // This is now handled by initializeBlogFiltering()
+    // Keeping for backward compatibility
 }
 
 /**
@@ -401,6 +724,19 @@ function scrollToPosts() {
     const postsSection = document.getElementById('posts');
     if (postsSection) {
         postsSection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+/**
+ * Scroll to blog archive section
+ */
+function scrollToArchive() {
+    const archiveSection = document.querySelector('.blog-archive-section');
+    if (archiveSection) {
+        archiveSection.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });

@@ -104,10 +104,9 @@
             </div>
             <div class="hero-container">
                 <div class="hero-content-center">
-                    <span class="hero-badge">Foundation Series</span>
                     <h1 class="hero-title">Building Your Jewish Home</h1>
                     <p class="hero-subtitle">
-                        Weekly Torah guidance for Jewish marriage. Practical wisdom for building your Jewish home, one week at a time.
+                        Real Torah for real marriage. Not theory—actual guidance you can use this week.
                     </p>
                     <!-- Blog Series Progress Indicator -->
                     <div class="blog-progress-container">
@@ -120,11 +119,9 @@
             </div>
         </section>
 
-        <!-- Blog Posts Section -->
-        <section class="blog-posts-section premium" id="posts">
+        <!-- Featured Post Section -->
+        <section class="featured-post-section" id="featured-post">
             <div class="container">
-
-                <!-- Featured Post (Latest Week) -->
                 <div id="latest-post-container">
                     <!-- Skeleton loader for latest post -->
                     <div class="skeleton-post-card">
@@ -135,13 +132,93 @@
                     </div>
                     <!-- Latest post will be dynamically injected here -->
                 </div>
+            </div>
+        </section>
 
-                <hr class="section-separator">
+        <!-- Main Blog Archive Section -->
+        <section class="main-blog-archive" id="blog-archive">
+            <div class="container">
+                <div class="archive-header">
+                    <h1 class="archive-title">Building Your Jewish Home</h1>
+                    <p class="archive-subtitle">Weekly Torah wisdom for strengthening your marriage and building a Jewish home. Browse our complete collection of published posts.</p>
+                </div>
 
-                <!-- Upcoming Posts -->
-                <div class="upcoming-posts-section">
-                    <h2 class="upcoming-title">Continue Your Journey</h2>
-                    <div id="upcoming-posts-container" class="upcoming-posts-grid">
+                <!-- Blog Filter Bar -->
+                <div class="blog-filter-bar" id="blog-filter-bar">
+                    <div class="filter-controls">
+                        <!-- Search Input -->
+                        <div class="search-group">
+                            <input type="text" id="blog-search" placeholder="Search posts..." class="search-input">
+                            <span class="search-icon">🔍</span>
+                        </div>
+
+                        <!-- Category Filters -->
+                        <div class="filter-group">
+                            <span class="filter-label">Filter:</span>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" data-filter="all">All Posts</button>
+                                        <button class="filter-btn" data-filter="foundation">Blog</button>
+                                <button class="filter-btn" data-filter="marriage">Marriage</button>
+                                <button class="filter-btn" data-filter="spirituality">Spirituality</button>
+                            </div>
+                        </div>
+
+                        <!-- Sort Options -->
+                        <div class="sort-group">
+                            <select id="sort-select" class="sort-select">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                                <option value="alphabetical">A-Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Active Filters Display -->
+                    <div class="active-filters" id="active-filters">
+                        <!-- Active filters will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="archive-loading" id="archive-loading">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                    </div>
+                    <p class="loading-text">Loading blog archive...</p>
+                </div>
+
+                <!-- No Results State -->
+                <div class="no-results" id="no-results" style="display: none;">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>No Posts Found</h3>
+                    <p>Try adjusting your filters or search terms to find what you're looking for.</p>
+                    <button class="btn btn-secondary" onclick="clearFilters()">Clear All Filters</button>
+                </div>
+
+                <!-- Blog Archive Grid -->
+                <div class="blog-archive-grid" id="blog-archive-grid">
+                    <!-- Blog posts will be loaded dynamically -->
+                </div>
+
+                <!-- Load More Button (if needed) -->
+                <div class="archive-load-more" id="load-more-container" style="display: none;">
+                    <button class="btn btn-secondary btn-large" id="load-more-btn">
+                        Load More Posts
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar Section for Upcoming Posts -->
+        <section class="sidebar-section">
+            <div class="container">
+                <div class="sidebar-content">
+                    <!-- Coming Soon Section -->
+                    <div class="coming-soon-sidebar">
+                        <h3 class="sidebar-title">Coming Soon</h3>
+                        <p class="sidebar-description">Preview upcoming posts in our "Building Your Jewish Home" series.</p>
+
+                        <div id="upcoming-posts-container" class="upcoming-posts-grid">
                         <!-- Skeleton loaders for upcoming posts -->
                         <div class="skeleton-upcoming-card">
                             <div class="skeleton skeleton-week"></div>
@@ -163,32 +240,31 @@
                         </div>
                         <!-- Upcoming posts will be dynamically injected here -->
                     </div>
-                </div>
+                    </div>
 
-                <hr class="section-separator">
-
-                <!-- Newsletter Signup -->
-                <section class="premium-newsletter-section">
-                    <div class="newsletter-card">
-                        <div class="newsletter-content">
-                            <div class="newsletter-header">
-                                <span class="newsletter-icon">✉️</span>
-                                <h2 class="newsletter-title">Weekly Torah Wisdom</h2>
-                            </div>
-                            <p class="newsletter-description">Get notified when new posts are published in our "Building Your Jewish Home" series. Fresh Torah wisdom delivered every week to guide your marriage journey!</p>
-                            <p class="newsletter-social-proof">Join 1,200+ subscribers already receiving weekly wisdom</p>
-                            <form class="newsletter-form" method="post" action="https://formspree.io/f/your-form-id">
-                                <div class="form-group-inline">
-                                    <div class="input-container">
-                                        <input type="email" name="email" id="newsletter-email" placeholder="Enter your email" required>
-                                        <span class="validation-icon" style="display: none;"></span>
-                                    </div>
-                                    <button type="submit" class="btn-primary">Subscribe to Weekly Posts</button>
+                    <!-- Newsletter Signup Sidebar -->
+                    <div class="newsletter-sidebar">
+                        <div class="newsletter-card">
+                            <div class="newsletter-content">
+                                <div class="newsletter-header">
+                                    <span class="newsletter-icon">✉️</span>
+                                    <h3 class="newsletter-title">Weekly Torah Wisdom</h3>
                                 </div>
-                            </form>
+                                <p class="newsletter-description">Get notified when new posts are published in our "Building Your Jewish Home" series. Fresh Torah wisdom delivered every week to guide your marriage journey!</p>
+                                <p class="newsletter-social-proof">Join 1,200+ subscribers already receiving weekly wisdom</p>
+                                <form class="newsletter-form" method="post" action="https://formspree.io/f/your-form-id">
+                                    <div class="form-group-inline">
+                                        <div class="input-container">
+                                            <input type="email" name="email" id="newsletter-email" placeholder="Enter your email" required>
+                                            <span class="validation-icon" style="display: none;"></span>
+                                        </div>
+                                        <button type="submit" class="btn-primary">Subscribe to Weekly Posts</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         </section>
     </main>
