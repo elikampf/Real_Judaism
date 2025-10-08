@@ -650,7 +650,7 @@ blockquote {
     color: #1a1a1a;
     font: 800 var(--text-section) var(--font-family);
     letter-spacing: -0.5px;
-    margin: var(--space-20) 0 var(--space-8) 0;
+    margin: var(--space-10) 0 var(--space-4) 0;
     text-align: center;
     line-height: 1.2;
 }
@@ -5961,17 +5961,31 @@ blockquote {
     align-items: center;
 }
 
-/* Centered Profile Hero */
+/* Professional Side-by-Side Profile Hero */
 .profile-hero {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
-    padding: var(--space-20) var(--space-8);
-    max-width: 800px;
+    justify-content: flex-start;
+    gap: var(--space-16);
+    padding: var(--space-16) var(--space-8);
+    max-width: 1200px;
     margin: 0 auto;
     background: linear-gradient(135deg, rgba(250, 250, 250, 0.98) 0%, rgba(248, 248, 248, 0.95) 100%);
-    margin-bottom: var(--space-20); /* 80-100px to journey */
+    margin-bottom: var(--space-10); /* Halved spacing to journey */
+}
+
+.profile-image-section {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-credentials {
+    flex: 1;
+    text-align: left;
+    padding-left: var(--space-8);
 }
 
 .about-text-content {
@@ -6093,7 +6107,7 @@ blockquote {
 }
 
 .credential-number {
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: 900;
     color: var(--color-primary);
     line-height: 1;
@@ -6140,7 +6154,7 @@ blockquote {
     }
 
     .credential-number {
-        font-size: 3.5rem;
+        font-size: 1.75rem;
     }
 
     .credential-label {
@@ -6149,19 +6163,19 @@ blockquote {
 
     /* Mobile spacing adjustments */
     .credentials-section {
-        margin-bottom: var(--space-12); /* Reduce spacing on tablet */
+        margin-bottom: var(--space-6); /* Halved spacing on tablet */
     }
 
     .profile-hero {
-        margin-bottom: var(--space-12);
+        margin-bottom: var(--space-6);
     }
 
     .premium-quote-section {
-        margin: var(--space-12) 0;
+        margin: var(--space-6) 0;
     }
 
     .about-text-content .content-section {
-        margin-bottom: var(--space-12);
+        margin-bottom: var(--space-6);
     }
 }
 
@@ -6171,7 +6185,7 @@ blockquote {
     }
 
     .credential-number {
-        font-size: 3rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -6218,7 +6232,7 @@ blockquote {
 /* Impact Section - Social Proof Cards */
 .impact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-6);
     margin: var(--space-8) 0 var(--space-6) 0;
     max-width: 900px;
@@ -6390,7 +6404,7 @@ blockquote {
 /* Enhanced about page typography and visual structure */
 .about-text-content .content-section {
     padding: var(--space-16) var(--space-12);
-    margin-bottom: var(--space-20);
+    margin-bottom: var(--space-10);
     border-radius: var(--radius-lg);
     position: relative;
     max-width: 900px;
@@ -6405,12 +6419,12 @@ blockquote {
 
 .about-text-content .content-section:nth-child(2) {
     background: #ffffff; /* Mission section */
-    margin-bottom: var(--space-20); /* 80-100px to impact */
+    margin-bottom: var(--space-10); /* Halved spacing to impact */
 }
 
 .about-text-content .content-section:nth-child(3) {
     background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%); /* Impact section */
-    margin-bottom: var(--space-24); /* 100-120px to CTA */
+    margin-bottom: var(--space-12); /* Halved spacing to CTA */
 }
 
 .about-text-content .content-section p {
@@ -6436,7 +6450,7 @@ blockquote {
     margin: 0 0 var(--space-3) 0;
     line-height: 1.2;
     letter-spacing: -0.3px;
-    text-align: center;
+    text-align: left;
 }
 
 .profile-tagline {
@@ -6444,7 +6458,7 @@ blockquote {
     font-weight: 400;
     color: #666666;
     margin: 0 0 var(--space-2) 0;
-    text-align: center;
+    text-align: left;
     letter-spacing: 0.02em;
 }
 
@@ -6453,37 +6467,51 @@ blockquote {
     font-weight: 400;
     color: #888888;
     margin: 0;
-    text-align: center;
+    text-align: left;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.5rem;
 }
 
 /* Responsive adjustments for profile hero */
 @media (max-width: 768px) {
     .profile-hero {
+        flex-direction: column;
+        text-align: center;
         padding: var(--space-12) var(--space-6);
+        gap: var(--space-8);
+    }
+
+    .profile-image-section {
+        margin-bottom: var(--space-4);
+    }
+
+    .profile-credentials {
+        text-align: center;
+        padding-left: 0;
     }
 
     .profile-image-container {
         width: 180px;
         height: 180px;
-        margin-bottom: var(--space-6);
     }
 
     .profile-name {
         font-size: 1.875rem;
         margin: var(--space-3) 0 var(--space-2) 0;
+        text-align: center;
     }
 
     .profile-tagline {
         font-size: 1rem;
         margin-bottom: var(--space-2);
+        text-align: center;
     }
 
     .profile-location {
         font-size: 0.875rem;
+        justify-content: center;
     }
 
     .hero-container {
@@ -6494,12 +6522,20 @@ blockquote {
 @media (max-width: 480px) {
     .profile-hero {
         padding: var(--space-8) var(--space-4);
+        gap: var(--space-6);
+    }
+
+    .profile-image-section {
+        margin-bottom: var(--space-3);
+    }
+
+    .profile-credentials {
+        padding-left: 0;
     }
 
     .profile-image-container {
         width: 160px;
         height: 160px;
-        margin-bottom: var(--space-4);
     }
 
     .profile-name {
@@ -6647,8 +6683,8 @@ blockquote {
 
 /* Premium Quote Section */
 .premium-quote-section {
-    padding: var(--space-24) 0;
-    margin: var(--space-24) 0; /* 100-120px spacing */
+    padding: var(--space-12) 0;
+    margin: var(--space-12) 0; /* Halved spacing */
     position: relative;
     overflow: visible;
 }
