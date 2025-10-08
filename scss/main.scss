@@ -1,0 +1,14 @@
+// Main SCSS Entry Point
+@import 'themes/variables';
+@import 'utils/mixins';
+@import 'utils/functions';
+@import 'base/reset';
+@import 'base/typography';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'components/buttons';
+@import 'components/cards';
+@import 'components/forms';
+@import 'pages/home';
+@import 'pages/blog';
+@import 'pages/about';
