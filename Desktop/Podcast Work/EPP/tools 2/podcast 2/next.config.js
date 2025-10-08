@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   images: {
     domains: ['*'], // Allow all domains for podcast cover art
   },
+  // Disable x-powered-by header for security
+  poweredByHeader: false,
 }
 
 module.exports = nextConfig

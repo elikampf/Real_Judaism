@@ -14,8 +14,9 @@ export async function POST(request: NextRequest) {
     const correctPassword = process.env.PASSWORD
 
     if (!correctPassword) {
+      console.error('PASSWORD environment variable not set')
       return NextResponse.json(
-        { error: 'Password not configured' },
+        { error: 'Server configuration error' },
         { status: 500 }
       )
     }
