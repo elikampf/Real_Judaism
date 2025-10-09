@@ -1237,20 +1237,36 @@ blockquote {
     margin-bottom: var(--space-4)
 }
 
-/* Profile Hero Image - Circular Portrait Style */
+/* Premium Professional Portrait */
 .profile-image-container {
     position: relative;
-    margin-bottom: var(--space-10);
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.15),
-        0 5px 20px rgba(0, 0, 0, 0.1),
-        0 2px 10px rgba(0, 0, 0, 0.08);
-    border: 3px solid #ffffff;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        0 2px 8px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.06),
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 16px 64px rgba(0, 0, 0, 0.12);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    background: #ffffff;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: var(--space-4);
+    animation: profileFloat 4s ease-in-out infinite;
+}
+
+.profile-image-container::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.05), rgba(59, 130, 246, 0.1));
+    z-index: -1;
+    animation: profileGlow 4s ease-in-out infinite;
 }
 
 .profile-image {
@@ -1263,15 +1279,11 @@ blockquote {
 }
 
 .profile-image-container:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow:
-        0 15px 50px rgba(0, 0, 0, 0.2),
-        0 8px 25px rgba(0, 0, 0, 0.12),
-        0 3px 12px rgba(0, 0, 0, 0.1);
-}
-
-.profile-image-container:hover .profile-image {
-    transform: scale(1.05);
+        0 25px 70px rgba(0, 0, 0, 0.15),
+        0 12px 35px rgba(0, 0, 0, 0.1),
+        0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 .container {
@@ -1358,8 +1370,8 @@ blockquote {
 .cta-buttons .btn-primary:hover {
     background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
     border-color: #1d4ed8;
-    box-shadow: 0 20px 60px rgba(37, 99, 235, 0.8), 0 12px 32px rgba(37, 99, 235, 0.6), 0 6px 16px rgba(37, 99, 235, 0.4);
-    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 24px 80px rgba(37, 99, 235, 1), 0 16px 48px rgba(37, 99, 235, 0.8), 0 8px 24px rgba(37, 99, 235, 0.6), 0 0 0 1px rgba(59, 130, 246, 0.3);
+    transform: translateY(-6px) scale(1.03);
 }
 
 /* Secondary CTA Button - Bright Outline Style */
@@ -1381,12 +1393,12 @@ blockquote {
 }
 
 .cta-buttons .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 1);
+    border-color: rgba(255, 255, 255, 1);
     color: #1e40af;
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.02);
     text-shadow: none;
-    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.4), 0 6px 16px rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive CTA Button Adjustments */
@@ -5961,31 +5973,44 @@ blockquote {
     align-items: center;
 }
 
-/* Professional Side-by-Side Profile Hero */
+/* Premium Executive Bio Section */
 .profile-hero {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--space-12);
-    padding: var(--space-12) var(--space-6); /* tighter vertical padding */
-    max-width: 1200px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, rgba(250, 250, 250, 0.98) 0%, rgba(248, 248, 248, 0.95) 100%);
-    margin-bottom: var(--space-8); /* further halved spacing to journey */
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-16);
+    padding: var(--space-20) var(--space-12);
+    max-width: 1100px;
+    margin: 0 auto var(--space-8) auto;
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 10px 40px rgba(0, 0, 0, 0.02);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary) 0%, rgba(59, 130, 246, 0.6) 100%);
 }
 
 .profile-image-section {
-    flex-shrink: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .profile-credentials {
-    flex: 1;
-    text-align: left;
-    padding-left: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-8) 0 var(--space-6) 0;
+    margin-bottom: var(--space-4);
 }
 
 .about-text-content {
@@ -6112,9 +6137,10 @@ blockquote {
     color: var(--color-primary);
     line-height: 1;
     margin-bottom: var(--space-3);
-    text-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+    text-shadow: 0 2px 12px rgba(59, 130, 246, 0.3), 0 1px 4px rgba(59, 130, 246, 0.2);
     letter-spacing: -0.8px;
     position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .credential-number::after {
@@ -6131,11 +6157,12 @@ blockquote {
 
 .credential-label {
     font-size: 1rem;
-    font-weight: 500;
-    color: #666666;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 0.7);
     letter-spacing: 0.8px;
     text-transform: uppercase;
     margin-top: var(--space-2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Responsive adjustments for credentials */
@@ -6207,12 +6234,14 @@ blockquote {
 }
 
 .philosophy-highlight {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(147, 197, 253, 0.02) 100%);
-    border-left: 4px solid var(--color-primary);
-    padding: var(--space-5) var(--space-6);
-    margin: var(--space-6) 0;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(147, 197, 253, 0.06) 100%);
+    border-left: 5px solid var(--color-primary);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    padding: var(--space-6) var(--space-8);
+    margin: var(--space-8) 0;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
     position: relative;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.06);
 }
 
 .philosophy-highlight p {
@@ -6244,9 +6273,11 @@ blockquote {
     border-radius: var(--radius-lg);
     padding: var(--space-6);
     text-align: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
 }
 
 .impact-card::before {
@@ -6261,9 +6292,9 @@ blockquote {
 }
 
 .impact-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(59, 130, 246, 0.15), 0 6px 12px rgba(59, 130, 246, 0.08);
-    border-color: rgba(59, 130, 246, 0.2);
+    transform: translateY(-14px) scale(1.025);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2), 0 10px 20px rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
 .impact-icon {
@@ -6271,6 +6302,12 @@ blockquote {
     margin-bottom: var(--space-4);
     display: block;
     line-height: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.impact-card:hover .impact-icon {
+    transform: rotate(5deg) scale(1.1);
+    color: var(--color-primary);
 }
 
 .impact-title {
@@ -6290,18 +6327,22 @@ blockquote {
 }
 
 .impact-summary {
-    margin-top: var(--space-8);
-    padding: var(--space-6);
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.02) 0%, rgba(147, 197, 253, 0.01) 100%);
-    border-radius: var(--radius-md);
-    border-left: 4px solid var(--color-primary);
-    max-width: 700px;
+    margin-top: var(--space-10);
+    padding: var(--space-8);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(147, 197, 253, 0.06) 100%);
+    border-radius: var(--radius-lg);
+    border-left: 6px solid var(--color-primary);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    max-width: 750px;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.08);
+    position: relative;
 }
 
 .impact-summary p {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
+    font-weight: 600;
     line-height: 1.6;
     color: var(--color-charcoal);
     margin: 0;
@@ -6403,8 +6444,8 @@ blockquote {
 
 /* Enhanced about page typography and visual structure */
 .about-text-content .content-section {
-    padding: var(--space-12) var(--space-10); /* reduce internal padding */
-    margin-bottom: var(--space-8); /* halve spacing between sections */
+    padding: var(--space-16) var(--space-12); /* increase internal padding for breathing room */
+    margin-bottom: var(--space-16); /* increase spacing between sections */
     border-radius: var(--radius-lg);
     position: relative;
     max-width: 900px;
@@ -6428,8 +6469,8 @@ blockquote {
 }
 
 .about-text-content .content-section p {
-    line-height: 1.75;
-    margin-bottom: 1.75rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
     font-size: var(--text-base);
     font-weight: 400;
     color: #333333;
@@ -6442,31 +6483,34 @@ blockquote {
     margin-bottom: 0;
 }
 
-/* Profile Hero Typography - Centered Hierarchy */
+/* Premium Profile Typography */
 .profile-name {
-    font-size: 2.125rem;
-    font-weight: 700;
+    font-size: 2.5rem;
+    font-weight: 800;
     color: #1a1a1a;
-    margin: 0 0 var(--space-3) 0;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
+    margin: 0 0 var(--space-2) 0;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
     text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .profile-tagline {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     font-weight: 400;
-    color: #666666;
-    margin: 0 0 var(--space-2) 0;
+    color: rgba(85, 85, 85, 0.7);
+    margin: 0 0 var(--space-4) 0;
     text-align: left;
-    letter-spacing: 0.02em;
+    line-height: 1.6;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .profile-location {
-    font-size: 0.9375rem;
-    font-weight: 400;
-    color: #888888;
-    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #666666;
+    margin: var(--space-1) 0 0 0;
     text-align: left;
     display: flex;
     align-items: center;
@@ -6477,40 +6521,42 @@ blockquote {
 /* Responsive adjustments for profile hero */
 @media (max-width: 768px) {
     .profile-hero {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         text-align: center;
-        padding: var(--space-12) var(--space-6);
-        gap: var(--space-8);
+        padding: var(--space-16) var(--space-8);
+        gap: var(--space-6);
     }
 
     .profile-image-section {
-        margin-bottom: var(--space-4);
+        margin: 0 auto;
     }
 
     .profile-credentials {
         text-align: center;
-        padding-left: 0;
+        align-items: center;
     }
 
     .profile-image-container {
-        width: 180px;
-        height: 180px;
+        width: 200px;
+        height: 200px;
     }
 
     .profile-name {
-        font-size: 1.875rem;
-        margin: var(--space-3) 0 var(--space-2) 0;
+        font-size: 2rem;
+        margin: 0 0 var(--space-2) 0;
         text-align: center;
     }
 
     .profile-tagline {
         font-size: 1rem;
-        margin-bottom: var(--space-2);
+        margin-bottom: var(--space-3);
         text-align: center;
+        border-bottom: none;
+        padding-bottom: 0;
     }
 
     .profile-location {
-        font-size: 0.875rem;
+        font-size: 0.9375rem;
         justify-content: center;
     }
 
@@ -6521,26 +6567,22 @@ blockquote {
 
 @media (max-width: 480px) {
     .profile-hero {
-        padding: var(--space-6) var(--space-4); /* tighter mobile */
+        padding: var(--space-12) var(--space-6);
         gap: var(--space-4);
     }
 
     .profile-image-section {
-        margin-bottom: var(--space-3);
-    }
-
-    .profile-credentials {
-        padding-left: 0;
+        margin: 0 auto;
     }
 
     .profile-image-container {
-        width: 160px;
-        height: 160px;
+        width: 180px;
+        height: 180px;
     }
 
     .profile-name {
-        font-size: 1.625rem;
-        margin: var(--space-2) 0 var(--space-2) 0;
+        font-size: 1.75rem;
+        margin: 0 0 var(--space-2) 0;
     }
 
     .profile-tagline {
@@ -6549,7 +6591,7 @@ blockquote {
     }
 
     .profile-location {
-        font-size: 0.8125rem;
+        font-size: 0.875rem;
     }
 
     .hero-container {
@@ -6632,11 +6674,11 @@ blockquote {
 /* Enhanced Subheading styles for journey chapters */
 .content-subheading {
     font-size: 1.375rem;
-    font-weight: 700;
+    font-weight: 800;
     color: #1a1a1a;
     margin: var(--space-12) 0 var(--space-4) 0;
     line-height: 1.3;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.02em;
     position: relative;
 }
 
@@ -6645,9 +6687,9 @@ blockquote {
     position: absolute;
     left: 0;
     bottom: -8px;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-primary), rgba(59, 130, 246, 0.6));
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), rgba(59, 130, 246, 0.8));
     border-radius: 2px;
 }
 
@@ -6703,17 +6745,20 @@ blockquote {
     line-height: 1.6;
     color: #2a2a2a;
     margin: 0;
-    padding: 0 0 0 var(--space-6);
+    padding: var(--space-6) 0 var(--space-6) var(--space-10);
     text-align: left;
     position: relative;
-    border-left: 4px solid var(--color-primary);
+    border-left: 6px solid var(--color-primary);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.02) 0%, rgba(147, 197, 253, 0.01) 100%);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .premium-quote::before {
     content: '"';
     position: absolute;
-    top: -10px;
-    left: -20px;
+    top: var(--space-4);
+    left: calc(var(--space-10) - 24px);
     font-size: 70px;
     color: var(--color-primary);
     opacity: 0.3;
@@ -6742,7 +6787,7 @@ blockquote {
 
     .premium-quote {
         font-size: 1.25rem;
-        padding: 0 0 0 var(--space-4);
+        padding: var(--space-5) 0 var(--space-5) var(--space-8);
     }
 
     .premium-quote::before {
@@ -6765,7 +6810,7 @@ blockquote {
 
     .premium-quote {
         font-size: 1.125rem;
-        padding: 0 0 0 var(--space-3);
+        padding: var(--space-4) 0 var(--space-4) var(--space-6);
     }
 
     .premium-quote::before {
@@ -7241,6 +7286,27 @@ textarea {
     }
 }
 
+/* Profile Photo Animation Keyframes */
+@keyframes profileFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes profileGlow {
+    0%, 100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.15;
+        transform: scale(1.01);
+    }
+}
+
 body {
     font-feature-settings: 'kern' 1, 'liga' 1;
     text-rendering: optimizeLegibility;
@@ -7575,6 +7641,27 @@ textarea {
     to {
         opacity: 1;
         transform: translateY(0)
+    }
+}
+
+/* Profile Photo Animation Keyframes */
+@keyframes profileFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes profileGlow {
+    0%, 100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.15;
+        transform: scale(1.01);
     }
 }
 
