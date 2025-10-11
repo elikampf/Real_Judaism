@@ -44,9 +44,9 @@ body {
     --color-charcoal: #1a202c;
     --color-charcoal-dark: #0f172a;
     --color-white: #fff;
-    --color-primary: #3b82f6;
-    --color-primary-hover: #2563eb;
-    --color-primary-active: #1d4ed8;
+    --color-primary: #005A9C;
+    --color-primary-hover: #004B8D;
+    --color-primary-active: #003C7E;
     --color-light-gray: #f8fafc;
     --color-gray: #64748b;
     --color-border: #e2e8f0;
@@ -57,9 +57,9 @@ body {
     --surface-contrast: #0f172a;
     --text-primary: var(--color-text);
     --text-muted: var(--color-text-secondary);
-    --accent-500: #3b82f6;
-    --accent-600: #2563eb;
-    --accent-700: #1d4ed8;
+    --accent-500: #005A9C;
+    --accent-600: #004B8D;
+    --accent-700: #003C7E;
     --gradient-primary: linear-gradient(135deg, #667eea 0, #764ba2 100%);
     --gradient-secondary: linear-gradient(135deg, #f093fb 0, #f5576c 100%);
     --gradient-accent: linear-gradient(135deg, #4facfe 0, #00f2fe 100%);
@@ -76,16 +76,16 @@ body {
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
-    --text-xs: .75rem;    /* 12px - captions */
-    --text-sm: .875rem;   /* 14px - small text */
-    --text-base: 1rem;    /* 16px - body text */
-    --text-lg: 1.125rem;  /* 18px - large body text */
-    --text-xl: 1.75rem;   /* 28px - H3/subsections */
-    --text-2xl: 2rem;     /* 32px - H2/section headers */
-    --text-3xl: 2.5rem;   /* 40px - H2 large sections */
-    --text-4xl: 3rem;     /* 48px - H1/main headlines */
-    --text-5xl: 4rem;     /* 64px - H1/hero headlines */
-    --text-section: 2.25rem; /* 36px - section titles */
+    --text-xs: 0.8rem;    /* 12.8px */
+    --text-sm: 0.9rem;   /* 14.4px */
+    --text-base: 1.05rem;    /* 16.8px */
+    --text-lg: 1.2rem;  /* 19.2px */
+    --text-xl: 1.5rem;   /* 24px */
+    --text-2xl: 1.8rem;     /* 28.8px */
+    --text-3xl: 2.2rem;   /* 35.2px */
+    --text-4xl: 2.8rem;     /* 44.8px */
+    --text-5xl: 3.5rem;     /* 56px */
+    --text-section: 2.5rem; /* 40px */
     --space-1: .25rem;
     --space-2: .5rem;
     --space-3: .75rem;
@@ -405,12 +405,12 @@ blockquote {
     border-radius: var(--radius-xl);
     cursor: pointer;
     display: inline-flex;
-    font: 600 var(--text-base) var(--font-family);
+    font: 700 var(--text-base) var(--font-family);
     justify-content: center;
     letter-spacing: .01em;
     outline: 0;
     overflow: hidden;
-    padding: var(--space-3) var(--space-6);
+    padding: var(--space-4) var(--space-8);
     position: relative;
     text-decoration: none;
     transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -421,7 +421,7 @@ blockquote {
 .btn-primary {
     background: linear-gradient(135deg, var(--color-primary) 0, var(--color-primary-hover) 100%);
     border: 0;
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4), 0 8px 32px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 90, 156, 0.4), 0 8px 32px rgba(0, 90, 156, 0.2);
     color: var(--color-white)
 }
 
@@ -450,7 +450,7 @@ blockquote {
 
 
 .btn-primary:hover {
-    box-shadow: 0 16px 48px rgba(59, 130, 246, 0.5), 0 8px 32px rgba(37, 99, 235, 0.4), 0 0 0 1px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 16px 48px rgba(0, 90, 156, 0.6), 0 8px 32px rgba(0, 75, 141, 0.5), 0 0 0 1px rgba(0, 90, 156, 0.4);
     transform: translateY(-4px) scale(1.03);
     background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary-active) 100%);
     cursor: pointer;
@@ -458,7 +458,7 @@ blockquote {
 }
 
 .btn-primary:active {
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6), 0 2px 12px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 90, 156, 0.7), 0 2px 12px rgba(0, 75, 141, 0.6);
     transform: translateY(-1px) scale(0.97);
     transition: all .1s ease
 }
@@ -466,13 +466,14 @@ blockquote {
 .btn-secondary {
     background: transparent;
     border: 2px solid var(--color-primary);
-    color: var(--color-primary)
+    color: var(--color-primary);
+    font-weight: 600;
 }
 
 .btn-secondary:hover {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
     border-color: var(--color-primary);
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3), 0 4px 16px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 90, 156, 0.4), 0 4px 16px rgba(0, 90, 156, 0.2);
     color: var(--color-white);
     transform: translateY(-3px) scale(1.02);
     cursor: pointer;
@@ -1166,18 +1167,15 @@ blockquote {
     height: 85vh;
     overflow: hidden;
     position: relative;
+    animation: heroGradientShift 15s ease-in-out infinite;
 }
 
 @keyframes heroGradientShift {
     0%, 100% {
-        background: var(--blue-gradient);
-        background-size: var(--blue-gradient-size);
-        background-position: var(--blue-gradient-pos);
+        background-position: 0% 50%;
     }
     50% {
-        background: var(--blue-gradient);
-        background-size: var(--blue-gradient-size);
-        background-position: var(--blue-gradient-pos);
+        background-position: 100% 50%;
     }
 }
 
@@ -1557,9 +1555,9 @@ blockquote {
     max-width: 1200px;
     text-align: center;
     text-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.4),
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        0 8px 32px rgba(59, 130, 246, 0.3);
+        0 2px 8px rgba(0, 0, 0, 0.6),
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 8px 32px rgba(0, 90, 156, 0.5);
     filter: drop-shadow(0 4px 16px rgba(255, 255, 255, 0.1));
     background: none !important;
     -webkit-background-clip: unset !important;
@@ -1576,8 +1574,8 @@ blockquote {
     max-width: 750px;
     text-align: center;
     text-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.3),
-        0 2px 8px rgba(0, 0, 0, 0.15)
+        0 1px 3px rgba(0, 0, 0, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.3)
 }
 
 .hero-cta-button {
@@ -1585,17 +1583,17 @@ blockquote {
     border: 0;
     border-radius: 12px;
     box-shadow:
-        0 8px 32px rgba(59, 130, 246, 0.4),
-        0 4px 16px rgba(59, 130, 246, 0.2);
+        0 8px 32px rgba(0, 90, 156, 0.5),
+        0 4px 16px rgba(0, 90, 156, 0.3);
     color: var(--color-white);
     cursor: pointer;
     display: inline-block;
     font-family: var(--font-family);
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     letter-spacing: .025em;
     margin-top: var(--space-4);
-    padding: 18px 36px;
+    padding: 20px 40px;
     position: relative;
     text-decoration: none;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1609,17 +1607,17 @@ blockquote {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 90, 156, 0.3), transparent);
     transition: left 0.6s ease
 }
 
 .hero-cta-button:hover {
     background: linear-gradient(135deg, var(--color-primary-hover) 0, var(--color-primary-active) 100%);
     box-shadow:
-        0 16px 48px rgba(59, 130, 246, 0.5),
-        0 8px 32px rgba(37, 99, 235, 0.4),
-        0 0 0 1px rgba(59, 130, 246, 0.3);
-    transform: translateY(-4px) scale(1.02);
+        0 16px 48px rgba(0, 90, 156, 0.6),
+        0 8px 32px rgba(0, 75, 141, 0.5),
+        0 0 0 1px rgba(0, 90, 156, 0.4);
+    transform: translateY(-4px) scale(1.03);
     cursor: pointer
 }
 
@@ -2146,7 +2144,7 @@ blockquote {
 
 .series-showcase {
     background: var(--color-white);
-    padding: 120px 0
+    padding: 140px 0
 }
 
 #series-showcase {
@@ -2324,7 +2322,7 @@ blockquote {
 
 .about-preview-section {
     background: var(--color-white);
-    padding: 120px 0 140px
+    padding: 140px 0 160px
 }
 
 .about-container {
@@ -2570,7 +2568,7 @@ blockquote {
 
 .contact-section {
     background: var(--color-light-gray);
-    padding: 120px 0
+    padding: 140px 0
 }
 
 .contact-content {
