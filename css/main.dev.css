@@ -5977,7 +5977,7 @@ blockquote {
 /* Meet Rabbi Section */
 .meet-rabbi-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: var(--space-20) 0;
+    padding: var(--space-12) 0;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -5991,7 +5991,7 @@ blockquote {
     font-weight: 700;
     color: var(--text-dark);
     text-align: center;
-    margin-bottom: var(--space-16);
+    margin-bottom: var(--space-8);
     position: relative;
 }
 
@@ -6577,12 +6577,12 @@ blockquote {
 /* Responsive adjustments for meet rabbi section */
 @media (max-width: 768px) {
     .meet-rabbi-section {
-        padding: var(--space-16) 0;
+        padding: var(--space-8) 0;
     }
 
     .meet-rabbi-title {
         font-size: var(--text-3xl);
-        margin-bottom: var(--space-12);
+        margin-bottom: var(--space-6);
     }
 
     .meet-rabbi-layout {
@@ -6605,12 +6605,12 @@ blockquote {
 
 @media (max-width: 480px) {
     .meet-rabbi-section {
-        padding: var(--space-12) 0;
+        padding: var(--space-6) 0;
     }
 
     .meet-rabbi-title {
         font-size: var(--text-2xl);
-        margin-bottom: var(--space-10);
+        margin-bottom: var(--space-4);
     }
 
     .rabbi-image-container {
