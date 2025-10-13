@@ -1,0 +1,119 @@
+/* Main styles for Real Judaism */
+
+:root {
+    /* Color Palette */
+    --color-charcoal: #111827;
+    --color-off-white: #F7F6F2;
+    --color-gold: #D9A84E;
+    --color-blue: #2563EB;
+    --color-light-gray: #E6E6E6;
+    --color-medium-gray: #A3A3A3;
+    --color-white: #FFFFFF;
+
+    /* Typography */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+
+    /* Spacing */
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 32px;
+    --space-xl: 48px;
+    --space-xxl: 72px;
+
+    /* Borders */
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+}
+
+main {
+    padding: var(--space-xl) 0;
+}
+
+/* Global Reset & Base Styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-secondary);
+    background-color: var(--color-off-white);
+    color: var(--color-charcoal);
+    line-height: 1.6;
+    font-size: 18px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-s);
+}
+
+h1 { font-size: 44px; }
+h2 { font-size: 32px; }
+h3 { font-size: 24px; }
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--space-l);
+}
+
+a {
+    color: var(--color-blue);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--color-gold);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+blockquote {
+    border-left: 4px solid var(--color-gold);
+    padding-left: var(--space-m);
+    margin: var(--space-l) 0;
+    font-style: italic;
+    color: var(--color-medium-gray);
+}
+
+/* Accessibility */
+a:focus,
+button:focus,
+input:focus {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 36px; }
+    h2 { font-size: 28px; }
+    h3 { font-size: 22px; }
+
+    main {
+        padding: var(--space-l) 0;
+    }
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
